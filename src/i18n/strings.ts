@@ -47,6 +47,10 @@ interface UIStrings {
     showTransliteration: string;
     tefsir: string;
     viewTefsir: string;
+    // Milestone 5 strings - Tajweed
+    tajweed: string;
+    showTajweed: string;
+    tajweedColors: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -93,6 +97,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: 'Okunuşu Göster',
         tefsir: 'Tefsir',
         viewTefsir: 'Tefsiri Görüntüle',
+        tajweed: 'Tecvid',
+        showTajweed: 'Tecvid Renklerini Göster',
+        tajweedColors: 'Tecvid Renkleri',
     },
     en: {
         appTitle: 'Quran App',
@@ -137,6 +144,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: 'Show Transliteration',
         tefsir: 'Tafsir',
         viewTefsir: 'View Tafsir',
+        tajweed: 'Tajweed',
+        showTajweed: 'Show Tajweed Colors',
+        tajweedColors: 'Tajweed Colors',
     },
     de: {
         appTitle: 'Koran App',
@@ -181,6 +191,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: 'Transliteration anzeigen',
         tefsir: 'Tafsir',
         viewTefsir: 'Tafsir anzeigen',
+        tajweed: 'Tagweed',
+        showTajweed: 'Tagweed-Farben anzeigen',
+        tajweedColors: 'Tagweed-Farben',
     },
     fr: {
         appTitle: 'Coran App',
@@ -225,6 +238,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: 'Afficher la translittération',
         tefsir: 'Tafsir',
         viewTefsir: 'Voir le Tafsir',
+        tajweed: 'Tajwid',
+        showTajweed: 'Afficher les couleurs du Tajwid',
+        tajweedColors: 'Couleurs du Tajwid',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -269,6 +285,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: '显示转写',
         tefsir: '注释',
         viewTefsir: '查看注释',
+        tajweed: '诵读规则',
+        showTajweed: '显示诵读颜色',
+        tajweedColors: '诵读颜色',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -313,6 +332,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTransliteration: 'إظهار الترجمة الصوتية',
         tefsir: 'التفسير',
         viewTefsir: 'عرض التفسير',
+        tajweed: 'التجويد',
+        showTajweed: 'إظهار ألوان التجويد',
+        tajweedColors: 'ألوان التجويد',
     },
 };
 

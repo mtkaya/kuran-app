@@ -8,6 +8,7 @@ interface SettingsState extends UserSettings {
     setArabicFontSize: (size: number) => void;
     setMealFontSize: (size: number) => void;
     setShowTransliteration: (show: boolean) => void;
+    setShowTajweed: (show: boolean) => void;
     hydrate: () => void;
 }
 
@@ -33,6 +34,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setShowTransliteration: (showTransliteration) => {
         set({ showTransliteration });
         saveSettings({ ...get(), showTransliteration });
+    },
+
+    setShowTajweed: (showTajweed) => {
+        set({ showTajweed });
+        saveSettings({ ...get(), showTajweed });
     },
 
     hydrate: () => {

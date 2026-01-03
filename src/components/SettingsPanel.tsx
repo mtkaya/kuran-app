@@ -1,6 +1,6 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2, Type } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type, Palette } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,7 +13,13 @@ interface SettingsPanelProps {
 }
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
-    const { theme, setTheme, arabicFontSize, setArabicFontSize, mealFontSize, setMealFontSize, showTransliteration, setShowTransliteration } = useSettingsStore();
+    const {
+        theme, setTheme,
+        arabicFontSize, setArabicFontSize,
+        mealFontSize, setMealFontSize,
+        showTransliteration, setShowTransliteration,
+        showTajweed, setShowTajweed
+    } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
@@ -84,6 +90,31 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     {showTransliteration && (
                         <p className="text-xs text-muted-foreground mt-2 italic">
                             Bismillâhirrahmânirrahîm
+                        </p>
+                    )}
+                </div>
+
+                {/* Tajweed Toggle */}
+                <div className="mb-6">
+                    <label className="flex items-center justify-between cursor-pointer">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Palette className="w-4 h-4" />
+                            {ui.showTajweed}
+                        </span>
+                        <button
+                            onClick={() => setShowTajweed(!showTajweed)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${showTajweed ? 'bg-primary' : 'bg-secondary'
+                                }`}
+                        >
+                            <span
+                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${showTajweed ? 'translate-x-6' : ''
+                                    }`}
+                            />
+                        </button>
+                    </label>
+                    {showTajweed && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                            🔴 Ghunnah &nbsp; 🟢 Ikhfa &nbsp; 🔵 Qalqalah
                         </p>
                     )}
                 </div>

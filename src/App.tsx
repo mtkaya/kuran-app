@@ -1,9 +1,10 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { getQuranData } from './data/quran'
-import { Search } from 'lucide-react'
+import { Search as SearchIcon } from 'lucide-react'
 import { useState, useMemo, useEffect } from 'react'
 import Reader from './pages/Reader'
+import Search from './pages/Search'
 import { LanguageSelector } from './components/LanguageSelector'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
@@ -65,9 +66,18 @@ function App() {
                         {/* Continue Reading */}
                         <ContinueReading />
 
-                        {/* Search Bar */}
+                        {/* Search Bar - Link to Search Page */}
+                        <Link
+                            to="/search"
+                            className="flex items-center gap-2 w-full px-4 py-3 bg-secondary/50 rounded-lg text-muted-foreground hover:bg-secondary transition-colors"
+                        >
+                            <SearchIcon className="w-4 h-4" />
+                            <span>{ui.searchInQuran}</span>
+                        </Link>
+
+                        {/* Quick Search for Surahs */}
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                             <input
                                 type="text"
                                 placeholder={ui.searchPlaceholder}
@@ -92,6 +102,7 @@ function App() {
                     </div>
                 } />
                 <Route path="/surah/:id" element={<Reader />} />
+                <Route path="/search" element={<Search />} />
             </Routes>
         </div>
     )

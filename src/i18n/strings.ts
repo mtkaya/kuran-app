@@ -33,6 +33,15 @@ interface UIStrings {
     reciter: string;
     selectReciter: string;
     playAyah: string;
+    // Milestone 3 strings - Search
+    searchInQuran: string;
+    all: string;
+    arabic: string;
+    translation: string;
+    surahName: string;
+    searchHint: string;
+    noSearchResults: string;
+    resultsFound: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -67,6 +76,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: 'Kâri',
         selectReciter: 'Kâri Seç',
         playAyah: 'Ayeti Dinle',
+        searchInQuran: 'Kuran\'da ara...',
+        all: 'Tümü',
+        arabic: 'Arapça',
+        translation: 'Meal',
+        surahName: 'Sure Adı',
+        searchHint: 'Arapça veya meal içinde arama yapın',
+        noSearchResults: 'Sonuç bulunamadı',
+        resultsFound: 'sonuç bulundu',
     },
     en: {
         appTitle: 'Quran App',
@@ -99,6 +116,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: 'Reciter',
         selectReciter: 'Select Reciter',
         playAyah: 'Play Verse',
+        searchInQuran: 'Search in Quran...',
+        all: 'All',
+        arabic: 'Arabic',
+        translation: 'Translation',
+        surahName: 'Surah Name',
+        searchHint: 'Search in Arabic text or translation',
+        noSearchResults: 'No results found',
+        resultsFound: 'results found',
     },
     de: {
         appTitle: 'Koran App',
@@ -131,6 +156,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: 'Rezitator',
         selectReciter: 'Rezitator auswählen',
         playAyah: 'Vers abspielen',
+        searchInQuran: 'Im Koran suchen...',
+        all: 'Alle',
+        arabic: 'Arabisch',
+        translation: 'Übersetzung',
+        surahName: 'Surenname',
+        searchHint: 'Suchen Sie im arabischen Text oder in der Übersetzung',
+        noSearchResults: 'Keine Ergebnisse gefunden',
+        resultsFound: 'Ergebnisse gefunden',
     },
     fr: {
         appTitle: 'Coran App',
@@ -163,6 +196,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: 'Récitateur',
         selectReciter: 'Choisir un récitateur',
         playAyah: 'Écouter le verset',
+        searchInQuran: 'Rechercher dans le Coran...',
+        all: 'Tout',
+        arabic: 'Arabe',
+        translation: 'Traduction',
+        surahName: 'Nom de la sourate',
+        searchHint: 'Rechercher dans le texte arabe ou la traduction',
+        noSearchResults: 'Aucun résultat trouvé',
+        resultsFound: 'résultats trouvés',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -195,6 +236,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: '诵读者',
         selectReciter: '选择诵读者',
         playAyah: '播放经文',
+        searchInQuran: '在古兰经中搜索...',
+        all: '全部',
+        arabic: '阿拉伯语',
+        translation: '翻译',
+        surahName: '章节名',
+        searchHint: '在阿拉伯文或翻译中搜索',
+        noSearchResults: '未找到结果',
+        resultsFound: '个结果',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -227,6 +276,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         reciter: 'القارئ',
         selectReciter: 'اختر القارئ',
         playAyah: 'استمع للآية',
+        searchInQuran: 'بحث في القرآن...',
+        all: 'الكل',
+        arabic: 'العربية',
+        translation: 'الترجمة',
+        surahName: 'اسم السورة',
+        searchHint: 'ابحث في النص العربي أو الترجمة',
+        noSearchResults: 'لم يتم العثور على نتائج',
+        resultsFound: 'نتائج',
     },
 };
 

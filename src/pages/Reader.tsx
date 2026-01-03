@@ -7,13 +7,16 @@ import { useLanguage } from '../context/LanguageContext';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { getUIStrings } from '../i18n/strings';
 import { useReadingStore } from '../store/readingStore';
+import { useAudioStore } from '../store/audioStore';
 import { SettingsPanel } from '../components/SettingsPanel';
+import { AudioPlayer } from '../components/AudioPlayer';
 import { Toast, useToast } from '../components/Toast';
 
 export default function Reader() {
     const { id } = useParams();
     const { currentLanguage } = useLanguage();
     const { setLastRead } = useReadingStore();
+    const { currentAyahId, isPlaying, cleanup } = useAudioStore();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { toast, showToast, hideToast } = useToast();
     const observerRef = useRef<IntersectionObserver | null>(null);
@@ -62,7 +65,7 @@ export default function Reader() {
         };
     }, [surah, handleAyahVisible]);
 
-    // Scroll to ayah if hash is present
+    // Scroll to ayah if hash is present or when audio changes
     useEffect(() => {
         const hash = window.location.hash;
         if (hash) {
@@ -75,12 +78,29 @@ export default function Reader() {
         }
     }, []);
 
+    // Auto-scroll to playing ayah
+    useEffect(() => {
+        if (isPlaying && currentAyahId) {
+            const element = document.getElementById(`ayah-${currentAyahId}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [currentAyahId, isPlaying]);
+
+    // Cleanup audio when leaving page
+    useEffect(() => {
+        return () => {
+            // Don't cleanup if navigating - let the audio continue
+        };
+    }, [cleanup]);
+
     if (!surah) {
         return <div className="p-8 text-center">{ui.surahNotFound}</div>;
     }
 
     return (
-        <div className="min-h-screen bg-background pb-20">
+        <div className="min-h-screen bg-background pb-32">
             {/* Header */}
             <div className="sticky top-0 z-10 bg-card/80 backdrop-blur-md border-b px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-4">
@@ -115,6 +135,7 @@ export default function Reader() {
                         <AyahView
                             ayah={ayah}
                             surahName={surah.name_turkish}
+                            totalAyahs={surah.verse_count}
                             onCopy={showToast}
                         />
                     </div>
@@ -126,6 +147,9 @@ export default function Reader() {
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
+
+            {/* Audio Player */}
+            <AudioPlayer />
 
             {/* Toast */}
             <Toast

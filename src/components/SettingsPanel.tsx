@@ -1,6 +1,6 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2 } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,7 +13,7 @@ interface SettingsPanelProps {
 }
 
 export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose }) => {
-    const { theme, setTheme, arabicFontSize, setArabicFontSize, mealFontSize, setMealFontSize } = useSettingsStore();
+    const { theme, setTheme, arabicFontSize, setArabicFontSize, mealFontSize, setMealFontSize, showTransliteration, setShowTransliteration } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
@@ -61,6 +61,31 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                             </button>
                         ))}
                     </div>
+                </div>
+
+                {/* Transliteration Toggle */}
+                <div className="mb-6">
+                    <label className="flex items-center justify-between cursor-pointer">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Type className="w-4 h-4" />
+                            {ui.showTransliteration}
+                        </span>
+                        <button
+                            onClick={() => setShowTransliteration(!showTransliteration)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${showTransliteration ? 'bg-primary' : 'bg-secondary'
+                                }`}
+                        >
+                            <span
+                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${showTransliteration ? 'translate-x-6' : ''
+                                    }`}
+                            />
+                        </button>
+                    </label>
+                    {showTransliteration && (
+                        <p className="text-xs text-muted-foreground mt-2 italic">
+                            Bismillâhirrahmânirrahîm
+                        </p>
+                    )}
                 </div>
 
                 {/* Reciter Selection */}

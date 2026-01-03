@@ -7,6 +7,7 @@ interface SettingsState extends UserSettings {
     setTheme: (theme: 'light' | 'dark' | 'system') => void;
     setArabicFontSize: (size: number) => void;
     setMealFontSize: (size: number) => void;
+    setShowTransliteration: (show: boolean) => void;
     hydrate: () => void;
 }
 
@@ -27,6 +28,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setMealFontSize: (mealFontSize) => {
         set({ mealFontSize });
         saveSettings({ ...get(), mealFontSize });
+    },
+
+    setShowTransliteration: (showTransliteration) => {
+        set({ showTransliteration });
+        saveSettings({ ...get(), showTransliteration });
     },
 
     hydrate: () => {

@@ -6,6 +6,7 @@ import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
+import { getTransliteration } from '../data/transliteration';
 
 interface AyahViewProps {
     ayah: Ayah;
@@ -16,10 +17,12 @@ interface AyahViewProps {
 
 export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy }) => {
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
-    const { arabicFontSize, mealFontSize } = useSettingsStore();
+    const { arabicFontSize, mealFontSize, showTransliteration } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
+
+    const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
 
     const bookmarked = isBookmarked(ayah.surah_id, ayah.id);
     const isCurrentlyPlaying = isPlaying && currentAyahId === ayah.id;
@@ -68,8 +71,8 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
         <div
             id={`ayah-${ayah.id}`}
             className={`py-6 border-b last:border-0 transition-colors ${isCurrentlyPlaying
-                    ? 'bg-primary/5 border-l-4 border-l-primary pl-4 -ml-4'
-                    : 'hover:bg-accent/5'
+                ? 'bg-primary/5 border-l-4 border-l-primary pl-4 -ml-4'
+                : 'hover:bg-accent/5'
                 }`}
         >
             {/* Arabic Text (Right Aligned) */}
@@ -85,6 +88,18 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                     </span>
                 </p>
             </div>
+
+            {/* Transliteration (if enabled) */}
+            {transliteration && (
+                <div className="mb-4 py-2 px-3 bg-secondary/30 rounded-lg border-l-2 border-primary/50">
+                    <p
+                        className="text-muted-foreground italic"
+                        style={{ fontSize: `${mealFontSize - 2}px` }}
+                    >
+                        {transliteration}
+                    </p>
+                </div>
+            )}
 
             {/* Meal (Left Aligned) */}
             <div className="space-y-2">
@@ -102,8 +117,8 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                 <button
                     onClick={handlePlay}
                     className={`p-2 rounded-lg transition-colors ${isCurrentlyPlaying
-                            ? 'text-primary bg-primary/10'
-                            : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                        ? 'text-primary bg-primary/10'
+                        : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
                         }`}
                     aria-label={isCurrentlyPlaying ? ui.pause : ui.playAyah}
                 >
@@ -118,8 +133,8 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                 <button
                     onClick={handleBookmark}
                     className={`p-2 rounded-lg transition-colors ${bookmarked
-                            ? 'text-primary bg-primary/10'
-                            : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                        ? 'text-primary bg-primary/10'
+                        : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
                         }`}
                     aria-label={bookmarked ? ui.removeBookmark : ui.addBookmark}
                 >

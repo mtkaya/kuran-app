@@ -42,6 +42,11 @@ interface UIStrings {
     searchHint: string;
     noSearchResults: string;
     resultsFound: string;
+    // Milestone 4 strings - Transliteration
+    transliteration: string;
+    showTransliteration: string;
+    tefsir: string;
+    viewTefsir: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -84,6 +89,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: 'Arapça veya meal içinde arama yapın',
         noSearchResults: 'Sonuç bulunamadı',
         resultsFound: 'sonuç bulundu',
+        transliteration: 'Okunuş',
+        showTransliteration: 'Okunuşu Göster',
+        tefsir: 'Tefsir',
+        viewTefsir: 'Tefsiri Görüntüle',
     },
     en: {
         appTitle: 'Quran App',
@@ -124,6 +133,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: 'Search in Arabic text or translation',
         noSearchResults: 'No results found',
         resultsFound: 'results found',
+        transliteration: 'Transliteration',
+        showTransliteration: 'Show Transliteration',
+        tefsir: 'Tafsir',
+        viewTefsir: 'View Tafsir',
     },
     de: {
         appTitle: 'Koran App',
@@ -164,6 +177,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: 'Suchen Sie im arabischen Text oder in der Übersetzung',
         noSearchResults: 'Keine Ergebnisse gefunden',
         resultsFound: 'Ergebnisse gefunden',
+        transliteration: 'Transliteration',
+        showTransliteration: 'Transliteration anzeigen',
+        tefsir: 'Tafsir',
+        viewTefsir: 'Tafsir anzeigen',
     },
     fr: {
         appTitle: 'Coran App',
@@ -204,6 +221,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: 'Rechercher dans le texte arabe ou la traduction',
         noSearchResults: 'Aucun résultat trouvé',
         resultsFound: 'résultats trouvés',
+        transliteration: 'Translittération',
+        showTransliteration: 'Afficher la translittération',
+        tefsir: 'Tafsir',
+        viewTefsir: 'Voir le Tafsir',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -244,6 +265,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: '在阿拉伯文或翻译中搜索',
         noSearchResults: '未找到结果',
         resultsFound: '个结果',
+        transliteration: '转写',
+        showTransliteration: '显示转写',
+        tefsir: '注释',
+        viewTefsir: '查看注释',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -284,6 +309,10 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchHint: 'ابحث في النص العربي أو الترجمة',
         noSearchResults: 'لم يتم العثور على نتائج',
         resultsFound: 'نتائج',
+        transliteration: 'الترجمة الصوتية',
+        showTransliteration: 'إظهار الترجمة الصوتية',
+        tefsir: 'التفسير',
+        viewTefsir: 'عرض التفسير',
     },
 };
 

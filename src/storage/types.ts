@@ -21,6 +21,7 @@ export interface UserSettings {
     theme: 'light' | 'dark' | 'system';
     arabicFontSize: number;  // 20-48
     mealFontSize: number;    // 14-28
+    showTransliteration: boolean;
 }
 
 export interface StorageSchema {
@@ -34,6 +35,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     theme: 'system',
     arabicFontSize: 28,
     mealFontSize: 18,
+    showTransliteration: false,
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

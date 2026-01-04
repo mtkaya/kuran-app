@@ -158,10 +158,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     >
                         {RECITERS.map((reciter) => (
                             <option key={reciter.id} value={reciter.identifier}>
-                                {reciter.name} - {reciter.arabicName}
+                                {reciter.country} {reciter.nameLocal} ({reciter.style})
                             </option>
                         ))}
                     </select>
+                    <p className="text-xs text-muted-foreground mt-2">
+                        {RECITERS.length} kâri mevcut
+                    </p>
                 </div>
 
                 {/* Arabic Font Size */}

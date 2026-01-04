@@ -15,7 +15,7 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah }) => {
     return (
         <Link
             to={`/surah/${surah.id}`}
-            className="flex items-center justify-between p-3 sm:p-4 bg-card hover:bg-primary/5 border border-border/50 rounded-xl transition-all duration-200 group touch-target active:scale-[0.98]"
+            className="flex items-center justify-between p-3 sm:p-4 bg-card border border-border/50 rounded-xl transition-all duration-300 group touch-target active:scale-[0.98] card-glow"
         >
             <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                 {/* Surah Number Badge */}

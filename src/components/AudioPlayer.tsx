@@ -78,24 +78,24 @@ export const AudioPlayer: React.FC = () => {
     };
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t shadow-lg">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border/50 shadow-2xl animate-slide-in">
             {/* Progress Bar (clickable) */}
             <div
-                className="h-1 bg-secondary cursor-pointer"
+                className="h-1.5 bg-secondary cursor-pointer group"
                 onClick={handleProgressClick}
             >
                 <div
-                    className="h-full bg-primary transition-all duration-100"
+                    className={`h-full bg-gradient-to-r from-primary to-accent transition-all duration-100 ${isPlaying ? 'shimmer' : ''}`}
                     style={{ width: `${progress}%` }}
                 />
             </div>
 
             <div className="max-w-2xl mx-auto px-4 py-3">
                 <div className="flex items-center gap-4">
-                    {/* Play/Pause */}
+                    {/* Play/Pause with pulse effect */}
                     <button
                         onClick={isPlaying ? pause : resume}
-                        className="w-12 h-12 flex items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+                        className={`w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 text-primary-foreground hover:scale-105 transition-all shadow-lg ${isPlaying ? 'pulse-glow' : ''}`}
                         aria-label={isPlaying ? ui.pause : ui.play}
                         disabled={isLoading}
                     >
@@ -108,19 +108,30 @@ export const AudioPlayer: React.FC = () => {
                         )}
                     </button>
 
+                    {/* Audio Wave Animation (when playing) */}
+                    {isPlaying && (
+                        <div className="audio-wave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    )}
+
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                             <div className="truncate">
-                                <span className="font-medium">{surahName}</span>
-                                <span className="text-muted-foreground mx-1">•</span>
+                                <span className="font-semibold">{surahName}</span>
+                                <span className="text-muted-foreground mx-2">•</span>
                                 <span className="text-muted-foreground">{ui.verses} {currentAyahNumber}</span>
                             </div>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                            <span>{formatTime(currentTime)}</span>
+                            <span className="font-mono">{formatTime(currentTime)}</span>
                             <span>/</span>
-                            <span>{formatTime(duration)}</span>
+                            <span className="font-mono">{formatTime(duration)}</span>
                         </div>
                     </div>
 
@@ -157,8 +168,8 @@ export const AudioPlayer: React.FC = () => {
                         <button
                             onClick={cycleRepeatMode}
                             className={`p-2 rounded-lg transition-colors ${repeatMode !== 'none'
-                                    ? 'bg-primary/10 text-primary'
-                                    : 'hover:bg-secondary'
+                                ? 'bg-primary/10 text-primary'
+                                : 'hover:bg-secondary'
                                 }`}
                             aria-label={getRepeatLabel()}
                             title={getRepeatLabel()}

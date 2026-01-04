@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Amiri Quran font */
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&display=swap');
+
 @layer base {
   :root {
     /* Elegant Islamic Green & Gold Theme */
@@ -24,6 +27,7 @@
     --muted: 60 10% 92%;
     --muted-foreground: 160 15% 45%;
 
+    /* Gold Accent */
     --accent: 45 80% 55%;
     --accent-foreground: 160 30% 15%;
 
@@ -35,10 +39,10 @@
     --ring: 158 64% 35%;
 
     --radius: 0.75rem;
-    
-    /* Gradient colors */
-    --gradient-start: 158 64% 35%;
-    --gradient-end: 158 50% 25%;
+
+    /* Glow colors */
+    --glow-primary: 158 64% 45%;
+    --glow-gold: 45 90% 60%;
   }
 
   .dark {
@@ -70,9 +74,9 @@
     --border: 160 15% 22%;
     --input: 160 15% 22%;
     --ring: 45 85% 55%;
-    
-    --gradient-start: 160 25% 15%;
-    --gradient-end: 160 20% 8%;
+
+    --glow-primary: 45 85% 55%;
+    --glow-gold: 45 90% 65%;
   }
 }
 
@@ -84,11 +88,9 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    /* Mobile safe area */
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
-  /* Smooth scrolling */
+
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
@@ -96,121 +98,349 @@
 }
 
 @layer utilities {
-  /* Gradient Background */
+
+  /* Gradient Header with Pattern */
   .gradient-header {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--primary)) 0%,
-      hsl(158 50% 25%) 50%,
-      hsl(160 40% 20%) 100%
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--primary)) 0%,
+        hsl(158 50% 28%) 50%,
+        hsl(160 45% 22%) 100%);
+    position: relative;
+    overflow: hidden;
   }
-  
+
+  .gradient-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 0L45 5L50 0L55 5L60 0L60 10L55 15L60 20L55 25L60 30L60 40L55 35L50 40L45 35L40 40L35 35L30 40L25 35L20 40L20 30L25 25L20 20L25 15L20 10L20 0L25 5L30 0L35 5L40 0Z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   .dark .gradient-header {
-    background: linear-gradient(
-      135deg,
-      hsl(160 25% 15%) 0%,
-      hsl(160 20% 10%) 50%,
-      hsl(160 25% 8%) 100%
-    );
+    background: linear-gradient(135deg,
+        hsl(160 30% 12%) 0%,
+        hsl(160 25% 10%) 50%,
+        hsl(160 20% 8%) 100%);
   }
-  
+
   /* Glass Effect */
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   }
-  
+
   .dark .glass {
-    background: rgba(20, 30, 25, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(20, 35, 28, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   }
-  
-  /* Card hover effect */
-  .card-hover {
-    @apply transition-all duration-300;
+
+  /* Card Glow Hover Effect */
+  .card-glow {
+    @apply transition-all duration-300 relative;
   }
-  
-  .card-hover:hover {
-    @apply shadow-lg;
-    transform: translateY(-2px);
+
+  .card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, hsl(var(--glow-primary)), hsl(var(--glow-gold)));
+    border-radius: inherit;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+    filter: blur(8px);
   }
-  
-  .card-hover:active {
-    transform: translateY(0);
+
+  .card-glow:hover::before {
+    opacity: 0.4;
   }
-  
+
+  .card-glow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-glow:active {
+    transform: translateY(-1px);
+  }
+
   /* Touch-friendly button */
   .touch-target {
     min-height: 44px;
     min-width: 44px;
   }
-  
-  /* Islamic Pattern Overlay (subtle) */
-  .pattern-overlay {
-    position: relative;
+
+  /* Besmele Banner */
+  .besmele-banner {
+    @apply relative overflow-hidden py-6 px-4 text-center;
+    background: linear-gradient(135deg,
+        hsl(var(--primary) / 0.1) 0%,
+        hsl(var(--accent) / 0.05) 100%);
   }
-  
-  .pattern-overlay::after {
-    content: '';
+
+  .besmele-banner::before,
+  .besmele-banner::after {
+    content: '✦';
     position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: hsl(var(--primary) / 0.3);
   }
-  
-  /* Shimmer animation */
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+
+  .besmele-banner::before {
+    left: 1rem;
   }
-  
-  .shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255,255,255,0.3) 50%,
-      transparent 100%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
+
+  .besmele-banner::after {
+    right: 1rem;
   }
-  
+
+  /* Ornamental Divider */
+  .ornament-divider {
+    @apply flex items-center justify-center gap-3 my-2;
+  }
+
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right,
+        transparent,
+        hsl(var(--primary) / 0.3),
+        transparent);
+  }
+
+  /* Audio Wave Animation */
+  @keyframes audioWave {
+
+    0%,
+    100% {
+      transform: scaleY(0.5);
+    }
+
+    50% {
+      transform: scaleY(1);
+    }
+  }
+
+  .audio-wave {
+    @apply flex items-center gap-0.5 h-4;
+  }
+
+  .audio-wave span {
+    @apply w-0.5 bg-primary rounded-full;
+    animation: audioWave 0.8s ease-in-out infinite;
+  }
+
+  .audio-wave span:nth-child(1) {
+    height: 40%;
+    animation-delay: 0s;
+  }
+
+  .audio-wave span:nth-child(2) {
+    height: 80%;
+    animation-delay: 0.1s;
+  }
+
+  .audio-wave span:nth-child(3) {
+    height: 60%;
+    animation-delay: 0.2s;
+  }
+
+  .audio-wave span:nth-child(4) {
+    height: 100%;
+    animation-delay: 0.3s;
+  }
+
+  .audio-wave span:nth-child(5) {
+    height: 60%;
+    animation-delay: 0.4s;
+  }
+
+  .audio-wave span:nth-child(6) {
+    height: 80%;
+    animation-delay: 0.5s;
+  }
+
+  .audio-wave span:nth-child(7) {
+    height: 40%;
+    animation-delay: 0.6s;
+  }
+
+  /* Pulse Glow for Playing State */
+  @keyframes pulseGlow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.4);
+    }
+
+    50% {
+      box-shadow: 0 0 20px 5px hsl(var(--primary) / 0.2);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* Bookmark Star Burst */
+  @keyframes starBurst {
+    0% {
+      transform: scale(0) rotate(0deg);
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1.5) rotate(180deg);
+      opacity: 0;
+    }
+  }
+
+  .star-burst {
+    animation: starBurst 0.5s ease-out forwards;
+  }
+
   /* Fade in animation */
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(15px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-  
+
   .animate-fade-in {
-    animation: fadeInUp 0.3s ease-out forwards;
+    animation: fadeInUp 0.4s ease-out forwards;
   }
-  
-  /* Responsive text */
-  .text-responsive {
-    @apply text-sm sm:text-base lg:text-lg;
+
+  /* Scale in animation */
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
-  
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  /* Slide in from right */
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideInRight 0.3s ease-out forwards;
+  }
+
+  /* Shimmer animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Floating animation */
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
   /* Mobile padding */
   .px-safe {
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
+
+  /* Ayah Number Islamic Style */
+  .ayah-number {
+    @apply relative inline-flex items-center justify-center;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .ayah-number::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid hsl(var(--primary));
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+
+  .ayah-number::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid hsl(var(--primary) / 0.5);
+    border-radius: 50%;
+  }
 }
 
-/* Arabic Font Improvements */
+/* Arabic Font - Amiri Quran */
 .font-arabic {
-  font-family: 'Amiri', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
-  letter-spacing: 0.02em;
+  font-family: 'Amiri Quran', 'Amiri', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+  letter-spacing: 0.03em;
+  line-height: 2.2;
+}
+
+/* Arabic text enhancements */
+.arabic-text {
+  font-family: 'Amiri Quran', 'Amiri', serif;
+  font-size: inherit;
+  direction: rtl;
+  text-align: right;
 }
 
 /* Number font for ayah numbers */
@@ -221,8 +451,8 @@
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -230,21 +460,26 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 3px;
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
+  background: hsl(var(--primary) / 0.5);
 }
 
-/* Focus styles for accessibility */
+/* Focus styles */
 :focus-visible {
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
 
-/* Disable focus outline on mouse click */
 :focus:not(:focus-visible) {
   outline: none;
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
 }

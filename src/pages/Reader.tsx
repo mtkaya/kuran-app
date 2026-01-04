@@ -126,11 +126,37 @@ export default function Reader() {
 
             {/* Content */}
             <div className="max-w-2xl mx-auto p-4">
-                {surah.ayahs.map(ayah => (
+                {/* Besmele Banner (not for Surah 9 - Tawbah) */}
+                {surah.id !== 9 && (
+                    <div className="besmele-banner rounded-2xl mb-6 animate-fade-in">
+                        <p className="font-arabic text-2xl sm:text-3xl text-primary" dir="rtl">
+                            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                            Rahman ve Rahim olan Allah'ın adıyla
+                        </p>
+                    </div>
+                )}
+
+                {/* Surah Info Card */}
+                <div className="glass rounded-2xl p-4 mb-6 text-center animate-fade-in" style={{ animationDelay: '100ms' }}>
+                    <div className="flex items-center justify-center gap-3 mb-2">
+                        <span className="w-8 h-0.5 bg-gradient-to-r from-transparent to-primary/50"></span>
+                        <span className="font-arabic text-xl text-primary">{surah.name_arabic}</span>
+                        <span className="w-8 h-0.5 bg-gradient-to-l from-transparent to-primary/50"></span>
+                    </div>
+                    <h2 className="font-semibold text-lg">{surah.name_turkish}</h2>
+                    <p className="text-sm text-muted-foreground">{surah.verse_count} ayet</p>
+                </div>
+
+                {/* Ayahs with Ornamental Dividers */}
+                {surah.ayahs.map((ayah, index) => (
                     <div
                         key={ayah.id}
                         data-ayah-id={ayah.id}
                         data-ayah-number={ayah.ayah_number}
+                        className="animate-fade-in"
+                        style={{ animationDelay: `${Math.min(index * 50, 500)}ms` }}
                     >
                         <AyahView
                             ayah={ayah}
@@ -138,8 +164,29 @@ export default function Reader() {
                             totalAyahs={surah.verse_count}
                             onCopy={showToast}
                         />
+                        {/* Ornamental Divider (not after last ayah) */}
+                        {index < surah.ayahs.length - 1 && (
+                            <div className="ornament-divider py-2">
+                                <span className="text-primary/30">✦</span>
+                            </div>
+                        )}
                     </div>
                 ))}
+
+                {/* End of Surah Decoration */}
+                <div className="text-center py-8 mt-4">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <span className="w-16 h-0.5 bg-gradient-to-r from-transparent to-primary/30"></span>
+                        <span className="text-2xl">☪</span>
+                        <span className="w-16 h-0.5 bg-gradient-to-l from-transparent to-primary/30"></span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                        صَدَقَ اللَّهُ الْعَظِيمُ
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                        Yüce Allah doğru söyledi
+                    </p>
+                </div>
             </div>
 
             {/* Settings Panel */}

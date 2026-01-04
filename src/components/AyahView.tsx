@@ -17,10 +17,13 @@ interface AyahViewProps {
 
 export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy }) => {
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
-    const { arabicFontSize, mealFontSize, showTransliteration } = useSettingsStore();
+    const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
+
+    // Memorization mode - track if this ayah is revealed
+    const [revealed, setRevealed] = React.useState(false);
 
     const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
 
@@ -76,24 +79,34 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                 }`}
         >
             {/* Arabic Text (Right Aligned) */}
-            <div className="text-right mb-4">
+            <div
+                className={`text-right mb-4 ${memorizationMode && !revealed ? 'cursor-pointer' : ''}`}
+                onClick={() => memorizationMode && !revealed && setRevealed(true)}
+            >
                 <p
-                    className="font-arabic leading-loose font-medium"
+                    className={`font-arabic leading-loose font-medium transition-all duration-300 ${memorizationMode && !revealed ? 'blur-md select-none' : ''
+                        }`}
                     dir="rtl"
                     style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2' }}
                 >
                     {ayah.text_arabic}
-                    <span className="inline-flex items-center justify-center w-8 h-8 mr-2 text-sm border border-primary rounded-full text-primary number-font">
+                    <span className="inline-flex items-center justify-center w-8 h-8 mr-2 text-sm border border-primary rounded-full text-primary number-font blur-none">
                         {ayah.ayah_number}
                     </span>
                 </p>
+                {memorizationMode && !revealed && (
+                    <p className="text-xs text-muted-foreground mt-1 text-center">
+                        {ui.tapToReveal}
+                    </p>
+                )}
             </div>
 
             {/* Transliteration (if enabled) */}
             {transliteration && (
                 <div className="mb-4 py-2 px-3 bg-secondary/30 rounded-lg border-l-2 border-primary/50">
                     <p
-                        className="text-muted-foreground italic"
+                        className={`text-muted-foreground italic transition-all duration-300 ${memorizationMode && !revealed ? 'blur-md select-none' : ''
+                            }`}
                         style={{ fontSize: `${mealFontSize - 2}px` }}
                     >
                         {transliteration}
@@ -104,7 +117,8 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
             {/* Meal (Left Aligned) */}
             <div className="space-y-2">
                 <p
-                    className="text-foreground/90 leading-relaxed font-sans"
+                    className={`text-foreground/90 leading-relaxed font-sans transition-all duration-300 ${memorizationMode && !revealed ? 'blur-md select-none' : ''
+                        }`}
                     style={{ fontSize: `${mealFontSize}px` }}
                 >
                     {ayah.text_meal}

@@ -23,6 +23,7 @@ export interface UserSettings {
     mealFontSize: number;    // 14-28
     showTransliteration: boolean;
     showTajweed: boolean;
+    memorizationMode: boolean;
 }
 
 export interface StorageSchema {
@@ -38,6 +39,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     mealFontSize: 18,
     showTransliteration: false,
     showTajweed: false,
+    memorizationMode: false,
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

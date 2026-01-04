@@ -51,6 +51,10 @@ interface UIStrings {
     tajweed: string;
     showTajweed: string;
     tajweedColors: string;
+    // Milestone 6 strings - Memorization
+    memorizationMode: string;
+    tapToReveal: string;
+    hideText: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -100,6 +104,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: 'Tecvid',
         showTajweed: 'Tecvid Renklerini Göster',
         tajweedColors: 'Tecvid Renkleri',
+        memorizationMode: 'Ezber Modu',
+        tapToReveal: 'Görmek için dokun',
+        hideText: 'Metni Gizle',
     },
     en: {
         appTitle: 'Quran App',
@@ -147,6 +154,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: 'Tajweed',
         showTajweed: 'Show Tajweed Colors',
         tajweedColors: 'Tajweed Colors',
+        memorizationMode: 'Memorization Mode',
+        tapToReveal: 'Tap to reveal',
+        hideText: 'Hide Text',
     },
     de: {
         appTitle: 'Koran App',
@@ -194,6 +204,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: 'Tagweed',
         showTajweed: 'Tagweed-Farben anzeigen',
         tajweedColors: 'Tagweed-Farben',
+        memorizationMode: 'Memoriermodus',
+        tapToReveal: 'Tippen zum Anzeigen',
+        hideText: 'Text verbergen',
     },
     fr: {
         appTitle: 'Coran App',
@@ -241,6 +254,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: 'Tajwid',
         showTajweed: 'Afficher les couleurs du Tajwid',
         tajweedColors: 'Couleurs du Tajwid',
+        memorizationMode: 'Mode mémorisation',
+        tapToReveal: 'Appuyez pour révéler',
+        hideText: 'Masquer le texte',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -288,6 +304,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: '诵读规则',
         showTajweed: '显示诵读颜色',
         tajweedColors: '诵读颜色',
+        memorizationMode: '背诵模式',
+        tapToReveal: '点击显示',
+        hideText: '隐藏文本',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -335,6 +354,9 @@ const translations: Record<LanguageCode, UIStrings> = {
         tajweed: 'التجويد',
         showTajweed: 'إظهار ألوان التجويد',
         tajweedColors: 'ألوان التجويد',
+        memorizationMode: 'وضع الحفظ',
+        tapToReveal: 'انقر للكشف',
+        hideText: 'إخفاء النص',
     },
 };
 

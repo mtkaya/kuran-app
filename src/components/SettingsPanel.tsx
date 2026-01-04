@@ -1,6 +1,6 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2, Type, Palette } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type, Palette, Brain } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
@@ -18,7 +18,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
         arabicFontSize, setArabicFontSize,
         mealFontSize, setMealFontSize,
         showTransliteration, setShowTransliteration,
-        showTajweed, setShowTajweed
+        showTajweed, setShowTajweed,
+        memorizationMode, setMemorizationMode
     } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
     const { currentLanguage } = useLanguage();
@@ -115,6 +116,31 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     {showTajweed && (
                         <p className="text-xs text-muted-foreground mt-2">
                             🔴 Ghunnah &nbsp; 🟢 Ikhfa &nbsp; 🔵 Qalqalah
+                        </p>
+                    )}
+                </div>
+
+                {/* Memorization Mode Toggle */}
+                <div className="mb-6">
+                    <label className="flex items-center justify-between cursor-pointer">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Brain className="w-4 h-4" />
+                            {ui.memorizationMode}
+                        </span>
+                        <button
+                            onClick={() => setMemorizationMode(!memorizationMode)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${memorizationMode ? 'bg-primary' : 'bg-secondary'
+                                }`}
+                        >
+                            <span
+                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${memorizationMode ? 'translate-x-6' : ''
+                                    }`}
+                            />
+                        </button>
+                    </label>
+                    {memorizationMode && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                            {ui.tapToReveal}
                         </p>
                     )}
                 </div>

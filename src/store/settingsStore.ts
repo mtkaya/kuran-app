@@ -9,6 +9,7 @@ interface SettingsState extends UserSettings {
     setMealFontSize: (size: number) => void;
     setShowTransliteration: (show: boolean) => void;
     setShowTajweed: (show: boolean) => void;
+    setMemorizationMode: (mode: boolean) => void;
     hydrate: () => void;
 }
 
@@ -39,6 +40,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setShowTajweed: (showTajweed) => {
         set({ showTajweed });
         saveSettings({ ...get(), showTajweed });
+    },
+
+    setMemorizationMode: (memorizationMode) => {
+        set({ memorizationMode });
+        saveSettings({ ...get(), memorizationMode });
     },
 
     hydrate: () => {

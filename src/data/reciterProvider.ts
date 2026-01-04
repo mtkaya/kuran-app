@@ -1,71 +1,73 @@
 // Reciter Provider - Audio URL generation and reciter manifest
-// Using Al Quran Cloud CDN: https://cdn.islamic.network/quran/audio/
+// Using EveryAyah.com CDN (CORS-friendly)
 
 export interface Reciter {
     id: string;
     name: string;
     arabicName: string;
-    identifier: string;
+    identifier: string; // EveryAyah folder name
     style?: string;
 }
 
+// EveryAyah.com reciters - these have CORS enabled
 export const RECITERS: Reciter[] = [
     {
         id: 'alafasy',
         name: 'Mishary Al-Afasy',
         arabicName: 'مشاري العفاسي',
-        identifier: 'ar.alafasy',
+        identifier: 'Alafasy_128kbps',
         style: 'Murattal',
     },
     {
         id: 'abdulbasit-murattal',
         name: 'Abdul Basit (Murattal)',
         arabicName: 'عبد الباسط عبد الصمد',
-        identifier: 'ar.abdulbasitmurattal',
+        identifier: 'Abdul_Basit_Murattal_192kbps',
         style: 'Murattal',
     },
     {
         id: 'husary',
         name: 'Mahmoud Khalil Al-Husary',
         arabicName: 'محمود خليل الحصري',
-        identifier: 'ar.husary',
+        identifier: 'Husary_128kbps',
         style: 'Murattal',
     },
     {
-        id: 'shatri',
-        name: 'Abu Bakr Al-Shatri',
-        arabicName: 'أبو بكر الشاطري',
-        identifier: 'ar.shatri',
+        id: 'sudais',
+        name: 'Abdur-Rahman As-Sudais',
+        arabicName: 'عبدالرحمن السديس',
+        identifier: 'Abdurrahmaan_As-Sudais_192kbps',
         style: 'Murattal',
     },
     {
-        id: 'mahermuaiqly',
-        name: 'Maher Al-Muaiqly',
-        arabicName: 'ماهر المعيقلي',
-        identifier: 'ar.mahermuaiqly',
-        style: 'Murattal',
-    },
-    {
-        id: 'minshawi-murattal',
+        id: 'minshawi',
         name: 'Mohamed Siddiq Al-Minshawi',
         arabicName: 'محمد صديق المنشاوي',
-        identifier: 'ar.minshawi',
+        identifier: 'Minshawy_Murattal_128kbps',
+        style: 'Murattal',
+    },
+    {
+        id: 'ghamadi',
+        name: 'Saad Al-Ghamdi',
+        arabicName: 'سعد الغامدي',
+        identifier: 'Ghamadi_40kbps',
         style: 'Murattal',
     },
 ];
 
-const CDN_BASE = 'https://cdn.islamic.network/quran/audio';
-const BITRATE = '128'; // Options: 64, 128, 192
+const CDN_BASE = 'https://everyayah.com/data';
 
 /**
  * Get audio URL for a specific ayah
- * @param reciterId - Reciter identifier (e.g., 'ar.alafasy')
+ * @param reciterFolder - Reciter folder name on EveryAyah
  * @param surahNumber - Surah number (1-114)
  * @param ayahNumber - Ayah number within the surah
  * @returns Audio URL string
+ * 
+ * Format: https://everyayah.com/data/[reciter]/SSSAAA.mp3
  */
 export function getAudioUrl(
-    reciterId: string,
+    reciterFolder: string,
     surahNumber: number,
     ayahNumber: number
 ): string {
@@ -73,7 +75,7 @@ export function getAudioUrl(
     const surahPadded = String(surahNumber).padStart(3, '0');
     const ayahPadded = String(ayahNumber).padStart(3, '0');
 
-    return `${CDN_BASE}/${BITRATE}/${reciterId}/${surahPadded}${ayahPadded}.mp3`;
+    return `${CDN_BASE}/${reciterFolder}/${surahPadded}${ayahPadded}.mp3`;
 }
 
 /**
@@ -84,7 +86,7 @@ export function getReciterById(id: string): Reciter | undefined {
 }
 
 /**
- * Get reciter by identifier
+ * Get reciter by identifier (folder name)
  */
 export function getReciterByIdentifier(identifier: string): Reciter | undefined {
     return RECITERS.find(r => r.identifier === identifier);

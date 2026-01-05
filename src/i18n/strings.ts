@@ -53,6 +53,7 @@ interface UIStrings {
     tajweedColors: string;
     // Milestone 6 strings - Memorization
     memorizationMode: string;
+    mushafMode: string;
     tapToReveal: string;
     hideText: string;
 }
@@ -105,6 +106,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: 'Tecvid Renklerini Göster',
         tajweedColors: 'Tecvid Renkleri',
         memorizationMode: 'Ezber Modu',
+        mushafMode: 'Mushaf Modu',
         tapToReveal: 'Görmek için dokun',
         hideText: 'Metni Gizle',
     },
@@ -155,6 +157,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: 'Show Tajweed Colors',
         tajweedColors: 'Tajweed Colors',
         memorizationMode: 'Memorization Mode',
+        mushafMode: 'Mushaf Mode',
         tapToReveal: 'Tap to reveal',
         hideText: 'Hide Text',
     },
@@ -205,6 +208,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: 'Tagweed-Farben anzeigen',
         tajweedColors: 'Tagweed-Farben',
         memorizationMode: 'Memoriermodus',
+        mushafMode: 'Mushaf-Modus',
         tapToReveal: 'Tippen zum Anzeigen',
         hideText: 'Text verbergen',
     },
@@ -255,6 +259,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: 'Afficher les couleurs du Tajwid',
         tajweedColors: 'Couleurs du Tajwid',
         memorizationMode: 'Mode mémorisation',
+        mushafMode: 'Mode Mushaf',
         tapToReveal: 'Appuyez pour révéler',
         hideText: 'Masquer le texte',
     },
@@ -305,6 +310,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: '显示诵读颜色',
         tajweedColors: '诵读颜色',
         memorizationMode: '背诵模式',
+        mushafMode: 'Mushaf 模式',
         tapToReveal: '点击显示',
         hideText: '隐藏文本',
     },
@@ -355,6 +361,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         showTajweed: 'إظهار ألوان التجويد',
         tajweedColors: 'ألوان التجويد',
         memorizationMode: 'وضع الحفظ',
+        mushafMode: 'وضع المصحف',
         tapToReveal: 'انقر للكشف',
         hideText: 'إخفاء النص',
     },

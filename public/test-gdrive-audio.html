@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive Audio Test - Davut Kaya</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0d4a2a 0%, #0a3d23 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .reciter-name {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .surah-name {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        audio {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .status.loading {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .note {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎧 Google Drive Audio Test</h1>
+
+    <div class="test-card">
+        <div class="reciter-name">🇹🇷 Davut Kaya</div>
+        <div class="surah-name">001 - Fatiha Suresi</div>
+
+        <audio id="audioPlayer" controls preload="metadata">
+            <source
+                src="https://drive.usercontent.google.com/download?id=1eTJ-i0SSYKf1X3dUI4ZV3oRT4y5mVuEU&export=download"
+                type="audio/mpeg">
+            Tarayıcınız audio desteklemiyor.
+        </audio>
+
+        <div id="status" class="status loading">⏳ Yükleniyor...</div>
+    </div>
+
+    <div class="note">
+        Bu sayfa Google Drive'dan doğrudan ses çalabilir mi test ediyor.<br>
+        Eğer CORS hatası alırsanız, dosyaların "Bağlantıyla herkes görüntüleyebilir" olduğundan emin olun.
+    </div>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const status = document.getElementById('status');
+
+        audio.addEventListener('loadedmetadata', () => {
+            status.className = 'status success';
+            status.textContent = '✅ Başarılı! Süre: ' + Math.round(audio.duration) + ' saniye';
+        });
+
+        audio.addEventListener('error', (e) => {
+            status.className = 'status error';
+            status.textContent = '❌ Hata: ' + (audio.error?.message || 'Ses yüklenemedi. CORS veya erişim sorunu olabilir.');
+        });
+
+        audio.addEventListener('playing', () => {
+            status.className = 'status success';
+            status.textContent = '🎵 Çalıyor...';
+        });
+    </script>
+</body>
+
+</html>

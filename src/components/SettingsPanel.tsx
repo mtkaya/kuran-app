@@ -1,6 +1,6 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2, Type, Palette, Brain } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type, Palette, Brain, BookOpen } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
@@ -19,7 +19,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
         mealFontSize, setMealFontSize,
         showTransliteration, setShowTransliteration,
         showTajweed, setShowTajweed,
-        memorizationMode, setMemorizationMode
+        memorizationMode, setMemorizationMode,
+        mushafMode, setMushafMode
     } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
     const { currentLanguage } = useLanguage();
@@ -118,6 +119,23 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                             🔴 Ghunnah &nbsp; 🟢 Ikhfa &nbsp; 🔵 Qalqalah
                         </p>
                     )}
+                </div>
+                {/* Mushaf Mode Toggle */}
+                <div className="mb-6">
+                    <label className="flex items-center justify-between cursor-pointer">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <BookOpen className="w-4 h-4" />
+                            {ui.mushafMode}
+                        </span>
+                        <button
+                            onClick={() => setMushafMode(!mushafMode)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${mushafMode ? 'bg-primary' : 'bg-secondary'}`}
+                        >
+                            <span
+                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${mushafMode ? 'translate-x-6' : ''}`}
+                            />
+                        </button>
+                    </label>
                 </div>
 
                 {/* Memorization Mode Toggle */}

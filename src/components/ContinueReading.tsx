@@ -18,8 +18,9 @@ export const ContinueReading: React.FC = () => {
     return (
         <Link
             to={`/surah/${lastRead.surahId}#ayah-${lastRead.ayahId}`}
-            className="block p-4 bg-primary/5 border border-primary/20 rounded-xl hover:bg-primary/10 transition-colors"
+            className="block p-4 bg-card/95 backdrop-blur-sm border border-border shadow-lg rounded-xl hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden group"
         >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -35,7 +36,7 @@ export const ContinueReading: React.FC = () => {
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
             </div>
-        </Link>
+        </Link >
     );
 };
 

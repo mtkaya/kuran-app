@@ -1,7 +1,8 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { getQuranData } from './data/quran'
-import { Search as SearchIcon } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText } from 'lucide-react'
+import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect } from 'react'
 import Reader from './pages/Reader'
 import Search from './pages/Search'
@@ -18,6 +19,8 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('')
     const { currentLanguage } = useLanguage()
     const [isHydrated, setIsHydrated] = useState(false)
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+    const { mushafMode, setMushafMode } = useSettingsStore()
 
     // Hydrate all stores on mount
     useEffect(() => {
@@ -62,6 +65,13 @@ function App() {
                                         <p className="text-white/70 text-sm">{ui.appSubtitle}</p>
                                     </div>
                                     <div className="flex items-center gap-1 sm:gap-2">
+                                        <button
+                                            onClick={() => setIsSettingsOpen(true)}
+                                            className="p-2 hover:bg-white/10 rounded-full text-white/90 transition-colors"
+                                            aria-label={ui.settings}
+                                        >
+                                            <Settings className="w-5 h-5" />
+                                        </button>
                                         <ThemeToggle />
                                         <LanguageSelector />
                                     </div>
@@ -74,6 +84,30 @@ function App() {
                             {/* Continue Reading Card */}
                             <div className="transform -translate-y-4">
                                 <ContinueReading />
+                            </div>
+
+                            {/* Mode Selection Toggles */}
+                            <div className="grid grid-cols-2 gap-3 mb-6">
+                                <button
+                                    onClick={() => setMushafMode(false)}
+                                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200 ${!mushafMode
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                        : 'bg-card text-muted-foreground border-border hover:border-primary/50'
+                                        }`}
+                                >
+                                    <ScrollText className="w-4 h-4" />
+                                    <span className="font-medium text-sm">Normal</span>
+                                </button>
+                                <button
+                                    onClick={() => setMushafMode(true)}
+                                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200 ${mushafMode
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                        : 'bg-card text-muted-foreground border-border hover:border-primary/50'
+                                        }`}
+                                >
+                                    <BookOpen className="w-4 h-4" />
+                                    <span className="font-medium text-sm">Mushaf</span>
+                                </button>
                             </div>
 
                             {/* Search Bar - Enhanced */}
@@ -131,6 +165,11 @@ function App() {
                 <Route path="/surah/:id" element={<Reader />} />
                 <Route path="/search" element={<Search />} />
             </Routes>
+
+            <SettingsPanel
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+            />
         </div>
     )
 }

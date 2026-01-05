@@ -24,6 +24,7 @@ export interface UserSettings {
     showTransliteration: boolean;
     showTajweed: boolean;
     memorizationMode: boolean;
+    mushafMode: boolean; // new toggle to show Mushaf page view
 }
 
 export interface StorageSchema {
@@ -40,6 +41,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     showTransliteration: false,
     showTajweed: false,
     memorizationMode: false,
+    mushafMode: false,
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

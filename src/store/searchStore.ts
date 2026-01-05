@@ -42,22 +42,34 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     search: (language) => {
         const { query, filter } = get();
 
+        // Cancel any pending search if possible? 
+        // In a real app we might use an AbortController or a ref to the current search ID.
+        // For now, simpler implementation:
+
         if (!query.trim() || query.length < 2) {
             set({ results: [], isSearching: false });
             return;
         }
 
-        set({ isSearching: true });
+        set({ isSearching: true, results: [] });
 
-        // Perform search asynchronously to not block UI
-        setTimeout(() => {
-            const quranData = getQuranData(language);
-            const results: SearchResult[] = [];
+        const quranData = getQuranData(language);
+        const results: SearchResult[] = [];
+        let surahIndex = 0;
 
-            for (const surah of quranData) {
+        // Time-slicing search
+        const processBatch = () => {
+            // Check if search was cancelled or query changed (basic check)
+            if (get().query !== query) return;
+
+            const startTime = performance.now();
+
+            // Process for up to 12ms to maintain 60fps
+            while (surahIndex < quranData.length && performance.now() - startTime < 12) {
+                const surah = quranData[surahIndex];
+
                 // Search in surah name
                 if (matchesQuery(surah.name_turkish, query) || matchesQuery(surah.name_arabic, query)) {
-                    // Add first ayah of matching surah
                     if (surah.ayahs.length > 0) {
                         results.push({
                             surah,
@@ -68,7 +80,17 @@ export const useSearchStore = create<SearchState>((set, get) => ({
                 }
 
                 // Search in ayahs
+                // Inner loop optimization: also break if time budget exceeded?
+                // Surahs can be large (Bakara 286 ayahs).
+                // Ideally we should process fewer ayahs if needed. 
+                // But processing one surah at a time is usually okay unless it's very large.
+                // Improve: loop ayahs manually?
+                // For simplicity, we process one Surah fully. 
+
                 for (const ayah of surah.ayahs) {
+                    // Check limiting
+                    if (results.length >= 50) break;
+
                     // Check Arabic
                     if ((filter === 'all' || filter === 'arabic') && matchesQuery(ayah.text_arabic, query)) {
                         results.push({
@@ -89,12 +111,20 @@ export const useSearchStore = create<SearchState>((set, get) => ({
                     }
                 }
 
-                // Limit results for performance
                 if (results.length >= 50) break;
+                surahIndex++;
             }
 
-            set({ results, isSearching: false });
-        }, 0);
+            if (results.length >= 50 || surahIndex >= quranData.length) {
+                set({ results, isSearching: false });
+            } else {
+                // Continue in next frame
+                setTimeout(processBatch, 0);
+            }
+        };
+
+        // Start processing
+        setTimeout(processBatch, 0);
     },
 
     clearSearch: () => {

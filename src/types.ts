@@ -6,6 +6,7 @@ export interface Ayah {
     text_meal: string;
     notes?: string;
     related_ayahs?: number[];
+    page?: number;
 }
 
 export interface Surah {

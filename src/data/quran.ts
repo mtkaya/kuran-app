@@ -20,6 +20,7 @@ interface RawApiData {
                 number: number;
                 numberInSurah: number;
                 text: string;
+                page: number;
             }[];
         }[];
     };
@@ -81,6 +82,7 @@ export function getQuranData(lang: LanguageCode): Surah[] {
                     ayah_number: ayah.numberInSurah,
                     text_arabic: ayah.text,
                     text_meal: lang === 'ar' ? ayah.text : translationAyah.text,
+                    page: ayah.page,
                 };
             }),
         };

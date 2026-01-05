@@ -10,6 +10,7 @@ interface SettingsState extends UserSettings {
     setShowTransliteration: (show: boolean) => void;
     setShowTajweed: (show: boolean) => void;
     setMemorizationMode: (mode: boolean) => void;
+    setMushafMode: (mode: boolean) => void;
     hydrate: () => void;
 }
 
@@ -45,6 +46,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setMemorizationMode: (memorizationMode) => {
         set({ memorizationMode });
         saveSettings({ ...get(), memorizationMode });
+    },
+    setMushafMode: (mushafMode) => {
+        set({ mushafMode });
+        saveSettings({ ...get(), mushafMode });
     },
 
     hydrate: () => {

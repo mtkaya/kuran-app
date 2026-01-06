@@ -6,12 +6,44 @@ import { getUIStrings } from '../i18n/strings';
 
 interface SurahCardProps {
     surah: Surah;
+    variant?: 'list' | 'grid';
 }
 
-export const SurahCard: React.FC<SurahCardProps> = ({ surah }) => {
+export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' }) => {
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
 
+    // Grid/Compact variant
+    if (variant === 'grid') {
+        return (
+            <Link
+                to={`/surah/${surah.id}`}
+                className="flex flex-col items-center p-3 bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
+            >
+                {/* Surah Number */}
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-sm border border-primary/10 mb-2">
+                    {surah.id}
+                </div>
+
+                {/* Surah Name */}
+                <h3 className="font-semibold text-xs text-foreground text-center truncate w-full">
+                    {surah.name_turkish}
+                </h3>
+
+                {/* Arabic Name */}
+                <span className="font-arabic text-sm text-muted-foreground mt-1">
+                    {surah.name_arabic}
+                </span>
+
+                {/* Verse Count */}
+                <span className="text-[10px] text-muted-foreground mt-1">
+                    {surah.verse_count} {ui.verses}
+                </span>
+            </Link>
+        );
+    }
+
+    // List variant (default)
     return (
         <Link
             to={`/surah/${surah.id}`}
@@ -46,3 +78,4 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah }) => {
         </Link>
     );
 };
+

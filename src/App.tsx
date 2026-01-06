@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { getQuranData } from './data/quran'
-import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3 } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect } from 'react'
 import Reader from './pages/Reader'
@@ -22,6 +22,7 @@ function App() {
     const [isHydrated, setIsHydrated] = useState(false)
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
     const { mushafMode, setMushafMode } = useSettingsStore()
+    const [surahViewMode, setSurahViewMode] = useState<'list' | 'grid'>('list')
 
     // Hydrate all stores on mount
     useEffect(() => {
@@ -145,27 +146,54 @@ function App() {
                                 />
                             </div>
 
-                            {/* Section Title */}
-                            <div className="flex items-center gap-2 pt-2">
-                                <div className="w-1 h-5 bg-primary rounded-full"></div>
-                                <h2 className="font-semibold text-foreground">Sureler</h2>
-                                <span className="text-xs text-muted-foreground">({filteredSurahs.length})</span>
+                            {/* Section Title with View Toggle */}
+                            <div className="flex items-center justify-between pt-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-1 h-5 bg-primary rounded-full"></div>
+                                    <h2 className="font-semibold text-foreground">Sureler</h2>
+                                    <span className="text-xs text-muted-foreground">({filteredSurahs.length})</span>
+                                </div>
+
+                                {/* View Toggle Buttons */}
+                                <div className="flex gap-1 bg-secondary/50 p-1 rounded-lg">
+                                    <button
+                                        onClick={() => setSurahViewMode('list')}
+                                        className={`p-1.5 rounded-md transition-all ${surahViewMode === 'list'
+                                            ? 'bg-primary text-primary-foreground shadow-sm'
+                                            : 'text-muted-foreground hover:text-foreground'}`}
+                                        aria-label="Liste Görünümü"
+                                    >
+                                        <List className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={() => setSurahViewMode('grid')}
+                                        className={`p-1.5 rounded-md transition-all ${surahViewMode === 'grid'
+                                            ? 'bg-primary text-primary-foreground shadow-sm'
+                                            : 'text-muted-foreground hover:text-foreground'}`}
+                                        aria-label="Izgara Görünümü"
+                                    >
+                                        <Grid3X3 className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
 
-                            {/* Surah List - Enhanced */}
-                            <div className="space-y-2">
+                            {/* Surah List - List or Grid View */}
+                            <div className={surahViewMode === 'grid'
+                                ? 'grid grid-cols-4 sm:grid-cols-5 gap-2'
+                                : 'space-y-2'
+                            }>
                                 {filteredSurahs.map((surah, index) => (
                                     <div
                                         key={surah.id}
                                         className="animate-fade-in"
-                                        style={{ animationDelay: `${Math.min(index * 30, 300)}ms` }}
+                                        style={{ animationDelay: `${Math.min(index * 15, 200)}ms` }}
                                     >
-                                        <SurahCard surah={surah} />
+                                        <SurahCard surah={surah} variant={surahViewMode} />
                                     </div>
                                 ))}
 
                                 {filteredSurahs.length === 0 && (
-                                    <div className="text-center py-12 text-muted-foreground">
+                                    <div className={`text-center py-12 text-muted-foreground ${surahViewMode === 'grid' ? 'col-span-full' : ''}`}>
                                         <SearchIcon className="w-12 h-12 mx-auto mb-4 opacity-30" />
                                         <p>{ui.notFound}</p>
                                     </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { ChevronLeft, ChevronRight, Loader2, ChevronDown } from 'lucide-react';
 import { fetchMushafPage, preloadAdjacentPages, MushafPageData, MushafLine } from '../data/mushafPageData';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
@@ -19,15 +19,48 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
     const [error, setError] = useState<string | null>(null);
 
     const { arabicFont, arabicFontSize } = useSettingsStore();
-    const { currentAyahId } = useAudioStore();
+    const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const onPageChangeRef = useRef(onPageChange);
+    const activeLineRef = useRef<HTMLDivElement>(null);
 
     // Keep ref updated
     useEffect(() => {
         onPageChangeRef.current = onPageChange;
     }, [onPageChange]);
+
+    // Current playing verse key (e.g., "1:5")
+    const currentVerseKey = useMemo(() => {
+        if (currentSurahId && currentAyahNumber) {
+            return `${currentSurahId}:${currentAyahNumber}`;
+        }
+        return null;
+    }, [currentSurahId, currentAyahNumber]);
+
+    // Find line containing current verse
+    const activeLineNumber = useMemo(() => {
+        if (!pageData || !currentVerseKey) return null;
+
+        for (const line of pageData.lines) {
+            for (const word of line.words) {
+                if (word.verseKey === currentVerseKey) {
+                    return line.lineNumber;
+                }
+            }
+        }
+        return null;
+    }, [pageData, currentVerseKey]);
+
+    // Scroll to active line when it changes
+    useEffect(() => {
+        if (activeLineRef.current && isPlaying) {
+            activeLineRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    }, [activeLineNumber, isPlaying]);
 
     // Fetch page data - only depends on currentPage
     useEffect(() => {
@@ -97,12 +130,22 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
         if (distance < -minSwipeDistance) goToPrevPage();
     };
 
+    // Check if a line contains the current playing verse
+    const isLineActive = (line: MushafLine) => {
+        if (!currentVerseKey) return false;
+        return line.words.some(word => word.verseKey === currentVerseKey);
+    };
+
     // Render a single line
     const renderLine = (line: MushafLine) => {
+        const isActive = isPlaying && isLineActive(line);
+
         return (
             <div
                 key={line.lineNumber}
-                className="mushaf-line flex justify-center items-baseline px-2 py-1"
+                ref={isActive ? activeLineRef : null}
+                className={`mushaf-line relative flex justify-center items-baseline px-2 py-1 transition-all duration-300 ${isActive ? 'bg-primary/10 rounded-lg' : ''
+                    }`}
                 style={{
                     fontFamily: arabicFont,
                     fontSize: `${arabicFontSize}px`,
@@ -110,6 +153,13 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                 }}
                 dir="rtl"
             >
+                {/* Tracking Arrow */}
+                {isActive && (
+                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 animate-pulse">
+                        <ChevronDown className="w-6 h-6 text-primary/50 rotate-[-90deg]" />
+                    </div>
+                )}
+
                 {line.words.map((word, idx) => (
                     <span
                         key={word.id || idx}

@@ -1,11 +1,12 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { getQuranData } from './data/quran'
-import { Search as SearchIcon, Settings, BookOpen, ScrollText } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect } from 'react'
 import Reader from './pages/Reader'
 import Search from './pages/Search'
+import { Notes } from './pages/Notes'
 import { LanguageSelector } from './components/LanguageSelector'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
@@ -110,6 +111,17 @@ function App() {
                                 </button>
                             </div>
 
+                            {/* Notes Link */}
+                            <Link
+                                to="/notes"
+                                className="flex items-center gap-3 w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-primary/50 transition-all duration-300"
+                            >
+                                <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center">
+                                    <FileText className="w-5 h-5 text-amber-500" />
+                                </div>
+                                <span className="font-medium">Notlarım</span>
+                            </Link>
+
                             {/* Search Bar - Enhanced */}
                             <Link
                                 to="/search"
@@ -164,6 +176,7 @@ function App() {
                 } />
                 <Route path="/surah/:id" element={<Reader />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="/notes" element={<Notes />} />
             </Routes>
 
             <SettingsPanel

@@ -1,5 +1,5 @@
 // Storage Types for Kuran App
-// Version: 1
+// Version: 2
 
 export interface Bookmark {
     surahId: number;
@@ -17,6 +17,17 @@ export interface ReadingPosition {
     timestamp?: number;
 }
 
+export interface Note {
+    id: string;
+    surahId: number;
+    ayahId: number;
+    ayahNumber: number;
+    surahName: string;
+    content: string;
+    createdAt: number;
+    updatedAt: number;
+}
+
 export interface UserSettings {
     theme: 'light' | 'dark' | 'system';
     arabicFontSize: number;  // 20-48
@@ -24,7 +35,7 @@ export interface UserSettings {
     showTransliteration: boolean;
     showTajweed: boolean;
     memorizationMode: boolean;
-    mushafMode: boolean; // new toggle to show Mushaf page view
+    mushafMode: boolean;
     arabicFont: string;
 }
 
@@ -32,6 +43,7 @@ export interface StorageSchema {
     version: number;
     settings: UserSettings;
     bookmarks: Bookmark[];
+    notes: Note[];
     lastRead: ReadingPosition | null;
 }
 
@@ -47,8 +59,10 @@ export const DEFAULT_SETTINGS: UserSettings = {
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {
-    version: 1,
+    version: 2,
     settings: DEFAULT_SETTINGS,
     bookmarks: [],
+    notes: [],
     lastRead: null,
 };
+

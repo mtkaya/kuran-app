@@ -18,25 +18,25 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center p-3 bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
+                className="flex flex-col items-center justify-between p-3 h-[130px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
             >
                 {/* Surah Number */}
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-sm border border-primary/10 mb-2">
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-sm border border-primary/10">
                     {surah.id}
                 </div>
 
                 {/* Surah Name */}
-                <h3 className="font-semibold text-xs text-foreground text-center truncate w-full">
+                <h3 className="font-semibold text-xs text-foreground text-center truncate w-full mt-1">
                     {surah.name_turkish}
                 </h3>
 
-                {/* Arabic Name */}
-                <span className="font-arabic text-sm text-muted-foreground mt-1">
+                {/* Arabic Name - single line truncated */}
+                <span className="font-arabic text-xs text-muted-foreground truncate w-full text-center">
                     {surah.name_arabic}
                 </span>
 
                 {/* Verse Count */}
-                <span className="text-[10px] text-muted-foreground mt-1">
+                <span className="text-[10px] text-muted-foreground">
                     {surah.verse_count} {ui.verses}
                 </span>
             </Link>

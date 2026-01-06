@@ -7,76 +7,82 @@
 
 @layer base {
   :root {
-    /* Elegant Islamic Green & Gold Theme */
-    --background: 60 20% 98%;
-    --foreground: 160 30% 15%;
+    /* Elegant Islamic Cream, Gold & Maroon Theme */
+    --background: 38 40% 96%;
+    /* Krem */
+    --foreground: 350 40% 20%;
+    /* Koyu bordo metin */
 
-    --card: 0 0% 100%;
-    --card-foreground: 160 30% 15%;
+    --card: 38 30% 98%;
+    --card-foreground: 350 40% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 160 30% 15%;
+    --popover: 38 30% 98%;
+    --popover-foreground: 350 40% 20%;
 
-    /* Islamic Green Primary */
-    --primary: 158 64% 35%;
-    --primary-foreground: 0 0% 100%;
+    /* Gold Primary */
+    --primary: 40 65% 58%;
+    /* Altın */
+    --primary-foreground: 350 50% 15%;
 
-    --secondary: 45 40% 95%;
-    --secondary-foreground: 160 30% 15%;
+    --secondary: 38 30% 94%;
+    --secondary-foreground: 350 40% 20%;
 
-    --muted: 60 10% 92%;
-    --muted-foreground: 160 15% 45%;
+    --muted: 38 25% 90%;
+    --muted-foreground: 350 20% 45%;
 
-    /* Gold Accent */
-    --accent: 45 80% 55%;
-    --accent-foreground: 160 30% 15%;
+    /* Maroon Accent */
+    --accent: 350 60% 35%;
+    /* Bordo */
+    --accent-foreground: 38 40% 96%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 60 15% 88%;
-    --input: 60 15% 88%;
-    --ring: 158 64% 35%;
+    --border: 38 25% 85%;
+    --input: 38 25% 85%;
+    --ring: 40 65% 58%;
 
     --radius: 0.75rem;
 
     /* Glow colors */
-    --glow-primary: 158 64% 45%;
-    --glow-gold: 45 90% 60%;
+    --glow-primary: 40 70% 60%;
+    --glow-gold: 40 80% 65%;
   }
 
   .dark {
-    --background: 160 25% 8%;
-    --foreground: 60 20% 95%;
+    --background: 350 30% 10%;
+    /* Koyu bordo */
+    --foreground: 38 30% 92%;
+    /* Krem metin */
 
-    --card: 160 20% 12%;
-    --card-foreground: 60 20% 95%;
+    --card: 350 25% 14%;
+    --card-foreground: 38 30% 92%;
 
-    --popover: 160 20% 12%;
-    --popover-foreground: 60 20% 95%;
+    --popover: 350 25% 14%;
+    --popover-foreground: 38 30% 92%;
 
-    /* Gold accent in dark mode */
-    --primary: 45 85% 55%;
-    --primary-foreground: 160 30% 10%;
+    /* Gold primary in dark mode */
+    --primary: 40 70% 55%;
+    --primary-foreground: 350 40% 12%;
 
-    --secondary: 160 20% 18%;
-    --secondary-foreground: 60 20% 95%;
+    --secondary: 350 20% 18%;
+    --secondary-foreground: 38 30% 92%;
 
-    --muted: 160 15% 20%;
-    --muted-foreground: 60 15% 65%;
+    --muted: 350 18% 22%;
+    --muted-foreground: 38 20% 60%;
 
-    --accent: 158 50% 40%;
-    --accent-foreground: 60 20% 95%;
+    --accent: 40 65% 50%;
+    --accent-foreground: 350 40% 12%;
 
     --destructive: 0 62.8% 45%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 160 15% 22%;
-    --input: 160 15% 22%;
-    --ring: 45 85% 55%;
+    --border: 350 18% 25%;
+    --input: 350 18% 25%;
+    --ring: 40 70% 55%;
 
-    --glow-primary: 45 85% 55%;
-    --glow-gold: 45 90% 65%;
+    --glow-primary: 40 75% 55%;
+    --glow-gold: 40 85% 60%;
   }
 }
 

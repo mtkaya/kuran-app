@@ -20,7 +20,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
         showTransliteration, setShowTransliteration,
         showTajweed, setShowTajweed,
         memorizationMode, setMemorizationMode,
-        mushafMode, setMushafMode
+        mushafMode, setMushafMode,
+        arabicFont, setArabicFont
     } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
     const { currentLanguage } = useLanguage();
@@ -185,6 +186,37 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     </p>
                 </div>
 
+                {/* Arabic Font Selection */}
+                <div className="mb-6">
+                    <label className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                        <Type className="w-4 h-4" />
+                        {ui.arabicFont}
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                        {[
+                            { id: 'Amiri Quran', name: ui.fontAmiri },
+                            { id: 'Reem Kufi', name: ui.fontKufi },
+                            { id: 'Amiri', name: ui.fontNesih },
+                            { id: 'Scheherazade New', name: ui.fontSulus },
+                            { id: 'Noto Nastaliq Urdu', name: ui.fontTalik },
+                            { id: 'Aref Ruqaa', name: ui.fontRika },
+                            { id: 'Rakkas', name: ui.fontDivani },
+                        ].map((font) => (
+                            <button
+                                key={font.id}
+                                onClick={() => setArabicFont(font.id)}
+                                className={`py-2 px-3 rounded-lg text-sm transition-colors text-left border ${arabicFont === font.id
+                                    ? 'bg-primary/10 border-primary text-primary font-medium'
+                                    : 'bg-secondary border-transparent hover:bg-secondary/80'
+                                    }`}
+                                style={{ fontFamily: font.id }}
+                            >
+                                {font.name}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Arabic Font Size */}
                 <div className="mb-6">
                     <div className="flex items-center justify-between mb-3">
@@ -221,9 +253,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     </div>
                     {/* Preview */}
                     <p
-                        className="text-right mt-3 font-arabic text-muted-foreground"
+                        className="text-right mt-3 font-arabic text-muted-foreground transition-all duration-300"
                         dir="rtl"
-                        style={{ fontSize: `${arabicFontSize}px` }}
+                        style={{ fontSize: `${arabicFontSize}px`, fontFamily: arabicFont }}
                     >
                         بِسْمِ اللَّهِ
                     </p>

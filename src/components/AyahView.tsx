@@ -17,7 +17,7 @@ interface AyahViewProps {
 
 export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy }) => {
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
-    const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode } = useSettingsStore();
+    const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode, arabicFont } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
@@ -87,7 +87,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                     className={`font-arabic leading-loose font-medium transition-all duration-300 ${memorizationMode && !revealed ? 'blur-md select-none' : ''
                         }`}
                     dir="rtl"
-                    style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2' }}
+                    style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2', fontFamily: arabicFont }}
                 >
                     {ayah.text_arabic}
                     <span className="inline-flex items-center justify-center w-8 h-8 mr-2 text-sm border border-primary rounded-full text-primary number-font blur-none">

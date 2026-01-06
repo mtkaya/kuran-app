@@ -50,4 +50,12 @@ export const en: UIStrings = {
     mushafMode: 'Mushaf Mode',
     tapToReveal: 'Tap to reveal',
     hideText: 'Hide Text',
+    arabicFont: 'Arabic Font',
+    fontAmiri: 'Amiri (Standard)',
+    fontKufi: 'Kufi (Angular)',
+    fontNesih: 'Naskh (Rounded)',
+    fontSulus: 'Thuluth (Decorative)',
+    fontTalik: 'Nastaliq (Persian)',
+    fontRika: 'Ruq\'ah (Handwriting)',
+    fontDivani: 'Diwani (Royal)',
 };

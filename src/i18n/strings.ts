@@ -56,6 +56,15 @@ interface UIStrings {
     mushafMode: string;
     tapToReveal: string;
     hideText: string;
+    // Milestone 7 strings - Arabic Fonts
+    arabicFont: string;
+    fontAmiri: string;
+    fontKufi: string;
+    fontNesih: string;
+    fontSulus: string;
+    fontTalik: string;
+    fontRika: string;
+    fontDivani: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -109,6 +118,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'Mushaf Modu',
         tapToReveal: 'Görmek için dokun',
         hideText: 'Metni Gizle',
+        arabicFont: 'Arapça Yazı Tipi',
+        fontAmiri: 'Amiri (Standart)',
+        fontKufi: 'Kufi (Köşeli)',
+        fontNesih: 'Nesih (Yuvarlak)',
+        fontSulus: 'Sülüs (Dekoratif)',
+        fontTalik: 'Talik (İran/Osmanlı)',
+        fontRika: 'Rik\'a (El Yazısı)',
+        fontDivani: 'Divani (Saray)',
     },
     en: {
         appTitle: 'Quran App',
@@ -160,6 +177,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'Mushaf Mode',
         tapToReveal: 'Tap to reveal',
         hideText: 'Hide Text',
+        arabicFont: 'Arabic Font',
+        fontAmiri: 'Amiri (Standard)',
+        fontKufi: 'Kufi (Angular)',
+        fontNesih: 'Naskh (Rounded)',
+        fontSulus: 'Thuluth (Decorative)',
+        fontTalik: 'Nastaliq (Persian)',
+        fontRika: 'Ruq\'ah (Handwriting)',
+        fontDivani: 'Diwani (Royal)',
     },
     de: {
         appTitle: 'Koran App',
@@ -211,6 +236,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'Mushaf-Modus',
         tapToReveal: 'Tippen zum Anzeigen',
         hideText: 'Text verbergen',
+        arabicFont: 'Arabische Schrift',
+        fontAmiri: 'Amiri (Standard)',
+        fontKufi: 'Kufi (Eckig)',
+        fontNesih: 'Naskh (Rund)',
+        fontSulus: 'Thuluth (Dekorativ)',
+        fontTalik: 'Nastaliq (Persisch)',
+        fontRika: 'Ruq\'ah (Handschrift)',
+        fontDivani: 'Diwani (Königlich)',
     },
     fr: {
         appTitle: 'Coran App',
@@ -262,6 +295,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'Mode Mushaf',
         tapToReveal: 'Appuyez pour révéler',
         hideText: 'Masquer le texte',
+        arabicFont: 'Police arabe',
+        fontAmiri: 'Amiri (Standard)',
+        fontKufi: 'Kufi (Angulaire)',
+        fontNesih: 'Naskh (Arrondi)',
+        fontSulus: 'Thuluth (Décoratif)',
+        fontTalik: 'Nastaliq (Persan)',
+        fontRika: 'Ruq\'ah (Manuscrit)',
+        fontDivani: 'Diwani (Royal)',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -313,6 +354,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'Mushaf 模式',
         tapToReveal: '点击显示',
         hideText: '隐藏文本',
+        arabicFont: '阿拉伯字体',
+        fontAmiri: 'Amiri (标准)',
+        fontKufi: 'Kufi (方角)',
+        fontNesih: 'Naskh (圆润)',
+        fontSulus: 'Thuluth (装饰)',
+        fontTalik: 'Nastaliq (波斯)',
+        fontRika: 'Ruq\'ah (手写)',
+        fontDivani: 'Diwani (皇家)',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -364,6 +413,14 @@ const translations: Record<LanguageCode, UIStrings> = {
         mushafMode: 'وضع المصحف',
         tapToReveal: 'انقر للكشف',
         hideText: 'إخفاء النص',
+        arabicFont: 'الخط العربي',
+        fontAmiri: 'أميري (قياسي)',
+        fontKufi: 'كوفي (زاوي)',
+        fontNesih: 'نسخ (مستدير)',
+        fontSulus: 'ثلث (زخرفي)',
+        fontTalik: 'نستعليق (فارسي)',
+        fontRika: 'رقعة (خط يد)',
+        fontDivani: 'ديواني (ملكي)',
     },
 };
 

@@ -25,6 +25,7 @@ export interface UserSettings {
     showTajweed: boolean;
     memorizationMode: boolean;
     mushafMode: boolean; // new toggle to show Mushaf page view
+    arabicFont: string;
 }
 
 export interface StorageSchema {
@@ -42,6 +43,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     showTajweed: false,
     memorizationMode: false,
     mushafMode: false,
+    arabicFont: 'Amiri Quran',
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

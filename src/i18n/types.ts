@@ -54,4 +54,13 @@ export interface UIStrings {
     mushafMode: string;
     tapToReveal: string;
     hideText: string;
+    // Milestone 7 strings - Arabic Fonts
+    arabicFont: string;
+    fontAmiri: string;
+    fontKufi: string;
+    fontNesih: string;
+    fontSulus: string;
+    fontTalik: string;
+    fontRika: string;
+    fontDivani: string;
 }

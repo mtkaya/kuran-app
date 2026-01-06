@@ -11,6 +11,7 @@ interface SettingsState extends UserSettings {
     setShowTajweed: (show: boolean) => void;
     setMemorizationMode: (mode: boolean) => void;
     setMushafMode: (mode: boolean) => void;
+    setArabicFont: (font: string) => void;
     hydrate: () => void;
 }
 
@@ -50,6 +51,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     setMushafMode: (mushafMode) => {
         set({ mushafMode });
         saveSettings({ ...get(), mushafMode });
+    },
+
+    setArabicFont: (arabicFont) => {
+        set({ arabicFont });
+        saveSettings({ ...get(), arabicFont });
     },
 
     hydrate: () => {

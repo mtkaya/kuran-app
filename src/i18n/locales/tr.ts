@@ -50,4 +50,12 @@ export const tr: UIStrings = {
     mushafMode: 'Mushaf Modu',
     tapToReveal: 'Görmek için dokun',
     hideText: 'Metni Gizle',
+    arabicFont: 'Arapça Yazı Tipi',
+    fontAmiri: 'Amiri (Standart)',
+    fontKufi: 'Kufi (Köşeli)',
+    fontNesih: 'Nesih (Yuvarlak)',
+    fontSulus: 'Sülüs (Dekoratif)',
+    fontTalik: 'Talik (İran/Osmanlı)',
+    fontRika: 'Rik\'a (El Yazısı)',
+    fontDivani: 'Divani (Saray)',
 };

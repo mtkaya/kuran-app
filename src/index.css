@@ -105,12 +105,12 @@
 
 @layer utilities {
 
-  /* Gradient Header with Pattern */
+  /* Gradient Header with Islamic Pattern */
   .gradient-header {
     background: linear-gradient(135deg,
-        hsl(var(--primary)) 0%,
-        hsl(158 50% 28%) 50%,
-        hsl(160 45% 22%) 100%);
+        hsl(40 65% 55%) 0%,
+        hsl(40 60% 48%) 50%,
+        hsl(350 50% 30%) 100%);
     position: relative;
     overflow: hidden;
   }
@@ -119,16 +119,33 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 0L45 5L50 0L55 5L60 0L60 10L55 15L60 20L55 25L60 30L60 40L55 35L50 40L45 35L40 40L35 35L30 40L25 35L20 40L20 30L25 25L20 20L25 15L20 10L20 0L25 5L30 0L35 5L40 0Z'/%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.3;
+    /* Islamic Geometric Pattern - 8-pointed stars */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.25'%3E%3C!-- 8-pointed star --%3E%3Cpath d='M30 5 L35 20 L50 15 L40 25 L55 30 L40 35 L50 45 L35 40 L30 55 L25 40 L10 45 L20 35 L5 30 L20 25 L10 15 L25 20 Z'/%3E%3C!-- Inner octagon --%3E%3Cpolygon points='30,12 42,18 48,30 42,42 30,48 18,42 12,30 18,18'/%3E%3C!-- Center circle --%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    opacity: 0.4;
     pointer-events: none;
+    animation: patternShift 30s linear infinite;
+  }
+
+  @keyframes patternShift {
+    0% {
+      background-position: 0 0;
+    }
+
+    100% {
+      background-position: 60px 60px;
+    }
   }
 
   .dark .gradient-header {
     background: linear-gradient(135deg,
-        hsl(160 30% 12%) 0%,
-        hsl(160 25% 10%) 50%,
-        hsl(160 20% 8%) 100%);
+        hsl(350 30% 15%) 0%,
+        hsl(350 25% 12%) 50%,
+        hsl(40 40% 20%) 100%);
+  }
+
+  .dark .gradient-header::before {
+    opacity: 0.2;
   }
 
   /* Glass Effect */

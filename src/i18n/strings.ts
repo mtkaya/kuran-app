@@ -65,6 +65,17 @@ interface UIStrings {
     fontTalik: string;
     fontRika: string;
     fontDivani: string;
+    // Milestone 8 strings - Notes
+    notes: string;
+    myNotes: string;
+    addNote: string;
+    editNote: string;
+    deleteNote: string;
+    noNotes: string;
+    noteAdded: string;
+    noteSaved: string;
+    noteDeleted: string;
+    searchNotes: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -126,6 +137,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Talik (İran/Osmanlı)',
         fontRika: 'Rik\'a (El Yazısı)',
         fontDivani: 'Divani (Saray)',
+        notes: 'Notlar',
+        myNotes: 'Notlarım',
+        addNote: 'Not Ekle',
+        editNote: 'Düzenle',
+        deleteNote: 'Sil',
+        noNotes: 'Henüz not eklenmemiş',
+        noteAdded: 'Not eklendi!',
+        noteSaved: 'Not kaydedildi!',
+        noteDeleted: 'Not silindi!',
+        searchNotes: 'Notlarda ara...',
     },
     en: {
         appTitle: 'Quran App',
@@ -185,6 +206,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persian)',
         fontRika: 'Ruq\'ah (Handwriting)',
         fontDivani: 'Diwani (Royal)',
+        notes: 'Notes',
+        myNotes: 'My Notes',
+        addNote: 'Add Note',
+        editNote: 'Edit',
+        deleteNote: 'Delete',
+        noNotes: 'No notes yet',
+        noteAdded: 'Note added!',
+        noteSaved: 'Note saved!',
+        noteDeleted: 'Note deleted!',
+        searchNotes: 'Search notes...',
     },
     de: {
         appTitle: 'Koran App',
@@ -244,6 +275,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persisch)',
         fontRika: 'Ruq\'ah (Handschrift)',
         fontDivani: 'Diwani (Königlich)',
+        notes: 'Notizen',
+        myNotes: 'Meine Notizen',
+        addNote: 'Notiz hinzufügen',
+        editNote: 'Bearbeiten',
+        deleteNote: 'Löschen',
+        noNotes: 'Noch keine Notizen',
+        noteAdded: 'Notiz hinzugefügt!',
+        noteSaved: 'Notiz gespeichert!',
+        noteDeleted: 'Notiz gelöscht!',
+        searchNotes: 'Notizen durchsuchen...',
     },
     fr: {
         appTitle: 'Coran App',
@@ -303,6 +344,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persan)',
         fontRika: 'Ruq\'ah (Manuscrit)',
         fontDivani: 'Diwani (Royal)',
+        notes: 'Notes',
+        myNotes: 'Mes Notes',
+        addNote: 'Ajouter une note',
+        editNote: 'Modifier',
+        deleteNote: 'Supprimer',
+        noNotes: 'Pas encore de notes',
+        noteAdded: 'Note ajoutée!',
+        noteSaved: 'Note enregistrée!',
+        noteDeleted: 'Note supprimée!',
+        searchNotes: 'Chercher dans les notes...',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -362,6 +413,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (波斯)',
         fontRika: 'Ruq\'ah (手写)',
         fontDivani: 'Diwani (皇家)',
+        notes: '笔记',
+        myNotes: '我的笔记',
+        addNote: '添加笔记',
+        editNote: '编辑',
+        deleteNote: '删除',
+        noNotes: '暂无笔记',
+        noteAdded: '笔记已添加！',
+        noteSaved: '笔记已保存！',
+        noteDeleted: '笔记已删除！',
+        searchNotes: '搜索笔记...',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -421,6 +482,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'نستعليق (فارسي)',
         fontRika: 'رقعة (خط يد)',
         fontDivani: 'ديواني (ملكي)',
+        notes: 'ملاحظات',
+        myNotes: 'ملاحظاتي',
+        addNote: 'إضافة ملاحظة',
+        editNote: 'تعديل',
+        deleteNote: 'حذف',
+        noNotes: 'لا توجد ملاحظات بعد',
+        noteAdded: 'تمت إضافة الملاحظة!',
+        noteSaved: 'تم حفظ الملاحظة!',
+        noteDeleted: 'تم حذف الملاحظة!',
+        searchNotes: 'بحث في الملاحظات...',
     },
 };
 

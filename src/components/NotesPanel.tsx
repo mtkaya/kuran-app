@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Search, Trash2, Edit3, FileText, ChevronRight, X, Save } from 'lucide-react';
 import { useNotesStore } from '../store/notesStore';
 import { Note } from '../storage/types';
-import { useLanguage } from '../context/LanguageContext';
-import { getUIStrings } from '../i18n/strings';
 
 interface NotesPanelProps {
     onNavigateToAyah?: (surahId: number, ayahNumber: number) => void;
@@ -11,8 +9,6 @@ interface NotesPanelProps {
 
 export const NotesPanel: React.FC<NotesPanelProps> = ({ onNavigateToAyah }) => {
     const { notes, updateNote, deleteNote } = useNotesStore();
-    const { currentLanguage } = useLanguage();
-    const ui = getUIStrings(currentLanguage);
 
     const [searchQuery, setSearchQuery] = useState('');
     const [editingNoteId, setEditingNoteId] = useState<string | null>(null);

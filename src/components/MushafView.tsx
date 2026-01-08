@@ -13,7 +13,7 @@ interface MushafViewProps {
     onPageChange?: (page: number) => void;
 }
 
-export const MushafView: React.FC<MushafViewProps> = ({ surahId, initialAyahId, onPageChange }) => {
+export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange }) => {
     const {
         currentAyahId,
         currentSurahId,

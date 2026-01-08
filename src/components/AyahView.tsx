@@ -20,7 +20,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
     const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode, arabicFont } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
-    const { notes, addNote, getNotesByAyah } = useNotesStore();
+    const { addNote, getNotesByAyah } = useNotesStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
 
@@ -108,14 +108,14 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
             >
                 {/* Arabic Text (Right Aligned) */}
                 <div
-                    className={`text-right mb-4 ${memorizationMode && !revealed ? 'cursor-pointer' : ''}`}
+                    className={`text-right mb-4 overflow-hidden ${memorizationMode && !revealed ? 'cursor-pointer' : ''}`}
                     onClick={() => memorizationMode && !revealed && setRevealed(true)}
                 >
                     <p
-                        className={`font-arabic leading-loose font-medium transition-all duration-300 ${memorizationMode && !revealed ? 'blur-md select-none' : ''
+                        className={`font-arabic leading-loose font-medium transition-all duration-300 break-words ${memorizationMode && !revealed ? 'blur-md select-none' : ''
                             }`}
                         dir="rtl"
-                        style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2', fontFamily: arabicFont }}
+                        style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2', fontFamily: arabicFont, wordBreak: 'break-word', overflowWrap: 'break-word' }}
                     >
                         {ayah.text_arabic}
                         <span className="inline-flex items-center justify-center w-8 h-8 mr-2 text-sm border border-primary rounded-full text-primary number-font blur-none">

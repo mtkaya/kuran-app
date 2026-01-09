@@ -144,12 +144,13 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
             <div
                 key={line.lineNumber}
                 ref={isActive ? activeLineRef : null}
-                className={`mushaf-line relative flex justify-center items-baseline px-2 py-1 transition-all duration-300 ${isActive ? 'bg-primary/10 rounded-lg' : ''
+                className={`mushaf-line relative flex flex-wrap justify-center items-baseline px-1 py-1 transition-all duration-300 overflow-hidden ${isActive ? 'bg-primary/10 rounded-lg' : ''
                     }`}
                 style={{
                     fontFamily: arabicFont,
-                    fontSize: `${arabicFontSize}px`,
+                    fontSize: `clamp(16px, ${arabicFontSize * 0.7}px, ${arabicFontSize}px)`,
                     lineHeight: '2.2',
+                    maxWidth: '100%',
                 }}
                 dir="rtl"
             >
@@ -169,7 +170,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                             }`}
                     >
                         {word.isEndMarker ? (
-                            <span className="inline-flex items-center justify-center w-6 h-6 text-xs border border-primary/50 rounded-full">
+                            <span className="inline-flex items-center justify-center w-5 h-5 text-xs border border-primary/50 rounded-full">
                                 {word.text}
                             </span>
                         ) : (
@@ -194,7 +195,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
             <div className="absolute inset-4 border border-primary/10 rounded-lg pointer-events-none" />
 
             {/* Page Content */}
-            <div className="relative p-6 min-h-[70vh]">
+            <div className="relative p-3 sm:p-6 min-h-[70vh] overflow-x-hidden">
                 {/* Surah Header */}
                 {pageData?.surahInfo && pageData.surahInfo.length > 0 && (
                     <div className="text-center mb-6">

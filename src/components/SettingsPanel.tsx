@@ -194,6 +194,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     </label>
                     <div className="grid grid-cols-2 gap-2">
                         {[
+                            { id: 'KFGQPC Uthmanic Script Hafs', name: ui.fontMushaf },
                             { id: 'Amiri Quran', name: ui.fontAmiri },
                             { id: 'Reem Kufi', name: ui.fontKufi },
                             { id: 'Amiri', name: ui.fontNesih },

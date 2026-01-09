@@ -63,11 +63,14 @@ function App() {
                         >
                             <div className="max-w-lg mx-auto px-4">
                                 <div className="flex items-center justify-between mb-4">
-                                    <div className="space-y-1">
-                                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                                            ☪ {ui.appTitle}
-                                        </h1>
-                                        <p className="text-white/70 text-sm">{ui.appSubtitle}</p>
+                                    <div className="flex items-center gap-3">
+                                        <img src="/logo.svg" alt="Kuran Logo" className="w-10 h-10" />
+                                        <div className="space-y-0.5">
+                                            <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+                                                {ui.appTitle}
+                                            </h1>
+                                            <p className="text-white/70 text-xs">{ui.appSubtitle}</p>
+                                        </div>
                                     </div>
                                     <div className="flex items-center gap-1 sm:gap-2">
                                         <button
@@ -205,16 +208,16 @@ function App() {
                         </main>
                     </div>
                 } />
-                <Route path="/surah/:id" element={<Reader />} />
-                <Route path="/search" element={<Search />} />
-                <Route path="/notes" element={<Notes />} />
-            </Routes>
+                < Route path="/surah/:id" element={< Reader />} />
+                < Route path="/search" element={< Search />} />
+                < Route path="/notes" element={< Notes />} />
+            </Routes >
 
             <SettingsPanel
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
-        </div>
+        </div >
     )
 }
 

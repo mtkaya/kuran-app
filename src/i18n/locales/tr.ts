@@ -1,7 +1,7 @@
 import { UIStrings } from '../types';
 
 export const tr: UIStrings = {
-    appTitle: 'Kuran App',
+    appTitle: "Kur'an-ı Kerim",
     appSubtitle: 'İndeksli Kuran Meali',
     searchPlaceholder: 'Sure ara...',
     verses: 'Ayet',
@@ -31,7 +31,7 @@ export const tr: UIStrings = {
     reciter: 'Kâri',
     selectReciter: 'Kâri Seç',
     playAyah: 'Ayeti Dinle',
-    searchInQuran: 'Kuran\'da ara...',
+    searchInQuran: "Kur'an'da ara...",
     all: 'Tümü',
     arabic: 'Arapça',
     translation: 'Meal',
@@ -56,7 +56,7 @@ export const tr: UIStrings = {
     fontNesih: 'Nesih (Yuvarlak)',
     fontSulus: 'Sülüs (Dekoratif)',
     fontTalik: 'Talik (İran/Osmanlı)',
-    fontRika: 'Rik\'a (El Yazısı)',
+    fontRika: "Rik'a (El Yazısı)",
     fontDivani: 'Divani (Saray)',
     fontMushaf: 'Mushaf Hattı (Kuran)',
 };

@@ -1,7 +1,7 @@
 import { UIStrings } from '../types';
 
 export const en: UIStrings = {
-    appTitle: 'Quran App',
+    appTitle: 'Holy Quran',
     appSubtitle: 'Indexed Quran Translation',
     searchPlaceholder: 'Search surah...',
     verses: 'Verses',

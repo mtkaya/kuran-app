@@ -1,9 +1,9 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2, Type, Palette, Brain, BookOpen } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type, Palette, Brain, BookOpen, Globe } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage, LanguageCode, LANGUAGES } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
 import { RECITERS } from '../data/reciterProvider';
 
@@ -24,7 +24,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
         arabicFont, setArabicFont
     } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
-    const { currentLanguage } = useLanguage();
+    const { currentLanguage, setLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
 
     if (!isOpen) return null;
@@ -67,6 +67,29 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                                     }`}
                             >
                                 {t === 'light' ? ui.lightMode : t === 'dark' ? ui.darkMode : ui.systemMode}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Language Selection */}
+                <div className="mb-6">
+                    <label className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                        <Globe className="w-4 h-4" />
+                        Dil / Language
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                        {LANGUAGES.map((lang) => (
+                            <button
+                                key={lang.code}
+                                onClick={() => setLanguage(lang.code as LanguageCode)}
+                                className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors
+                                    ${currentLanguage === lang.code
+                                        ? 'bg-primary text-primary-foreground'
+                                        : 'bg-secondary hover:bg-secondary/80'
+                                    }`}
+                            >
+                                {lang.nativeName}
                             </button>
                         ))}
                     </div>

@@ -7,7 +7,6 @@ import { useState, useMemo, useEffect } from 'react'
 import Reader from './pages/Reader'
 import Search from './pages/Search'
 import { Notes } from './pages/Notes'
-import { LanguageSelector } from './components/LanguageSelector'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -56,32 +55,31 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     <div className="min-h-screen">
-                        {/* Gradient Header - extends behind status bar */}
+                        {/* Minimal Header */}
                         <header
-                            className="gradient-header text-white px-safe pb-20 -mb-14"
-                            style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1.5rem)' }}
+                            className="gradient-header text-white px-safe pb-16 -mb-10"
+                            style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1rem)' }}
                         >
                             <div className="max-w-lg mx-auto px-4">
-                                <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <img src="./logo.svg" alt="Kuran Logo" className="w-10 h-10" />
-                                        <div className="space-y-0.5">
-                                            <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+                                        <img src="./logo.svg" alt="Logo" className="w-9 h-9" />
+                                        <div>
+                                            <h1 className="text-lg font-bold tracking-tight">
                                                 {ui.appTitle}
                                             </h1>
-                                            <p className="text-white/70 text-xs">{ui.appSubtitle}</p>
+                                            <p className="text-white/60 text-xs">{ui.appSubtitle}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-1 sm:gap-2">
+                                    <div className="flex items-center gap-0.5">
+                                        <ThemeToggle />
                                         <button
                                             onClick={() => setIsSettingsOpen(true)}
-                                            className="p-2 hover:bg-white/10 rounded-full text-white/90 transition-colors"
+                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
                                             aria-label={ui.settings}
                                         >
                                             <Settings className="w-5 h-5" />
                                         </button>
-                                        <ThemeToggle />
-                                        <LanguageSelector />
                                     </div>
                                 </div>
                             </div>

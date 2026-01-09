@@ -105,7 +105,10 @@ export default function Reader() {
     return (
         <div className="min-h-screen bg-background pb-32">
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-card/80 backdrop-blur-md border-b px-4 py-3 flex items-center justify-between">
+            <div
+                className="sticky top-0 z-10 bg-card/80 backdrop-blur-md border-b px-4 py-3 flex items-center justify-between"
+                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.75rem)' }}
+            >
                 <div className="flex items-center gap-4">
                     <Link to="/" className="p-2 -ml-2 hover:bg-accent rounded-full text-foreground/80">
                         <ArrowLeft className="w-6 h-6" />

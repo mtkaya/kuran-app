@@ -3,7 +3,6 @@ import { getQuranData } from '../data/quran';
 import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
 import { ArrowLeft, Settings } from 'lucide-react';
-import { LanguageSelector } from '../components/LanguageSelector';
 import { useLanguage } from '../context/LanguageContext';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { getUIStrings } from '../i18n/strings';
@@ -126,12 +125,11 @@ export default function Reader() {
                     >
                         <Settings className="w-5 h-5" />
                     </button>
-                    <LanguageSelector />
                 </div>
             </div>
 
             {/* Content */}
-            <div className="max-w-2xl mx-auto p-4">
+            <div className="max-w-2xl mx-auto px-4 pb-4 pt-24">
                 {mushafMode ? (
                     <div className="animate-fade-in">
                         <MushafView

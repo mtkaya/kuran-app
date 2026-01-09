@@ -151,7 +151,7 @@ function App() {
                             </div>
 
                             {/* Section Title with View Toggle */}
-                            <div className="flex items-center justify-between pt-2">
+                            <div className="flex items-center justify-between pt-2 mt-4">
                                 <div className="flex items-center gap-2">
                                     <div className="w-1 h-5 bg-primary rounded-full"></div>
                                     <h2 className="font-semibold text-foreground">Sureler</h2>

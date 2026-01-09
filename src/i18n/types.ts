@@ -63,4 +63,5 @@ export interface UIStrings {
     fontTalik: string;
     fontRika: string;
     fontDivani: string;
+    fontMushaf: string;
 }

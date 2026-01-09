@@ -58,4 +58,5 @@ export const en: UIStrings = {
     fontTalik: 'Nastaliq (Persian)',
     fontRika: 'Ruq\'ah (Handwriting)',
     fontDivani: 'Diwani (Royal)',
+    fontMushaf: 'Mushaf Script (Quran)',
 };

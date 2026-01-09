@@ -58,4 +58,5 @@ export const tr: UIStrings = {
     fontTalik: 'Talik (İran/Osmanlı)',
     fontRika: 'Rik\'a (El Yazısı)',
     fontDivani: 'Divani (Saray)',
+    fontMushaf: 'Mushaf Hattı (Kuran)',
 };

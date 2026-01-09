@@ -65,6 +65,7 @@ interface UIStrings {
     fontTalik: string;
     fontRika: string;
     fontDivani: string;
+    fontMushaf: string;
     // Milestone 8 strings - Notes
     notes: string;
     myNotes: string;
@@ -137,6 +138,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Talik (İran/Osmanlı)',
         fontRika: 'Rik\'a (El Yazısı)',
         fontDivani: 'Divani (Saray)',
+        fontMushaf: 'Mushaf Hattı (Kuran)',
         notes: 'Notlar',
         myNotes: 'Notlarım',
         addNote: 'Not Ekle',
@@ -206,6 +208,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persian)',
         fontRika: 'Ruq\'ah (Handwriting)',
         fontDivani: 'Diwani (Royal)',
+        fontMushaf: 'Mushaf Script (Quran)',
         notes: 'Notes',
         myNotes: 'My Notes',
         addNote: 'Add Note',
@@ -275,6 +278,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persisch)',
         fontRika: 'Ruq\'ah (Handschrift)',
         fontDivani: 'Diwani (Königlich)',
+        fontMushaf: 'Mushaf-Schrift (Koran)',
         notes: 'Notizen',
         myNotes: 'Meine Notizen',
         addNote: 'Notiz hinzufügen',
@@ -344,6 +348,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (Persan)',
         fontRika: 'Ruq\'ah (Manuscrit)',
         fontDivani: 'Diwani (Royal)',
+        fontMushaf: 'Écriture Mushaf (Coran)',
         notes: 'Notes',
         myNotes: 'Mes Notes',
         addNote: 'Ajouter une note',
@@ -413,6 +418,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'Nastaliq (波斯)',
         fontRika: 'Ruq\'ah (手写)',
         fontDivani: 'Diwani (皇家)',
+        fontMushaf: 'Mushaf 书法 (古兰经)',
         notes: '笔记',
         myNotes: '我的笔记',
         addNote: '添加笔记',
@@ -482,6 +488,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         fontTalik: 'نستعليق (فارسي)',
         fontRika: 'رقعة (خط يد)',
         fontDivani: 'ديواني (ملكي)',
+        fontMushaf: 'خط المصحف (القرآن)',
         notes: 'ملاحظات',
         myNotes: 'ملاحظاتي',
         addNote: 'إضافة ملاحظة',

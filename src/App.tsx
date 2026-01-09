@@ -64,7 +64,7 @@ function App() {
                             <div className="max-w-lg mx-auto px-4">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <img src="/logo.svg" alt="Kuran Logo" className="w-10 h-10" />
+                                        <img src="./logo.svg" alt="Kuran Logo" className="w-10 h-10" />
                                         <div className="space-y-0.5">
                                             <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
                                                 {ui.appTitle}

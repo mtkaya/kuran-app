@@ -81,7 +81,7 @@ interface UIStrings {
 
 const translations: Record<LanguageCode, UIStrings> = {
     tr: {
-        appTitle: 'Kuran App',
+        appTitle: "Kur'an-ı Kerim",
         appSubtitle: 'İndeksli Kuran Meali',
         searchPlaceholder: 'Sure ara...',
         verses: 'Ayet',
@@ -151,7 +151,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         searchNotes: 'Notlarda ara...',
     },
     en: {
-        appTitle: 'Quran App',
+        appTitle: 'Holy Quran',
         appSubtitle: 'Indexed Quran Translation',
         searchPlaceholder: 'Search surah...',
         verses: 'Verses',

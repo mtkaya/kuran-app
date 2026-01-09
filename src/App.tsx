@@ -56,8 +56,11 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     <div className="min-h-screen">
-                        {/* Gradient Header */}
-                        <header className="gradient-header text-white px-safe py-6 pb-20 -mb-14">
+                        {/* Gradient Header - extends behind status bar */}
+                        <header
+                            className="gradient-header text-white px-safe pb-20 -mb-14"
+                            style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1.5rem)' }}
+                        >
                             <div className="max-w-lg mx-auto px-4">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="space-y-1">

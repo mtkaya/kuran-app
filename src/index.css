@@ -1,5 +1,15 @@
-/* Import Amiri Quran font */
+/* Import Arabic fonts including Quran Mushaf calligraphy */
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Rakkas&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
+
+/* KFGQPC Mushaf Font - Authentic Quran Script */
+@font-face {
+  font-family: 'KFGQPC Uthmanic Script Hafs';
+  src: url('https://cdn.jsdelivr.net/npm/quran-fonts@1.1.4/fonts/hafs/v1/woff2/QCF_BSML.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/npm/quran-fonts@1.1.4/fonts/hafs/v1/woff/QCF_BSML.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -95,11 +105,14 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     padding-bottom: env(safe-area-inset-bottom);
+    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    background: hsl(var(--background));
   }
 }
 
@@ -456,6 +469,11 @@
   font-family: 'Amiri Quran', 'Amiri', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
   letter-spacing: 0.03em;
   line-height: 2.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  max-width: 100%;
 }
 
 /* Arabic text enhancements */
@@ -464,6 +482,35 @@
   font-size: inherit;
   direction: rtl;
   text-align: right;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* Mushaf line mobile responsiveness */
+.mushaf-line {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .mushaf-line {
+    font-size: 18px !important;
+    line-height: 2 !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  .font-arabic {
+    font-size: 22px !important;
+  }
+
+  .mushaf-text-container {
+    margin-left: -8px;
+    margin-right: -8px;
+  }
 }
 
 /* Number font for ayah numbers */

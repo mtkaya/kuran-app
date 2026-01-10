@@ -30,6 +30,13 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
         onPageChangeRef.current = onPageChange;
     }, [onPageChange]);
 
+    // Sync with parent's page if it changes (e.g., from audio playback)
+    useEffect(() => {
+        if (initialPage && initialPage !== currentPage) {
+            setCurrentPage(initialPage);
+        }
+    }, [initialPage]);
+
     // Current playing verse key (e.g., "1:5")
     const currentVerseKey = useMemo(() => {
         if (currentSurahId && currentAyahNumber) {

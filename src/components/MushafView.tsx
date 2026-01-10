@@ -6,6 +6,7 @@ import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useLanguage } from '../context/LanguageContext';
 import { getQuranData } from '../data/quran';
+import { getUIStrings } from '../i18n/strings';
 
 interface MushafViewProps {
     surahId: number;
@@ -33,6 +34,7 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
 
     // Get full Quran data for lookups
     const quranData = useMemo(() => getQuranData(currentLanguage), [currentLanguage]);
+    const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
 
     // Initialize Page based on surah
     useEffect(() => {
@@ -106,9 +108,9 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
             {/* Translation Panel */}
             <div className="bg-card rounded-2xl p-4 shadow-sm border border-border/50">
                 <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border/50">
-                    <h3 className="font-semibold text-foreground">Sayfa Meali</h3>
+                    <h3 className="font-semibold text-foreground">{ui.pageTranslation}</h3>
                     <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">
-                        {pageAyahs.length} Ayet
+                        {pageAyahs.length} {ui.verses}
                     </span>
                 </div>
 
@@ -147,7 +149,7 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
 
                     {pageAyahs.length === 0 && (
                         <div className="text-center py-8 text-muted-foreground">
-                            Yükleniyor...
+                            {ui.loading}
                         </div>
                     )}
                 </div>

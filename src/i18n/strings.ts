@@ -77,6 +77,13 @@ interface UIStrings {
     noteSaved: string;
     noteDeleted: string;
     searchNotes: string;
+    // Additional UI strings
+    loading: string;
+    pageTranslation: string;
+    page: string;
+    pageLoadError: string;
+    relatedVerses: string;
+    goToReadingPage: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -149,6 +156,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: 'Not kaydedildi!',
         noteDeleted: 'Not silindi!',
         searchNotes: 'Notlarda ara...',
+        loading: 'Yükleniyor...',
+        pageTranslation: 'Sayfa Meali',
+        page: 'Sayfa',
+        pageLoadError: 'Sayfa yüklenemedi',
+        relatedVerses: 'Bağlantılı Ayetler',
+        goToReadingPage: 'Ayetlere not eklemek için okuma sayfasına gidin',
     },
     en: {
         appTitle: 'Holy Quran',
@@ -219,6 +232,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: 'Note saved!',
         noteDeleted: 'Note deleted!',
         searchNotes: 'Search notes...',
+        loading: 'Loading...',
+        pageTranslation: 'Page Translation',
+        page: 'Page',
+        pageLoadError: 'Page could not be loaded',
+        relatedVerses: 'Related Verses',
+        goToReadingPage: 'Go to reading page to add notes to verses',
     },
     de: {
         appTitle: 'Koran App',
@@ -289,6 +308,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: 'Notiz gespeichert!',
         noteDeleted: 'Notiz gelöscht!',
         searchNotes: 'Notizen durchsuchen...',
+        loading: 'Laden...',
+        pageTranslation: 'Seitenübersetzung',
+        page: 'Seite',
+        pageLoadError: 'Seite konnte nicht geladen werden',
+        relatedVerses: 'Verwandte Verse',
+        goToReadingPage: 'Gehen Sie zur Leseseite, um Notizen zu Versen hinzuzufügen',
     },
     fr: {
         appTitle: 'Coran App',
@@ -359,6 +384,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: 'Note enregistrée!',
         noteDeleted: 'Note supprimée!',
         searchNotes: 'Chercher dans les notes...',
+        loading: 'Chargement...',
+        pageTranslation: 'Traduction de la page',
+        page: 'Page',
+        pageLoadError: 'La page n\'a pas pu être chargée',
+        relatedVerses: 'Versets liés',
+        goToReadingPage: 'Allez à la page de lecture pour ajouter des notes aux versets',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -429,6 +460,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: '笔记已保存！',
         noteDeleted: '笔记已删除！',
         searchNotes: '搜索笔记...',
+        loading: '加载中...',
+        pageTranslation: '页面翻译',
+        page: '页',
+        pageLoadError: '页面无法加载',
+        relatedVerses: '相关经文',
+        goToReadingPage: '前往阅读页面为经文添加笔记',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -499,6 +536,12 @@ const translations: Record<LanguageCode, UIStrings> = {
         noteSaved: 'تم حفظ الملاحظة!',
         noteDeleted: 'تم حذف الملاحظة!',
         searchNotes: 'بحث في الملاحظات...',
+        loading: 'جاري التحميل...',
+        pageTranslation: 'ترجمة الصفحة',
+        page: 'صفحة',
+        pageLoadError: 'تعذر تحميل الصفحة',
+        relatedVerses: 'الآيات ذات الصلة',
+        goToReadingPage: 'انتقل إلى صفحة القراءة لإضافة ملاحظات إلى الآيات',
     },
 };
 

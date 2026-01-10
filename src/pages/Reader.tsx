@@ -27,19 +27,7 @@ export default function Reader() {
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
     const surah = quranData.find(s => s.id === Number(id));
 
-    // Show loading while data is loading
-    if (isQuranLoading) {
-        return (
-            <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                    <span className="text-muted-foreground text-sm">{ui.loading}</span>
-                </div>
-            </div>
-        );
-    }
-
-    // Track visible ayah for lastRead
+    // Track visible ayah for lastRead - must be before any conditional returns
     const handleAyahVisible = useCallback((ayah: { id: number; ayah_number: number }) => {
         if (surah) {
             setLastRead({
@@ -108,6 +96,18 @@ export default function Reader() {
             // Don't cleanup if navigating - let the audio continue
         };
     }, [cleanup]);
+
+    // Show loading while data is loading - AFTER all hooks
+    if (isQuranLoading) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-muted-foreground text-sm">{ui.loading}</span>
+                </div>
+            </div>
+        );
+    }
 
     if (!surah) {
         return <div className="p-8 text-center">{ui.surahNotFound}</div>;

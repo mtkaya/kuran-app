@@ -22,6 +22,9 @@ export default defineConfig({
                     if (id.includes('src/data/de.json')) return 'quran-de';
                     if (id.includes('src/data/fr.json')) return 'quran-fr';
                     if (id.includes('src/data/zh.json')) return 'quran-zh';
+                    if (id.includes('src/data/id.json')) return 'quran-id';
+                    if (id.includes('src/data/ur.json')) return 'quran-ur';
+                    if (id.includes('src/data/bn.json')) return 'quran-bn';
                     // React and other vendor libs
                     if (id.includes('node_modules')) {
                         if (id.includes('react')) return 'react-vendor';

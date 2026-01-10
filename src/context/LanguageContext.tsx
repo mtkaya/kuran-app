@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-export type LanguageCode = 'tr' | 'en' | 'de' | 'fr' | 'zh' | 'ar';
+export type LanguageCode = 'tr' | 'en' | 'de' | 'fr' | 'zh' | 'ar' | 'id' | 'ur' | 'bn';
 
 interface Language {
     code: LanguageCode;
@@ -15,6 +15,9 @@ export const LANGUAGES: Language[] = [
     { code: 'fr', name: 'French', nativeName: 'Français' },
     { code: 'zh', name: 'Chinese', nativeName: '中文' },
     { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
+    { code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia' },
+    { code: 'ur', name: 'Urdu', nativeName: 'اردو' },
+    { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
 ];
 
 interface LanguageContextType {

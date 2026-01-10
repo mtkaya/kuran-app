@@ -8,6 +8,9 @@ import enData from './en.json';
 import deData from './de.json';
 import frData from './fr.json';
 import zhData from './zh.json';
+import idData from './id.json';
+import urData from './ur.json';
+import bnData from './bn.json';
 
 interface RawApiData {
     code: number;
@@ -33,6 +36,9 @@ const dataMap: Record<LanguageCode, RawApiData> = {
     de: deData as RawApiData,
     fr: frData as RawApiData,
     zh: zhData as RawApiData,
+    id: idData as RawApiData,
+    ur: urData as RawApiData,
+    bn: bnData as RawApiData,
 };
 
 // Turkish surah names for better UX

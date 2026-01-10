@@ -59,7 +59,7 @@ function App() {
                     <div className="min-h-screen">
                         {/* Minimal Header */}
                         <header
-                            className="gradient-header text-white px-safe pb-16 -mb-10"
+                            className="gradient-header text-white px-safe pb-8"
                             style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1rem)' }}
                         >
                             <div className="max-w-lg mx-auto px-4">
@@ -88,14 +88,14 @@ function App() {
                         </header>
 
                         {/* Main Content */}
-                        <main className="max-w-lg mx-auto px-4 space-y-4 pb-8">
+                        <main className="max-w-lg mx-auto px-4 space-y-4 pb-8 pt-6">
                             {/* Continue Reading Card */}
-                            <div className="transform -translate-y-4">
+                            <div>
                                 <ContinueReading />
                             </div>
 
                             {/* Mode Selection Toggles */}
-                            <div className="grid grid-cols-2 gap-3 mb-6">
+                            <div className="grid grid-cols-2 gap-3 mb-4">
                                 <button
                                     onClick={() => setMushafMode(false)}
                                     className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200 ${!mushafMode

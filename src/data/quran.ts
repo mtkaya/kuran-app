@@ -1,17 +1,6 @@
 import { Surah } from '../types';
 import { LanguageCode } from '../context/LanguageContext';
 
-// Import all language data
-import arData from './ar.json';
-import trData from './tr.json';
-import enData from './en.json';
-import deData from './de.json';
-import frData from './fr.json';
-import zhData from './zh.json';
-import idData from './id.json';
-import urData from './ur.json';
-import bnData from './bn.json';
-
 interface RawApiData {
     code: number;
     data: {
@@ -29,17 +18,52 @@ interface RawApiData {
     };
 }
 
-const dataMap: Record<LanguageCode, RawApiData> = {
-    ar: arData as RawApiData,
-    tr: trData as RawApiData,
-    en: enData as RawApiData,
-    de: deData as RawApiData,
-    fr: frData as RawApiData,
-    zh: zhData as RawApiData,
-    id: idData as RawApiData,
-    ur: urData as RawApiData,
-    bn: bnData as RawApiData,
-};
+// Cache for loaded language data
+const dataCache: Partial<Record<LanguageCode, RawApiData>> = {};
+
+// Dynamic import function
+async function loadLanguageData(lang: LanguageCode): Promise<RawApiData> {
+    if (dataCache[lang]) {
+        return dataCache[lang]!;
+    }
+
+    let data: RawApiData;
+
+    switch (lang) {
+        case 'ar':
+            data = (await import('./ar.json')).default as RawApiData;
+            break;
+        case 'tr':
+            data = (await import('./tr.json')).default as RawApiData;
+            break;
+        case 'en':
+            data = (await import('./en.json')).default as RawApiData;
+            break;
+        case 'de':
+            data = (await import('./de.json')).default as RawApiData;
+            break;
+        case 'fr':
+            data = (await import('./fr.json')).default as RawApiData;
+            break;
+        case 'zh':
+            data = (await import('./zh.json')).default as RawApiData;
+            break;
+        case 'id':
+            data = (await import('./id.json')).default as RawApiData;
+            break;
+        case 'ur':
+            data = (await import('./ur.json')).default as RawApiData;
+            break;
+        case 'bn':
+            data = (await import('./bn.json')).default as RawApiData;
+            break;
+        default:
+            data = (await import('./tr.json')).default as RawApiData;
+    }
+
+    dataCache[lang] = data;
+    return data;
+}
 
 // Turkish surah names for better UX
 const turkishSurahNames: Record<number, string> = {
@@ -68,11 +92,21 @@ const turkishSurahNames: Record<number, string> = {
     111: "Tebbet", 112: "İhlâs", 113: "Felak", 114: "Nâs"
 };
 
-export function getQuranData(lang: LanguageCode): Surah[] {
-    const arabicRaw = dataMap.ar;
-    const translationRaw = dataMap[lang];
+// Cached processed Quran data per language
+const quranDataCache: Partial<Record<LanguageCode, Surah[]>> = {};
 
-    return arabicRaw.data.surahs.map((surah, surahIndex) => {
+// Async version - use this for new code
+export async function getQuranDataAsync(lang: LanguageCode): Promise<Surah[]> {
+    if (quranDataCache[lang]) {
+        return quranDataCache[lang]!;
+    }
+
+    const [arabicRaw, translationRaw] = await Promise.all([
+        loadLanguageData('ar'),
+        lang === 'ar' ? loadLanguageData('ar') : loadLanguageData(lang)
+    ]);
+
+    const result = arabicRaw.data.surahs.map((surah, surahIndex) => {
         const translationSurah = translationRaw.data.surahs[surahIndex];
 
         return {
@@ -93,7 +127,34 @@ export function getQuranData(lang: LanguageCode): Surah[] {
             }),
         };
     });
+
+    quranDataCache[lang] = result;
+    return result;
 }
 
-// Default export for backward compatibility
-export const quranData: Surah[] = getQuranData('tr');
+// Sync version - for backward compatibility (loads from cache only)
+export function getQuranData(lang: LanguageCode): Surah[] {
+    if (quranDataCache[lang]) {
+        return quranDataCache[lang]!;
+    }
+    // Return empty array if not loaded yet - caller should use async version
+    return [];
+}
+
+// Preload a specific language
+export async function preloadLanguage(lang: LanguageCode): Promise<void> {
+    await getQuranDataAsync(lang);
+}
+
+// Clear cache to free memory (e.g., when switching languages)
+export function clearLanguageCache(exceptLang?: LanguageCode): void {
+    for (const key of Object.keys(quranDataCache) as LanguageCode[]) {
+        if (key !== exceptLang && key !== 'ar') {
+            delete quranDataCache[key];
+            delete dataCache[key];
+        }
+    }
+}
+
+// Default export for backward compatibility - empty initially
+export const quranData: Surah[] = [];

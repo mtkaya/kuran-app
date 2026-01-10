@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { getQuranData } from '../data/quran';
+import { useQuranData } from '../hooks/useQuranData';
 import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
 import { ArrowLeft, Settings } from 'lucide-react';
@@ -23,9 +23,21 @@ export default function Reader() {
     const observerRef = useRef<IntersectionObserver | null>(null);
     const { mushafMode } = useSettingsStore();
 
-    const quranData = useMemo(() => getQuranData(currentLanguage), [currentLanguage]);
+    const { quranData, isLoading: isQuranLoading } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
     const surah = quranData.find(s => s.id === Number(id));
+
+    // Show loading while data is loading
+    if (isQuranLoading) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-muted-foreground text-sm">{ui.loading}</span>
+                </div>
+            </div>
+        );
+    }
 
     // Track visible ayah for lastRead
     const handleAyahVisible = useCallback((ayah: { id: number; ayah_number: number }) => {

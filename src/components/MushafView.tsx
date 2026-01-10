@@ -5,7 +5,7 @@ import { getPageForAyah } from '../data/pageMapping';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useLanguage } from '../context/LanguageContext';
-import { getQuranData } from '../data/quran';
+import { useQuranData } from '../hooks/useQuranData';
 import { getUIStrings } from '../i18n/strings';
 
 interface MushafViewProps {
@@ -33,7 +33,7 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
     const [pageAyahs, setPageAyahs] = useState<any[]>([]);
 
     // Get full Quran data for lookups
-    const quranData = useMemo(() => getQuranData(currentLanguage), [currentLanguage]);
+    const { quranData } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
 
     // Initialize Page based on surah

@@ -1,7 +1,7 @@
 // Search Store
 import { create } from 'zustand';
 import { Surah, Ayah } from '../types';
-import { getQuranData } from '../data/quran';
+import { getQuranDataAsync } from '../data/quran';
 import { matchesQuery } from '../utils/searchUtils';
 import { LanguageCode } from '../context/LanguageContext';
 
@@ -53,78 +53,83 @@ export const useSearchStore = create<SearchState>((set, get) => ({
 
         set({ isSearching: true, results: [] });
 
-        const quranData = getQuranData(language);
-        const results: SearchResult[] = [];
-        let surahIndex = 0;
-
-        // Time-slicing search
-        const processBatch = () => {
-            // Check if search was cancelled or query changed (basic check)
+        // Load data asynchronously
+        getQuranDataAsync(language).then((quranData) => {
+            // Verify query hasn't changed
             if (get().query !== query) return;
 
-            const startTime = performance.now();
+            const results: SearchResult[] = [];
+            let surahIndex = 0;
 
-            // Process for up to 12ms to maintain 60fps
-            while (surahIndex < quranData.length && performance.now() - startTime < 12) {
-                const surah = quranData[surahIndex];
+            // Time-slicing search
+            const processBatch = () => {
+                // Check if search was cancelled or query changed (basic check)
+                if (get().query !== query) return;
 
-                // Search in surah name
-                if (matchesQuery(surah.name_turkish, query) || matchesQuery(surah.name_arabic, query)) {
-                    if (surah.ayahs.length > 0) {
-                        results.push({
-                            surah,
-                            ayah: surah.ayahs[0],
-                            matchType: 'surah_name',
-                        });
+                const startTime = performance.now();
+
+                // Process for up to 12ms to maintain 60fps
+                while (surahIndex < quranData.length && performance.now() - startTime < 12) {
+                    const surah = quranData[surahIndex];
+
+                    // Search in surah name
+                    if (matchesQuery(surah.name_turkish, query) || matchesQuery(surah.name_arabic, query)) {
+                        if (surah.ayahs.length > 0) {
+                            results.push({
+                                surah,
+                                ayah: surah.ayahs[0],
+                                matchType: 'surah_name',
+                            });
+                        }
                     }
-                }
 
-                // Search in ayahs
-                // Inner loop optimization: also break if time budget exceeded?
-                // Surahs can be large (Bakara 286 ayahs).
-                // Ideally we should process fewer ayahs if needed. 
-                // But processing one surah at a time is usually okay unless it's very large.
-                // Improve: loop ayahs manually?
-                // For simplicity, we process one Surah fully. 
+                    // Search in ayahs
+                    // Inner loop optimization: also break if time budget exceeded?
+                    // Surahs can be large (Bakara 286 ayahs).
+                    // Ideally we should process fewer ayahs if needed. 
+                    // But processing one surah at a time is usually okay unless it's very large.
+                    // Improve: loop ayahs manually?
+                    // For simplicity, we process one Surah fully. 
 
-                for (const ayah of surah.ayahs) {
-                    // Check limiting
+                    for (const ayah of surah.ayahs) {
+                        // Check limiting
+                        if (results.length >= 50) break;
+
+                        // Check Arabic
+                        if ((filter === 'all' || filter === 'arabic') && matchesQuery(ayah.text_arabic, query)) {
+                            results.push({
+                                surah,
+                                ayah,
+                                matchType: 'arabic',
+                            });
+                            continue; // Don't add duplicate
+                        }
+
+                        // Check translation
+                        if ((filter === 'all' || filter === 'translation') && matchesQuery(ayah.text_meal, query)) {
+                            results.push({
+                                surah,
+                                ayah,
+                                matchType: 'translation',
+                            });
+                        }
+                    }
+
                     if (results.length >= 50) break;
-
-                    // Check Arabic
-                    if ((filter === 'all' || filter === 'arabic') && matchesQuery(ayah.text_arabic, query)) {
-                        results.push({
-                            surah,
-                            ayah,
-                            matchType: 'arabic',
-                        });
-                        continue; // Don't add duplicate
-                    }
-
-                    // Check translation
-                    if ((filter === 'all' || filter === 'translation') && matchesQuery(ayah.text_meal, query)) {
-                        results.push({
-                            surah,
-                            ayah,
-                            matchType: 'translation',
-                        });
-                    }
+                    surahIndex++;
                 }
 
-                if (results.length >= 50) break;
-                surahIndex++;
-            }
+                if (results.length >= 50 || surahIndex >= quranData.length) {
+                    set({ results, isSearching: false });
+                } else {
+                    // Continue in next frame
+                    setTimeout(processBatch, 0);
+                }
+            };
 
-            if (results.length >= 50 || surahIndex >= quranData.length) {
-                set({ results, isSearching: false });
-            } else {
-                // Continue in next frame
-                setTimeout(processBatch, 0);
-            }
-        };
-
-        // Start processing
-        setTimeout(processBatch, 0);
+            // Start processing
+            setTimeout(processBatch, 0);
+        });
     },
 
     clearSearch: () => {

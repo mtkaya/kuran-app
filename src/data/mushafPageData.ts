@@ -74,8 +74,8 @@ export async function fetchMushafPage(pageNumber: number): Promise<MushafPageDat
  */
 async function createFallbackPageData(pageNumber: number): Promise<MushafPageData> {
     // Dynamic import to avoid circular dependency
-    const { getQuranData } = await import('./quran');
-    const quranData = getQuranData('tr');
+    const { getQuranDataAsync } = await import('./quran');
+    const quranData = await getQuranDataAsync('tr');
 
     const pageAyahs: any[] = [];
 

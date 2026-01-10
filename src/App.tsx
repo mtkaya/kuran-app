@@ -1,6 +1,6 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
-import { getQuranData } from './data/quran'
+import { useQuranData } from './hooks/useQuranData'
 import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3 } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect, lazy, Suspense } from 'react'
@@ -34,7 +34,7 @@ function App() {
     }, []);
 
     // Get Quran data and UI strings for the selected language
-    const quranData = useMemo(() => getQuranData(currentLanguage), [currentLanguage])
+    const { quranData, isLoading: isQuranLoading } = useQuranData(currentLanguage)
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage])
 
     const filteredSurahs = quranData.filter(surah =>
@@ -43,11 +43,14 @@ function App() {
         surah.id.toString().includes(searchTerm)
     )
 
-    // Wait for hydration before rendering
-    if (!isHydrated) {
+    // Wait for hydration and data loading
+    if (!isHydrated || isQuranLoading) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
-                <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                    <span className="text-muted-foreground text-sm">{isQuranLoading ? ui.loading : ''}</span>
+                </div>
             </div>
         );
     }

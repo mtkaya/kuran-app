@@ -9,11 +9,14 @@ export interface Reciter {
     identifier: string; // EveryAyah folder name
     style: 'Murattal' | 'Mujawwad' | 'Muallim';
     country?: string;
+    qiraat?: 'Hafs' | 'Warsh' | 'Qalun';
+    audioType?: 'arabic' | 'translation';
+    audioLanguage?: string;
 }
 
 // EveryAyah.com reciters - organized by popularity
 export const RECITERS: Reciter[] = [
-    // ⭐ En Popüler Kariler
+    // ⭐ En Popüler Kariler (Hafs)
     {
         id: 'alafasy',
         name: 'Mishary Al-Afasy',
@@ -22,6 +25,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Alafasy_128kbps',
         style: 'Murattal',
         country: '🇰🇼',
+        qiraat: 'Hafs',
     },
     {
         id: 'abdulbasit-murattal',
@@ -31,6 +35,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Abdul_Basit_Murattal_192kbps',
         style: 'Murattal',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     {
         id: 'abdulbasit-mujawwad',
@@ -40,6 +45,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Abdul_Basit_Mujawwad_128kbps',
         style: 'Mujawwad',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     {
         id: 'sudais',
@@ -49,6 +55,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Abdurrahmaan_As-Sudais_192kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'shuraym',
@@ -58,6 +65,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Saood_ash-Shuraym_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     // 🎙️ Klasik Ustalar
     {
@@ -68,6 +76,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Husary_128kbps',
         style: 'Murattal',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     {
         id: 'husary-muallim',
@@ -77,6 +86,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Husary_Muallim_128kbps',
         style: 'Muallim',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     {
         id: 'minshawi-murattal',
@@ -86,6 +96,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Minshawy_Murattal_128kbps',
         style: 'Murattal',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     {
         id: 'minshawi-mujawwad',
@@ -95,6 +106,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Minshawy_Mujawwad_192kbps',
         style: 'Mujawwad',
         country: '🇪🇬',
+        qiraat: 'Hafs',
     },
     // 🕌 Harem İmamları
     {
@@ -105,6 +117,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'MaherAlMuaiqly128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'shatri',
@@ -114,6 +127,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Abu_Bakr_Ash-Shaatree_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'ghamadi',
@@ -123,6 +137,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Ghamadi_40kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     // 🌟 Diğer Popüler Kariler
     {
@@ -133,6 +148,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Hudhaify_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'ayyoub',
@@ -142,6 +158,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Muhammad_Ayyoub_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'basfar',
@@ -151,6 +168,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Abdullah_Basfar_192kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'dussary',
@@ -160,6 +178,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Yasser_Ad-Dussary_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'qatami',
@@ -169,6 +188,7 @@ export const RECITERS: Reciter[] = [
         identifier: 'Nasser_Alqatami_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
     },
     {
         id: 'budair',
@@ -178,6 +198,51 @@ export const RECITERS: Reciter[] = [
         identifier: 'Salah_Al_Budair_128kbps',
         style: 'Murattal',
         country: '🇸🇦',
+        qiraat: 'Hafs',
+    },
+    // 📜 Warsh Kıraati
+    {
+        id: 'abdulbasit-warsh',
+        name: 'Abdul Basit (Warsh)',
+        nameLocal: 'Abdulbasit Abdussamed (Verş)',
+        arabicName: 'عبد الباسط عبد الصمد',
+        identifier: 'warsh/warsh_Abdul_Basit_128kbps',
+        style: 'Murattal',
+        country: '🇪🇬',
+        qiraat: 'Warsh',
+    },
+    {
+        id: 'dosary-warsh',
+        name: 'Ibrahim Al-Dosary (Warsh)',
+        nameLocal: 'İbrahim ed-Devseri (Verş)',
+        arabicName: 'إبراهيم الدوسري',
+        identifier: 'warsh/warsh_ibrahim_aldosary_128kbps',
+        style: 'Murattal',
+        country: '🇸🇦',
+        qiraat: 'Warsh',
+    },
+    {
+        id: 'jazaery-warsh',
+        name: 'Yassin Al-Jazaery (Warsh)',
+        nameLocal: 'Yasin el-Cezayirî (Verş)',
+        arabicName: 'ياسين الجزائري',
+        identifier: 'warsh/warsh_yassin_al-jazaery_64kbps',
+        style: 'Murattal',
+        country: '🇩🇿',
+        qiraat: 'Warsh',
+    },
+    // 🌍 Çeviri Sesleri (Translation Audio)
+    {
+        id: 'ibrahim-walk-en',
+        name: 'Ibrahim Walk (English)',
+        nameLocal: 'İngilizce Meal Sesi',
+        arabicName: '',
+        identifier: 'English/Ibrahim_Walk_192kbps',
+        style: 'Murattal',
+        country: '🇬🇧',
+        qiraat: 'Hafs',
+        audioType: 'translation',
+        audioLanguage: 'en',
     },
 ];
 
@@ -222,4 +287,35 @@ export function getDefaultReciter(): Reciter {
  */
 export function getRecitersByStyle(style: Reciter['style']): Reciter[] {
     return RECITERS.filter(r => r.style === style);
+}
+
+/**
+ * Get reciters by qiraat
+ */
+export function getRecitersByQiraat(qiraat: 'Hafs' | 'Warsh' | 'Qalun'): Reciter[] {
+    return RECITERS.filter(r => r.qiraat === qiraat);
+}
+
+/**
+ * Get reciters by audio type
+ */
+export function getRecitersByAudioType(audioType: 'arabic' | 'translation'): Reciter[] {
+    if (audioType === 'arabic') {
+        return RECITERS.filter(r => !r.audioType || r.audioType === 'arabic');
+    }
+    return RECITERS.filter(r => r.audioType === audioType);
+}
+
+/**
+ * Get Arabic reciters only (default behavior)
+ */
+export function getArabicReciters(): Reciter[] {
+    return RECITERS.filter(r => !r.audioType || r.audioType === 'arabic');
+}
+
+/**
+ * Get translation audio reciters
+ */
+export function getTranslationReciters(): Reciter[] {
+    return RECITERS.filter(r => r.audioType === 'translation');
 }

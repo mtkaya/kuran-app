@@ -3,10 +3,7 @@ import { SurahCard } from './components/SurahCard'
 import { getQuranData } from './data/quran'
 import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3 } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
-import { useState, useMemo, useEffect } from 'react'
-import Reader from './pages/Reader'
-import Search from './pages/Search'
-import { Notes } from './pages/Notes'
+import { useState, useMemo, useEffect, lazy, Suspense } from 'react'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -14,6 +11,11 @@ import { ContinueReading } from './components/ContinueReading'
 import { useSettingsStore } from './store/settingsStore'
 import { useBookmarkStore } from './store/bookmarkStore'
 import { useReadingStore } from './store/readingStore'
+
+// Lazy load pages for better initial load performance
+const Reader = lazy(() => import('./pages/Reader'))
+const Search = lazy(() => import('./pages/Search'))
+const Notes = lazy(() => import('./pages/Notes'))
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('')
@@ -206,10 +208,22 @@ function App() {
                         </main>
                     </div>
                 } />
-                < Route path="/surah/:id" element={< Reader />} />
-                < Route path="/search" element={< Search />} />
-                < Route path="/notes" element={< Notes />} />
-            </Routes >
+                <Route path="/surah/:id" element={
+                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <Reader />
+                    </Suspense>
+                } />
+                <Route path="/search" element={
+                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <Search />
+                    </Suspense>
+                } />
+                <Route path="/notes" element={
+                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <Notes />
+                    </Suspense>
+                } />
+            </Routes>
 
             <SettingsPanel
                 isOpen={isSettingsOpen}

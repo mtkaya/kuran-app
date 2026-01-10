@@ -37,3 +37,5 @@ export const Notes: React.FC = () => {
         </div>
     );
 };
+
+export default Notes;

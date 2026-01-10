@@ -11,4 +11,25 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: (id) => {
+                    // Split each language JSON into its own chunk
+                    if (id.includes('src/data/ar.json')) return 'quran-ar';
+                    if (id.includes('src/data/tr.json')) return 'quran-tr';
+                    if (id.includes('src/data/en.json')) return 'quran-en';
+                    if (id.includes('src/data/de.json')) return 'quran-de';
+                    if (id.includes('src/data/fr.json')) return 'quran-fr';
+                    if (id.includes('src/data/zh.json')) return 'quran-zh';
+                    // React and other vendor libs
+                    if (id.includes('node_modules')) {
+                        if (id.includes('react')) return 'react-vendor';
+                        if (id.includes('zustand')) return 'state-vendor';
+                        return 'vendor';
+                    }
+                }
+            }
+        }
+    }
 })

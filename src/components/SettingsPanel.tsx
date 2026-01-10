@@ -344,7 +344,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                         <div className="flex flex-col items-center gap-1">
                             <div className="w-12 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
                             <p className="text-xs text-muted-foreground/70 font-light tracking-wider">
-                                Bir <span className="font-semibold text-primary/80">ARF HAUSE</span> markasıdır
+                                Bir <span className="font-semibold text-primary/80">ARFHAUSE</span> markasıdır
                             </p>
                             <p className="text-[10px] text-muted-foreground/50 tracking-widest">
                                 © 2026

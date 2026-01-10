@@ -129,7 +129,7 @@ export default function Reader() {
             </div>
 
             {/* Content */}
-            <div className="max-w-2xl mx-auto px-4 pb-4 pt-24">
+            <div className="max-w-2xl mx-auto px-4 pb-4 pt-28">
                 {mushafMode ? (
                     <div className="animate-fade-in">
                         <MushafView

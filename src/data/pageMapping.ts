@@ -237,9 +237,10 @@ export function getPageForAyah(surah: number, ayah: number): number {
  * Uses local Diyanet Mushaf images (converted from PDF)
  */
 export function getPageImageUrl(page: number): string {
-    // Diyanet PDF has extra cover pages at the beginning
-    // Actual Quran pages start from page 12 in the PDF
-    const COVER_PAGES_OFFSET = 11; // Adjusted: Fatiha = page 1
+    // All 616 PDF pages are included (covers + 604 Quran pages)
+    // page-001.png = PDF page 1 (likely cover)
+    // Adjust offset based on where Fatiha starts in your PDF
+    const COVER_PAGES_OFFSET = 0; // Set to 0, user will verify
     const actualPage = page + COVER_PAGES_OFFSET;
     const paddedPage = actualPage.toString().padStart(3, '0');
 

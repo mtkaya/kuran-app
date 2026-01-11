@@ -238,8 +238,8 @@ export function getPageForAyah(surah: number, ayah: number): number {
  */
 export function getPageImageUrl(page: number): string {
     // Diyanet PDF has extra cover pages at the beginning
-    // Actual Quran pages start from page 13 in the PDF (adjust as needed)
-    const COVER_PAGES_OFFSET = 12; // Skip cover, index, and intro pages
+    // Actual Quran pages start from page 12 in the PDF
+    const COVER_PAGES_OFFSET = 11; // Adjusted: Fatiha = page 1
     const actualPage = page + COVER_PAGES_OFFSET;
     const paddedPage = actualPage.toString().padStart(3, '0');
 

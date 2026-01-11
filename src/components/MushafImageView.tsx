@@ -56,7 +56,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const pageInfo = getPageFirstAyah(currentPage);
 
     return (
-        <div className="flex flex-col h-full bg-[#FBF7F0] dark:bg-[#1a1a1a]">
+        <div className="flex flex-col h-full bg-background">
             {/* Page Navigation Header */}
             <div className="flex items-center justify-between px-4 py-2 bg-card/80 backdrop-blur-sm border-b border-border/30">
                 <button
@@ -89,8 +89,8 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                 </button>
             </div>
 
-            {/* Page Image */}
-            <div className="flex-1 relative overflow-auto flex items-center justify-center p-2">
+            {/* Page Image - fills remaining space */}
+            <div className="flex-1 relative overflow-auto flex items-start justify-center p-1 pb-2">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-background/50">
                         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -116,18 +116,13 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                         alt={`Kur'an sayfa ${currentPage}`}
                         onLoad={handleImageLoad}
                         onError={handleImageError}
-                        className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+                        className="w-full h-auto object-contain"
                         style={{
                             opacity: isLoading ? 0 : 1,
                             transition: 'opacity 0.3s ease'
                         }}
                     />
                 )}
-            </div>
-
-            {/* Swipe hint */}
-            <div className="text-center py-2 text-xs text-muted-foreground">
-                ← Önceki / Sonraki →
             </div>
         </div>
     );

@@ -28,6 +28,8 @@ export interface Note {
     updatedAt: number;
 }
 
+export type ReadingMode = 'normal' | 'mushaf' | 'digital';
+
 export interface UserSettings {
     theme: 'light' | 'dark' | 'system';
     arabicFontSize: number;  // 20-48
@@ -35,7 +37,7 @@ export interface UserSettings {
     showTransliteration: boolean;
     showTajweed: boolean;
     memorizationMode: boolean;
-    mushafMode: boolean;
+    readingMode: ReadingMode;
     arabicFont: string;
 }
 
@@ -54,7 +56,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     showTransliteration: false,
     showTajweed: false,
     memorizationMode: false,
-    mushafMode: false,
+    readingMode: 'normal',
     arabicFont: 'Amiri Quran',
 };
 

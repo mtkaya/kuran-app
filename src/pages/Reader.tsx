@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useQuranData } from '../hooks/useQuranData';
 import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
+import { MushafImageView } from '../components/MushafImageView';
 import { ArrowLeft, Settings } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
@@ -21,7 +22,7 @@ export default function Reader() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { toast, showToast, hideToast } = useToast();
     const observerRef = useRef<IntersectionObserver | null>(null);
-    const { mushafMode } = useSettingsStore();
+    const { readingMode } = useSettingsStore();
 
     const { quranData, isLoading: isQuranLoading } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
@@ -141,15 +142,29 @@ export default function Reader() {
             </div>
 
             {/* Content */}
-            <div className="max-w-2xl mx-auto px-4 pb-4 pt-28">
-                {mushafMode ? (
+            <div className={readingMode === 'mushaf' ? 'h-[calc(100vh-80px)]' : 'max-w-2xl mx-auto px-4 pb-4 pt-28'}>
+                {/* Mushaf Mode - Real Page Images */}
+                {readingMode === 'mushaf' && (
+                    <div className="h-full animate-fade-in">
+                        <MushafImageView
+                            surahId={surah.id}
+                            initialAyah={1}
+                        />
+                    </div>
+                )}
+
+                {/* Digital Mode - Styled Mushaf Text */}
+                {readingMode === 'digital' && (
                     <div className="animate-fade-in">
                         <MushafView
                             surahId={surah.id}
                             initialAyahId={currentAyahId || undefined}
                         />
                     </div>
-                ) : (
+                )}
+
+                {/* Normal Mode - Ayah by Ayah */}
+                {readingMode === 'normal' && (
                     <>
                         {/* Besmele Banner (not for Surah 9 - Tawbah) */}
                         {surah.id !== 9 && (

@@ -1,6 +1,6 @@
 // Settings Panel Component
 import React from 'react';
-import { X, Minus, Plus, Volume2, Type, Palette, Brain, BookOpen, Globe } from 'lucide-react';
+import { X, Minus, Plus, Volume2, Type, Palette, Brain, BookOpen, Globe, FileText, Monitor } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useLanguage, LanguageCode, LANGUAGES } from '../context/LanguageContext';
@@ -20,7 +20,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
         showTransliteration, setShowTransliteration,
         showTajweed, setShowTajweed,
         memorizationMode, setMemorizationMode,
-        mushafMode, setMushafMode,
+        readingMode, setReadingMode,
         arabicFont, setArabicFont
     } = useSettingsStore();
     const { selectedReciterId, setReciter } = useAudioStore();
@@ -144,22 +144,52 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                         </p>
                     )}
                 </div>
-                {/* Mushaf Mode Toggle */}
+                {/* Reading Mode Selection */}
                 <div className="mb-6">
-                    <label className="flex items-center justify-between cursor-pointer">
-                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <BookOpen className="w-4 h-4" />
-                            {ui.mushafMode}
-                        </span>
-                        <button
-                            onClick={() => setMushafMode(!mushafMode)}
-                            className={`relative w-12 h-6 rounded-full transition-colors ${mushafMode ? 'bg-primary' : 'bg-secondary'}`}
-                        >
-                            <span
-                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${mushafMode ? 'translate-x-6' : ''}`}
-                            />
-                        </button>
+                    <label className="text-sm font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                        <BookOpen className="w-4 h-4" />
+                        Okuma Modu
                     </label>
+                    <div className="grid grid-cols-3 gap-2">
+                        <button
+                            onClick={() => setReadingMode('normal')}
+                            className={`flex flex-col items-center gap-1 py-3 px-2 rounded-lg text-xs font-medium transition-colors
+                                ${readingMode === 'normal'
+                                    ? 'bg-primary text-primary-foreground'
+                                    : 'bg-secondary hover:bg-secondary/80'
+                                }`}
+                        >
+                            <FileText className="w-5 h-5" />
+                            <span>Normal</span>
+                        </button>
+                        <button
+                            onClick={() => setReadingMode('mushaf')}
+                            className={`flex flex-col items-center gap-1 py-3 px-2 rounded-lg text-xs font-medium transition-colors
+                                ${readingMode === 'mushaf'
+                                    ? 'bg-primary text-primary-foreground'
+                                    : 'bg-secondary hover:bg-secondary/80'
+                                }`}
+                        >
+                            <BookOpen className="w-5 h-5" />
+                            <span>Mushaf</span>
+                        </button>
+                        <button
+                            onClick={() => setReadingMode('digital')}
+                            className={`flex flex-col items-center gap-1 py-3 px-2 rounded-lg text-xs font-medium transition-colors
+                                ${readingMode === 'digital'
+                                    ? 'bg-primary text-primary-foreground'
+                                    : 'bg-secondary hover:bg-secondary/80'
+                                }`}
+                        >
+                            <Monitor className="w-5 h-5" />
+                            <span>Dijital</span>
+                        </button>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                        {readingMode === 'normal' && 'Ayet ayet metin ve meal'}
+                        {readingMode === 'mushaf' && 'Gerçek Kur\'an sayfaları'}
+                        {readingMode === 'digital' && 'Dijital Mushaf görünümü'}
+                    </p>
                 </div>
 
                 {/* Memorization Mode Toggle */}

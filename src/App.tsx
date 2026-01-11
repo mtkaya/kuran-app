@@ -22,7 +22,7 @@ function App() {
     const { currentLanguage } = useLanguage()
     const [isHydrated, setIsHydrated] = useState(false)
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
-    const { mushafMode, setMushafMode } = useSettingsStore()
+    const { readingMode, setReadingMode } = useSettingsStore()
     const [surahViewMode, setSurahViewMode] = useState<'list' | 'grid'>('list')
 
     // Hydrate all stores on mount
@@ -97,27 +97,37 @@ function App() {
                                 <ContinueReading />
                             </div>
 
-                            {/* Mode Selection Toggles */}
-                            <div className="grid grid-cols-2 gap-3 mb-4">
+                            {/* Reading Mode Selection - 3 Options */}
+                            <div className="grid grid-cols-3 gap-2 mb-4">
                                 <button
-                                    onClick={() => setMushafMode(false)}
-                                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200 ${!mushafMode
+                                    onClick={() => setReadingMode('normal')}
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'normal'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
                                     <ScrollText className="w-4 h-4" />
-                                    <span className="font-medium text-sm">Normal</span>
+                                    <span className="font-medium text-xs">Normal</span>
                                 </button>
                                 <button
-                                    onClick={() => setMushafMode(true)}
-                                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border transition-all duration-200 ${mushafMode
+                                    onClick={() => setReadingMode('mushaf')}
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'mushaf'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
                                     <BookOpen className="w-4 h-4" />
-                                    <span className="font-medium text-sm">Mushaf</span>
+                                    <span className="font-medium text-xs">Mushaf</span>
+                                </button>
+                                <button
+                                    onClick={() => setReadingMode('digital')}
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'digital'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                        : 'bg-card text-muted-foreground border-border hover:border-primary/50'
+                                        }`}
+                                >
+                                    <BookOpen className="w-4 h-4" />
+                                    <span className="font-medium text-xs">Dijital</span>
                                 </button>
                             </div>
 

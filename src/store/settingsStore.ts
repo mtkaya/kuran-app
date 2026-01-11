@@ -1,6 +1,6 @@
 // Settings Store - Theme and Font Sizes
 import { create } from 'zustand';
-import { UserSettings, DEFAULT_SETTINGS } from '../storage/types';
+import { UserSettings, DEFAULT_SETTINGS, ReadingMode } from '../storage/types';
 import { getSettings, saveSettings } from '../storage/storage';
 
 interface SettingsState extends UserSettings {
@@ -10,7 +10,7 @@ interface SettingsState extends UserSettings {
     setShowTransliteration: (show: boolean) => void;
     setShowTajweed: (show: boolean) => void;
     setMemorizationMode: (mode: boolean) => void;
-    setMushafMode: (mode: boolean) => void;
+    setReadingMode: (mode: ReadingMode) => void;
     setArabicFont: (font: string) => void;
     hydrate: () => void;
 }
@@ -48,9 +48,10 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
         set({ memorizationMode });
         saveSettings({ ...get(), memorizationMode });
     },
-    setMushafMode: (mushafMode) => {
-        set({ mushafMode });
-        saveSettings({ ...get(), mushafMode });
+
+    setReadingMode: (readingMode) => {
+        set({ readingMode });
+        saveSettings({ ...get(), readingMode });
     },
 
     setArabicFont: (arabicFont) => {
@@ -60,8 +61,14 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
 
     hydrate: () => {
         const settings = getSettings();
-        set(settings);
-        applyTheme(settings.theme);
+        // Migration: convert old mushafMode to new readingMode
+        const migratedSettings = {
+            ...settings,
+            readingMode: (settings as any).mushafMode === true ? 'digital' : (settings.readingMode || 'normal')
+        };
+        delete (migratedSettings as any).mushafMode;
+        set(migratedSettings);
+        applyTheme(migratedSettings.theme);
     },
 }));
 

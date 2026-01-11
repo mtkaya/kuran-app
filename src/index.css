@@ -122,9 +122,10 @@
   /* Gradient Header with Islamic Pattern */
   .gradient-header {
     background: linear-gradient(135deg,
-        hsl(40 65% 55%) 0%,
-        hsl(40 60% 48%) 50%,
-        hsl(350 50% 30%) 100%);
+        hsl(174 11% 28%) 0%,
+        hsl(195 13% 20%) 50%,
+        hsl(25 31% 45%) 100%);
+    /* LUNAR ECLIPSE -> INKWELL -> CREME BRULEE */
     position: relative;
     overflow: hidden;
   }
@@ -134,7 +135,7 @@
     position: absolute;
     inset: 0;
     /* Islamic Geometric Pattern - 8-pointed stars */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.25'%3E%3C!-- 8-pointed star --%3E%3Cpath d='M30 5 L35 20 L50 15 L40 25 L55 30 L40 35 L50 45 L35 40 L30 55 L25 40 L10 45 L20 35 L5 30 L20 25 L10 15 L25 20 Z'/%3E%3C!-- Inner octagon --%3E%3Cpolygon points='30,12 42,18 48,30 42,42 30,48 18,42 12,30 18,18'/%3E%3C!-- Center circle --%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3C/g%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23DCD7C9' stroke-width='0.5' opacity='0.25'%3E%3C!-- 8-pointed star --%3E%3Cpath d='M30 5 L35 20 L50 15 L40 25 L55 30 L40 35 L50 45 L35 40 L30 55 L25 40 L10 45 L20 35 L5 30 L20 25 L10 15 L25 20 Z'/%3E%3C!-- Inner octagon --%3E%3Cpolygon points='30,12 42,18 48,30 42,42 30,48 18,42 12,30 18,18'/%3E%3C!-- Center circle --%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3C/g%3E%3C/svg%3E");
     background-size: 60px 60px;
     opacity: 0.4;
     pointer-events: none;
@@ -153,13 +154,14 @@
 
   .dark .gradient-header {
     background: linear-gradient(135deg,
-        hsl(350 30% 15%) 0%,
-        hsl(350 25% 12%) 50%,
-        hsl(40 40% 20%) 100%);
+        hsl(195 13% 15%) 0%,
+        hsl(174 11% 22%) 50%,
+        hsl(25 31% 40%) 100%);
+    /* Darker INKWELL -> LUNAR ECLIPSE -> CREME BRULEE */
   }
 
   .dark .gradient-header::before {
-    opacity: 0.2;
+    opacity: 0.15;
   }
 
   /* Glass Effect */

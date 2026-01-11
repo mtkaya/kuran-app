@@ -17,80 +17,83 @@
 
 @layer base {
   :root {
-    /* New Readability-Focused Theme */
-    /* Light mode: #CFE5FF light blue background */
-    --background: 213 100% 91%;
-    --foreground: 234 60% 25%;
-    /* Dark blue text for readability */
+    /* AU LAIT Theme - Light Mode */
+    /* AU LAIT #DCD7C9 - Light background */
+    --background: 44 26% 82%;
+    --foreground: 195 13% 20%;
+    /* INKWELL for text */
 
-    --card: 213 80% 96%;
-    --card-foreground: 234 60% 25%;
+    --card: 44 20% 88%;
+    --card-foreground: 195 13% 20%;
 
-    --popover: 213 80% 96%;
-    --popover-foreground: 234 60% 25%;
+    --popover: 44 20% 88%;
+    --popover-foreground: 195 13% 20%;
 
-    /* Dark Blue Primary #252F9C */
-    --primary: 234 61% 38%;
-    --primary-foreground: 213 100% 95%;
+    /* CREME BRULEE #A27B5B - Primary accent */
+    --primary: 25 31% 53%;
+    --primary-foreground: 44 26% 95%;
 
-    --secondary: 213 60% 92%;
-    --secondary-foreground: 234 60% 25%;
+    /* LUNAR ECLIPSE for secondary */
+    --secondary: 174 11% 85%;
+    --secondary-foreground: 195 13% 20%;
 
-    --muted: 213 40% 88%;
-    --muted-foreground: 234 30% 45%;
+    --muted: 44 15% 75%;
+    --muted-foreground: 174 11% 35%;
 
-    /* Maroon Accent #7C1034 */
-    --accent: 343 77% 28%;
-    --accent-foreground: 213 100% 95%;
+    /* CREME BRULEE for accent */
+    --accent: 25 31% 53%;
+    --accent-foreground: 44 26% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 213 40% 82%;
-    --input: 213 40% 82%;
-    --ring: 234 61% 38%;
+    --border: 44 18% 70%;
+    --input: 44 18% 70%;
+    --ring: 25 31% 53%;
 
     --radius: 0.75rem;
 
     /* Glow colors */
-    --glow-primary: 234 65% 45%;
-    --glow-gold: 234 70% 50%;
+    --glow-primary: 25 35% 55%;
+    --glow-gold: 25 40% 60%;
   }
 
   .dark {
-    /* Dark mode: #7C1034 maroon background */
-    --background: 343 77% 14%;
-    --foreground: 213 100% 91%;
-    /* Light blue text #CFE5FF */
+    /* INKWELL #2C3639 - Dark mode background (darkest) */
+    --background: 195 13% 20%;
+    --foreground: 44 26% 82%;
+    /* AU LAIT for text */
 
-    --card: 343 65% 18%;
-    --card-foreground: 213 100% 91%;
+    /* LUNAR ECLIPSE #3F4E4F for cards */
+    --card: 174 11% 28%;
+    --card-foreground: 44 26% 88%;
 
-    --popover: 343 65% 18%;
-    --popover-foreground: 213 100% 91%;
+    --popover: 174 11% 28%;
+    --popover-foreground: 44 26% 88%;
 
-    /* Dark Blue primary in dark mode */
-    --primary: 213 80% 75%;
-    --primary-foreground: 343 77% 14%;
+    /* CREME BRULEE #A27B5B - Primary in dark mode */
+    --primary: 25 31% 58%;
+    --primary-foreground: 195 13% 15%;
 
-    --secondary: 343 50% 22%;
-    --secondary-foreground: 213 100% 91%;
+    --secondary: 174 11% 24%;
+    --secondary-foreground: 44 26% 85%;
 
-    --muted: 343 40% 26%;
-    --muted-foreground: 213 60% 70%;
+    --muted: 195 10% 25%;
+    --muted-foreground: 44 20% 65%;
 
-    --accent: 213 80% 75%;
-    --accent-foreground: 343 77% 14%;
+    /* CREME BRULEE for accent */
+    --accent: 25 31% 58%;
+    --accent-foreground: 195 13% 15%;
 
     --destructive: 0 62.8% 45%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 343 40% 30%;
-    --input: 343 40% 30%;
-    --ring: 213 80% 75%;
+    --border: 174 11% 32%;
+    --input: 174 11% 32%;
+    --ring: 25 31% 58%;
 
-    --glow-primary: 213 85% 70%;
-    --glow-gold: 213 90% 75%;
+    --glow-primary: 25 35% 55%;
+    --glow-gold: 25 40% 60%;
   }
 }
 

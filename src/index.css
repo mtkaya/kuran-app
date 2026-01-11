@@ -18,8 +18,8 @@
 @layer base {
   :root {
     /* Elegant Islamic Cream, Gold & Maroon Theme */
-    --background: 38 40% 96%;
-    /* Krem */
+    /* #fef9da = hsl(50, 93%, 93%) */
+    --background: 50 93% 93%;
     --foreground: 350 40% 20%;
     /* Koyu bordo metin */
 

@@ -18,20 +18,20 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center justify-center gap-2 p-3 h-[160px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
+                className="flex flex-col items-center justify-center gap-1 p-2 h-[140px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97] overflow-hidden"
             >
                 {/* Surah Number */}
-                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-xs border border-primary/10">
+                <div className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-xs border border-primary/10">
                     {surah.id}
                 </div>
 
-                {/* Surah Name - allow 2 lines */}
-                <h3 className="font-semibold text-xs text-foreground text-center w-full line-clamp-2 leading-tight min-h-[28px] flex items-center justify-center">
+                {/* Surah Name - single line with ellipsis */}
+                <h3 className="font-semibold text-xs text-foreground text-center w-full truncate px-1">
                     {surah.name_turkish}
                 </h3>
 
-                {/* Arabic Name */}
-                <span className="font-arabic text-base text-muted-foreground text-center w-full leading-tight">
+                {/* Arabic Name - single line */}
+                <span className="font-arabic text-sm text-muted-foreground text-center w-full truncate px-1">
                     {surah.name_arabic}
                 </span>
 

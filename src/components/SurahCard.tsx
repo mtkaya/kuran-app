@@ -18,25 +18,25 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center justify-between p-3 min-h-[140px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
+                className="flex flex-col items-center justify-center gap-2 p-3 h-[160px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
             >
                 {/* Surah Number */}
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-xs border border-primary/10">
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-xs border border-primary/10">
                     {surah.id}
                 </div>
 
-                {/* Surah Name */}
-                <h3 className="font-semibold text-xs text-foreground text-center line-clamp-2 w-full mt-2 leading-tight">
+                {/* Surah Name - allow 2 lines */}
+                <h3 className="font-semibold text-xs text-foreground text-center w-full line-clamp-2 leading-tight min-h-[28px] flex items-center justify-center">
                     {surah.name_turkish}
                 </h3>
 
-                {/* Arabic Name - tighter line height */}
-                <span className="font-arabic text-lg text-muted-foreground text-center w-full leading-none py-1">
+                {/* Arabic Name */}
+                <span className="font-arabic text-base text-muted-foreground text-center w-full leading-tight">
                     {surah.name_arabic}
                 </span>
 
                 {/* Verse Count */}
-                <span className="text-[10px] text-muted-foreground mt-1">
+                <span className="flex-shrink-0 text-[10px] text-muted-foreground">
                     {surah.verse_count} {ui.verses}
                 </span>
             </Link>

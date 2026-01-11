@@ -17,82 +17,80 @@
 
 @layer base {
   :root {
-    /* Elegant Islamic Cream, Gold & Maroon Theme */
-    /* #fef9da = hsl(50, 93%, 93%) */
-    --background: 50 93% 93%;
-    --foreground: 350 40% 20%;
-    /* Koyu bordo metin */
+    /* New Readability-Focused Theme */
+    /* Light mode: #CFE5FF light blue background */
+    --background: 213 100% 91%;
+    --foreground: 234 60% 25%;
+    /* Dark blue text for readability */
 
-    --card: 38 30% 98%;
-    --card-foreground: 350 40% 20%;
+    --card: 213 80% 96%;
+    --card-foreground: 234 60% 25%;
 
-    --popover: 38 30% 98%;
-    --popover-foreground: 350 40% 20%;
+    --popover: 213 80% 96%;
+    --popover-foreground: 234 60% 25%;
 
-    /* Gold Primary */
-    --primary: 40 65% 58%;
-    /* Altın */
-    --primary-foreground: 350 50% 15%;
+    /* Dark Blue Primary #252F9C */
+    --primary: 234 61% 38%;
+    --primary-foreground: 213 100% 95%;
 
-    --secondary: 38 30% 94%;
-    --secondary-foreground: 350 40% 20%;
+    --secondary: 213 60% 92%;
+    --secondary-foreground: 234 60% 25%;
 
-    --muted: 38 25% 90%;
-    --muted-foreground: 350 20% 45%;
+    --muted: 213 40% 88%;
+    --muted-foreground: 234 30% 45%;
 
-    /* Maroon Accent */
-    --accent: 350 60% 35%;
-    /* Bordo */
-    --accent-foreground: 38 40% 96%;
+    /* Maroon Accent #7C1034 */
+    --accent: 343 77% 28%;
+    --accent-foreground: 213 100% 95%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 38 25% 85%;
-    --input: 38 25% 85%;
-    --ring: 40 65% 58%;
+    --border: 213 40% 82%;
+    --input: 213 40% 82%;
+    --ring: 234 61% 38%;
 
     --radius: 0.75rem;
 
     /* Glow colors */
-    --glow-primary: 40 70% 60%;
-    --glow-gold: 40 80% 65%;
+    --glow-primary: 234 65% 45%;
+    --glow-gold: 234 70% 50%;
   }
 
   .dark {
-    --background: 350 30% 10%;
-    /* Koyu bordo */
-    --foreground: 38 30% 92%;
-    /* Krem metin */
+    /* Dark mode: #7C1034 maroon background */
+    --background: 343 77% 14%;
+    --foreground: 213 100% 91%;
+    /* Light blue text #CFE5FF */
 
-    --card: 350 25% 14%;
-    --card-foreground: 38 30% 92%;
+    --card: 343 65% 18%;
+    --card-foreground: 213 100% 91%;
 
-    --popover: 350 25% 14%;
-    --popover-foreground: 38 30% 92%;
+    --popover: 343 65% 18%;
+    --popover-foreground: 213 100% 91%;
 
-    /* Gold primary in dark mode */
-    --primary: 40 70% 55%;
-    --primary-foreground: 350 40% 12%;
+    /* Dark Blue primary in dark mode */
+    --primary: 213 80% 75%;
+    --primary-foreground: 343 77% 14%;
 
-    --secondary: 350 20% 18%;
-    --secondary-foreground: 38 30% 92%;
+    --secondary: 343 50% 22%;
+    --secondary-foreground: 213 100% 91%;
 
-    --muted: 350 18% 22%;
-    --muted-foreground: 38 20% 60%;
+    --muted: 343 40% 26%;
+    --muted-foreground: 213 60% 70%;
 
-    --accent: 40 65% 50%;
-    --accent-foreground: 350 40% 12%;
+    --accent: 213 80% 75%;
+    --accent-foreground: 343 77% 14%;
 
     --destructive: 0 62.8% 45%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 350 18% 25%;
-    --input: 350 18% 25%;
-    --ring: 40 70% 55%;
+    --border: 343 40% 30%;
+    --input: 343 40% 30%;
+    --ring: 213 80% 75%;
 
-    --glow-primary: 40 75% 55%;
-    --glow-gold: 40 85% 60%;
+    --glow-primary: 213 85% 70%;
+    --glow-gold: 213 90% 75%;
   }
 }
 

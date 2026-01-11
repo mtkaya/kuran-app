@@ -234,18 +234,17 @@ export function getPageForAyah(surah: number, ayah: number): number {
 
 /**
  * Get Mushaf page image URL
- * Uses Quran.com CDN for high-quality Madani Mushaf images
+ * Uses local Diyanet Mushaf images (converted from PDF)
  */
 export function getPageImageUrl(page: number): string {
-    // Quran.com uses v2 words endpoint, for pages we use a different approach
-    // Using Internet Archive Madani Mushaf as backup
-    const paddedPage = page.toString().padStart(3, '0');
+    // Diyanet PDF has extra cover pages at the beginning
+    // Actual Quran pages start from page 13 in the PDF (adjust as needed)
+    const COVER_PAGES_OFFSET = 12; // Skip cover, index, and intro pages
+    const actualPage = page + COVER_PAGES_OFFSET;
+    const paddedPage = actualPage.toString().padStart(3, '0');
 
-    // Primary: Quran.com (if allowed)
-    // return `https://cdn.quran.com/images/pages/${paddedPage}.png`;
-
-    // Primary: Quran Android (Official)
-    return `https://android.quran.com/data/width_1024/page${paddedPage}.png`;
+    // Use local Diyanet Mushaf images
+    return `/mushaf/diyanet/page-${paddedPage}.png`;
 }
 
 /**

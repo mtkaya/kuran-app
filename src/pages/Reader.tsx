@@ -71,9 +71,10 @@ export default function Reader() {
     // Scroll to ayah if hash is present or when audio changes
     useEffect(() => {
         const hash = window.location.hash;
-        if (hash) {
+        // Validate hash format to prevent XSS - only allow #ayah-{number}
+        if (hash && /^#ayah-\d+$/.test(hash)) {
             setTimeout(() => {
-                const element = document.querySelector(hash);
+                const element = document.getElementById(hash.slice(1));
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }

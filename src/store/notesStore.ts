@@ -15,9 +15,9 @@ interface NotesState {
     loadNotes: () => void;
 }
 
-// Generate unique ID
+// Generate unique ID using cryptographically secure method
 const generateId = (): string => {
-    return `note_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return crypto.randomUUID();
 };
 
 // Save to localStorage

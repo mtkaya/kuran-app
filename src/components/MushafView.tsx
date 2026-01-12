@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { MushafTextView } from './MushafTextView';
+import { MushafTranslationPanel } from './MushafTranslationPanel';
 import { getPageForAyah } from '../data/pageMapping';
 import { useAudioStore } from '../store/audioStore';
-import { useSettingsStore } from '../store/settingsStore';
 import { useLanguage } from '../context/LanguageContext';
 import { useQuranData } from '../hooks/useQuranData';
 import { getUIStrings } from '../i18n/strings';
@@ -22,7 +22,6 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
         play,
     } = useAudioStore();
 
-    const { arabicFont } = useSettingsStore();
     const { currentLanguage } = useLanguage();
 
     // State
@@ -106,54 +105,12 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
             </div>
 
             {/* Translation Panel */}
-            <div className="bg-card rounded-2xl p-4 shadow-sm border border-border/50">
-                <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border/50">
-                    <h3 className="font-semibold text-foreground">{ui.pageTranslation}</h3>
-                    <span className="text-xs text-muted-foreground bg-secondary px-2 py-0.5 rounded-full">
-                        {pageAyahs.length} {ui.verses}
-                    </span>
-                </div>
-
-                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                    {pageAyahs.map((ayah) => {
-                        const isActive = currentAyahId === ayah.id;
-                        return (
-                            <div
-                                key={ayah.id}
-                                onClick={() => handleAyahClick(ayah)}
-                                className={`p-4 rounded-xl transition-all cursor-pointer border ${isActive
-                                    ? 'bg-primary/10 border-primary shadow-md ring-1 ring-primary/30'
-                                    : 'bg-background hover:bg-secondary/50 border-transparent hover:border-border'
-                                    }`}
-                            >
-                                <div className="flex justify-between items-start gap-4 mb-2">
-                                    <span className={`text-xs font-bold px-2 py-1 rounded-md ${isActive ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground'
-                                        }`}>
-                                        {ayah.surah_id}:{ayah.ayah_number}
-                                    </span>
-                                    <p
-                                        className="font-arabic text-xl text-right flex-1 leading-loose"
-                                        dir="rtl"
-                                        style={{ fontFamily: arabicFont }}
-                                    >
-                                        {ayah.text_arabic}
-                                    </p>
-                                </div>
-                                <p className={`text-sm leading-relaxed ${isActive ? 'text-foreground font-medium' : 'text-muted-foreground'
-                                    }`}>
-                                    {ayah.text_meal}
-                                </p>
-                            </div>
-                        );
-                    })}
-
-                    {pageAyahs.length === 0 && (
-                        <div className="text-center py-8 text-muted-foreground">
-                            {ui.loading}
-                        </div>
-                    )}
-                </div>
-            </div>
+            <MushafTranslationPanel
+                pageAyahs={pageAyahs}
+                currentAyahId={currentAyahId}
+                onAyahClick={handleAyahClick}
+                ui={ui}
+            />
         </div>
     );
 };

@@ -3,6 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { getPageImageUrl, getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
 import { useAudioStore } from '../store/audioStore';
+import { useLanguage } from '../context/LanguageContext';
+import { useQuranData } from '../hooks/useQuranData';
+import { getUIStrings } from '../i18n/strings';
+import { MushafTranslationPanel } from './MushafTranslationPanel';
 
 interface MushafImageViewProps {
     surahId: number;
@@ -14,7 +18,29 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [isLoading, setIsLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
 
-    const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
+    const { currentSurahId, currentAyahNumber, isPlaying, play, currentAyahId } = useAudioStore();
+    const { currentLanguage } = useLanguage();
+    const { quranData } = useQuranData(currentLanguage);
+    const ui = React.useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
+
+    const [pageAyahs, setPageAyahs] = useState<any[]>([]);
+
+    useEffect(() => {
+        // Load translations for current page
+        const ayahs: any[] = [];
+        for (const surah of quranData) {
+            const surahAyahs = surah.ayahs.filter(a => a.page === currentPage);
+            ayahs.push(...surahAyahs);
+        }
+        setPageAyahs(ayahs);
+    }, [currentPage, quranData]);
+
+    const handleAyahClick = (ayah: any) => {
+        const surah = quranData.find(s => s.id === ayah.surah_id);
+        if (surah) {
+            play(ayah.surah_id, ayah.id, ayah.ayah_number, surah.name_turkish, surah.verse_count);
+        }
+    };
 
     // Sync page with audio playback
     useEffect(() => {
@@ -124,6 +150,14 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     />
                 )}
             </div>
+
+            {/* Translation Panel */}
+            <MushafTranslationPanel
+                pageAyahs={pageAyahs}
+                currentAyahId={currentAyahId}
+                onAyahClick={handleAyahClick}
+                ui={ui}
+            />
         </div>
     );
 };

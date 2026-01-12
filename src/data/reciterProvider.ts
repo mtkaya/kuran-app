@@ -248,6 +248,9 @@ export const RECITERS: Reciter[] = [
 
 const CDN_BASE = 'https://everyayah.com/data';
 
+// Allowed reciter identifiers whitelist for security
+const ALLOWED_RECITER_FOLDERS = new Set(RECITERS.map(r => r.identifier));
+
 /**
  * Get audio URL for a specific ayah
  */
@@ -256,6 +259,12 @@ export function getAudioUrl(
     surahNumber: number,
     ayahNumber: number
 ): string {
+    // Validate reciterFolder against whitelist to prevent path traversal
+    if (!ALLOWED_RECITER_FOLDERS.has(reciterFolder)) {
+        console.warn(`Invalid reciter folder: ${reciterFolder}, using default`);
+        reciterFolder = getDefaultReciter().identifier;
+    }
+
     const surahPadded = String(surahNumber).padStart(3, '0');
     const ayahPadded = String(ayahNumber).padStart(3, '0');
     return `${CDN_BASE}/${reciterFolder}/${surahPadded}${ayahPadded}.mp3`;

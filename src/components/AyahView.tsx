@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Ayah } from '../types';
-import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText, X, Save } from 'lucide-react';
+import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText } from 'lucide-react';
+import { NoteModal } from './NoteModal';
 import { useBookmarkStore } from '../store/bookmarkStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
@@ -29,7 +30,6 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
 
     // Note modal state
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
-    const [noteContent, setNoteContent] = useState('');
 
     const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
 
@@ -53,15 +53,10 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
         try {
             await navigator.clipboard.writeText(text);
             onCopy?.(ui.copied);
-        } catch {
-            // Fallback for older browsers
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            onCopy?.(ui.copied);
+        } catch (err) {
+            // Modern browsers require user interaction for clipboard access
+            console.error('Clipboard API failed:', err);
+            onCopy?.('Kopyalama başarısız');
         }
     };
 
@@ -79,22 +74,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     };
 
     const handleOpenNoteModal = () => {
-        // Pre-fill with existing note if any
-        if (ayahNotes.length > 0) {
-            setNoteContent(ayahNotes[0].content);
-        } else {
-            setNoteContent('');
-        }
         setIsNoteModalOpen(true);
-    };
-
-    const handleSaveNote = () => {
-        if (noteContent.trim()) {
-            addNote(ayah.surah_id, ayah.id, ayah.ayah_number, surahName, noteContent.trim());
-            setIsNoteModalOpen(false);
-            setNoteContent('');
-            onCopy?.('Not eklendi!');
-        }
     };
 
     return (
@@ -229,66 +209,20 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
             </div>
 
             {/* Note Modal */}
-            {isNoteModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-                    <div className="w-full max-w-md bg-card rounded-2xl shadow-xl border border-border overflow-hidden">
-                        {/* Modal Header */}
-                        <div className="flex items-center justify-between p-4 border-b border-border">
-                            <div className="flex items-center gap-2">
-                                <FileText className="w-5 h-5 text-amber-500" />
-                                <h3 className="font-semibold">Not Ekle</h3>
-                            </div>
-                            <button
-                                onClick={() => setIsNoteModalOpen(false)}
-                                className="p-1 hover:bg-secondary rounded-lg transition-colors"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        {/* Ayah Reference */}
-                        <div className="p-4 bg-secondary/30 border-b border-border">
-                            <p className="text-sm text-muted-foreground mb-1">{surahName} {ayah.surah_id}:{ayah.ayah_number}</p>
-                            <p
-                                className="font-arabic text-right text-lg leading-relaxed"
-                                dir="rtl"
-                                style={{ fontFamily: arabicFont }}
-                            >
-                                {ayah.text_arabic.substring(0, 100)}...
-                            </p>
-                        </div>
-
-                        {/* Note Input */}
-                        <div className="p-4">
-                            <textarea
-                                value={noteContent}
-                                onChange={(e) => setNoteContent(e.target.value)}
-                                placeholder="Bu ayet hakkında notunuzu yazın..."
-                                className="w-full p-3 bg-secondary rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 min-h-[120px]"
-                                autoFocus
-                            />
-                        </div>
-
-                        {/* Modal Footer */}
-                        <div className="flex gap-2 p-4 border-t border-border">
-                            <button
-                                onClick={() => setIsNoteModalOpen(false)}
-                                className="flex-1 py-2 px-4 text-sm text-muted-foreground hover:bg-secondary rounded-lg transition-colors"
-                            >
-                                İptal
-                            </button>
-                            <button
-                                onClick={handleSaveNote}
-                                disabled={!noteContent.trim()}
-                                className="flex-1 py-2 px-4 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                            >
-                                <Save className="w-4 h-4" />
-                                Kaydet
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <NoteModal
+                isOpen={isNoteModalOpen}
+                onClose={() => setIsNoteModalOpen(false)}
+                onSave={(content) => {
+                    addNote(ayah.surah_id, ayah.id, ayah.ayah_number, surahName, content.trim());
+                    setIsNoteModalOpen(false);
+                    onCopy?.('Not eklendi!');
+                }}
+                initialContent={ayahNotes.length > 0 ? ayahNotes[0].content : ''}
+                surahName={surahName}
+                surahId={ayah.surah_id}
+                ayahNumber={ayah.ayah_number}
+                ayahText={ayah.text_arabic}
+            />
         </>
     );
 };

@@ -247,6 +247,14 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         if (audioElement) {
             audioElement.pause();
             audioElement.src = '';
+            // Remove event listeners to prevent memory leaks
+            audioElement.onended = null;
+            audioElement.ontimeupdate = null;
+            audioElement.onloadedmetadata = null;
+            audioElement.onwaiting = null;
+            audioElement.onplaying = null;
+            audioElement.onerror = null;
         }
+        set({ audioElement: null });
     },
 }));

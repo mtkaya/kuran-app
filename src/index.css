@@ -23,7 +23,7 @@
     --foreground: 195 13% 20%;
     /* INKWELL for text */
 
-    --card: 44 20% 88%;
+    --card: 44 25% 94%;
     --card-foreground: 195 13% 20%;
 
     --popover: 44 20% 88%;
@@ -64,12 +64,12 @@
     --foreground: 44 26% 82%;
     /* AU LAIT for text */
 
-    /* LUNAR ECLIPSE #3F4E4F for cards */
-    --card: 174 11% 28%;
-    --card-foreground: 44 26% 88%;
+    /* LUNAR ECLIPSE #3F4E4F for cards - darker for better contrast */
+    --card: 174 12% 24%;
+    --card-foreground: 44 26% 90%;
 
-    --popover: 174 11% 28%;
-    --popover-foreground: 44 26% 88%;
+    --popover: 174 12% 24%;
+    --popover-foreground: 44 26% 90%;
 
     /* CREME BRULEE #A27B5B - Primary in dark mode */
     --primary: 25 31% 58%;
@@ -506,7 +506,7 @@
     padding-right: 4px !important;
   }
 
-  .font-arabic {
+  .font-arabic:not(.preview-text) {
     font-size: 22px !important;
   }
 

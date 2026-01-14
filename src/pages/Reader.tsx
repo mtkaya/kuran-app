@@ -143,7 +143,7 @@ export default function Reader() {
             </div>
 
             {/* Content */}
-            <div className={readingMode === 'mushaf' ? 'h-[calc(100vh-80px)]' : 'max-w-2xl mx-auto px-4 pb-4 pt-28'}>
+            <div className={readingMode === 'mushaf' ? 'h-[calc(100vh-80px)]' : 'max-w-2xl mx-auto px-4 pb-4 pt-4'}>
                 {/* Mushaf Mode - Real Page Images */}
                 {readingMode === 'mushaf' && (
                     <div className="h-full animate-fade-in">

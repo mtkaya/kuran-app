@@ -81,9 +81,9 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
         <>
             <div
                 id={`ayah-${ayah.id}`}
-                className={`py-6 border-b last:border-0 transition-colors ${isCurrentlyPlaying
-                    ? 'bg-primary/5 border-l-4 border-l-primary pl-4 -ml-4'
-                    : 'hover:bg-accent/5'
+                className={`py-5 px-4 rounded-xl transition-all ${isCurrentlyPlaying
+                    ? 'bg-primary/10 border-2 border-primary/50 shadow-lg shadow-primary/10'
+                    : 'bg-card border border-border/50 hover:border-primary/30 hover:shadow-md'
                     }`}
             >
                 {/* Arabic Text (Right Aligned) */}

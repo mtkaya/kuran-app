@@ -1,6 +1,6 @@
 // Theme Toggle Button Component
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Monitor } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
 
 export const ThemeToggle: React.FC = () => {
@@ -17,10 +17,14 @@ export const ThemeToggle: React.FC = () => {
     };
 
     const getIcon = () => {
-        if (theme === 'dark') {
-            return <Moon className="w-5 h-5" />;
+        switch (theme) {
+            case 'light':
+                return <Sun className="w-5 h-5" />;
+            case 'dark':
+                return <Moon className="w-5 h-5" />;
+            case 'system':
+                return <Monitor className="w-5 h-5" />;
         }
-        return <Sun className="w-5 h-5" />;
     };
 
     const getLabel = () => {
@@ -34,11 +38,10 @@ export const ThemeToggle: React.FC = () => {
     return (
         <button
             onClick={toggleTheme}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
+            className="p-2 rounded-full hover:bg-white/10 text-white/80 transition-colors"
             aria-label={`Theme: ${getLabel()}`}
         >
             {getIcon()}
-            <span className="text-xs font-medium">{getLabel()}</span>
         </button>
     );
 };

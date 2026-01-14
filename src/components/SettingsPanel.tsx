@@ -307,11 +307,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                     </div>
                     {/* Preview */}
                     <p
-                        className="text-right mt-3 font-arabic text-muted-foreground transition-all duration-300"
+                        key={`arabic-preview-${arabicFontSize}-${arabicFont}`}
+                        className="text-right mt-3 font-arabic preview-text text-foreground transition-all duration-300"
                         dir="rtl"
                         style={{ fontSize: `${arabicFontSize}px`, fontFamily: arabicFont }}
                     >
-                        بِسْمِ اللَّهِ
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                     </p>
                 </div>
 

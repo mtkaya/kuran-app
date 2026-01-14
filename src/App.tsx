@@ -98,36 +98,36 @@ function App() {
                             </div>
 
                             {/* Reading Mode Selection - 3 Options */}
-                            <div className="flex gap-2 mb-4">
+                            <div className="grid grid-cols-3 gap-2 mb-4">
                                 <button
                                     onClick={() => setReadingMode('normal')}
-                                    className={`flex items-center justify-center p-3 rounded-xl border transition-all duration-200 ${readingMode === 'normal'
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'normal'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
-                                    title="Normal"
                                 >
-                                    <ScrollText className="w-5 h-5" />
+                                    <ScrollText className="w-4 h-4" />
+                                    <span className="font-medium text-xs">Normal</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('mushaf')}
-                                    className={`flex items-center justify-center p-3 rounded-xl border transition-all duration-200 ${readingMode === 'mushaf'
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'mushaf'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
-                                    title="Mushaf"
                                 >
-                                    <BookOpen className="w-5 h-5" />
+                                    <BookOpen className="w-4 h-4" />
+                                    <span className="font-medium text-xs">Mushaf</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('digital')}
-                                    className={`flex items-center justify-center p-3 rounded-xl border transition-all duration-200 ${readingMode === 'digital'
+                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'digital'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
-                                    title="Dijital"
                                 >
-                                    <BookOpen className="w-5 h-5" />
+                                    <BookOpen className="w-4 h-4" />
+                                    <span className="font-medium text-xs">Dijital</span>
                                 </button>
                             </div>
 

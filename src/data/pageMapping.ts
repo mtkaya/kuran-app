@@ -234,18 +234,18 @@ export function getPageForAyah(surah: number, ayah: number): number {
 
 /**
  * Get Mushaf page image URL
- * Uses local Diyanet Mushaf images (converted from PDF)
+ * Uses local Diyanet Mushaf images (WebP format for smaller size)
  */
 export function getPageImageUrl(page: number): string {
     // All 616 PDF pages are included (covers + 604 Quran pages)
-    // page-001.png = PDF page 1 (likely cover)
+    // page-001.webp = PDF page 1 (likely cover)
     // Adjust offset based on where Fatiha starts in your PDF
     const COVER_PAGES_OFFSET = 0; // Set to 0, user will verify
     const actualPage = page + COVER_PAGES_OFFSET;
     const paddedPage = actualPage.toString().padStart(3, '0');
 
-    // Use local Diyanet Mushaf images
-    return `/mushaf/diyanet/page-${paddedPage}.png`;
+    // Use local Diyanet Mushaf images (WebP for better compression)
+    return `/mushaf/diyanet-webp/page-${paddedPage}.webp`;
 }
 
 /**

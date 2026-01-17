@@ -15,6 +15,13 @@ describe('BookmarkStore', () => {
         })
     })
 
+    const testBookmark = {
+        surahId: 1,
+        ayahId: 101,
+        surahName: 'Fatiha',
+        ayahNumber: 1,
+    }
+
     it('should have empty bookmarks initially', () => {
         const state = useBookmarkStore.getState()
         expect(state.bookmarks.length).toBe(0)
@@ -22,34 +29,34 @@ describe('BookmarkStore', () => {
 
     it('should add bookmark', () => {
         const { addBookmark } = useBookmarkStore.getState()
-        addBookmark({ surahId: 1, ayahId: 101 })
+        addBookmark(testBookmark)
         expect(useBookmarkStore.getState().bookmarks.length).toBe(1)
         expect(useBookmarkStore.getState().bookmarks[0].surahId).toBe(1)
     })
 
     it('should remove bookmark', () => {
         const { addBookmark, removeBookmark } = useBookmarkStore.getState()
-        addBookmark({ surahId: 1, ayahId: 101 })
+        addBookmark(testBookmark)
         removeBookmark(1, 101)
         expect(useBookmarkStore.getState().bookmarks.length).toBe(0)
     })
 
     it('should toggle bookmark', () => {
-        const { toggleBookmark, isBookmarked } = useBookmarkStore.getState()
+        const { toggleBookmark } = useBookmarkStore.getState()
 
         // Add
-        toggleBookmark({ surahId: 1, ayahId: 101 })
+        toggleBookmark(testBookmark)
         expect(useBookmarkStore.getState().isBookmarked(1, 101)).toBe(true)
 
         // Remove
-        useBookmarkStore.getState().toggleBookmark({ surahId: 1, ayahId: 101 })
+        useBookmarkStore.getState().toggleBookmark(testBookmark)
         expect(useBookmarkStore.getState().isBookmarked(1, 101)).toBe(false)
     })
 
     it('should check if ayah is bookmarked', () => {
         const { addBookmark, isBookmarked } = useBookmarkStore.getState()
         expect(isBookmarked(1, 101)).toBe(false)
-        addBookmark({ surahId: 1, ayahId: 101 })
+        addBookmark(testBookmark)
         expect(useBookmarkStore.getState().isBookmarked(1, 101)).toBe(true)
     })
 })

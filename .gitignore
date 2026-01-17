@@ -29,5 +29,8 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# Test coverage
+coverage/
+
 # Misc
 *.log

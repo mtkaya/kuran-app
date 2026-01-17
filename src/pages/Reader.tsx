@@ -11,7 +11,6 @@ import { useReadingStore } from '../store/readingStore';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { SettingsPanel } from '../components/SettingsPanel';
-import { AudioPlayer } from '../components/AudioPlayer';
 import { Toast, useToast } from '../components/Toast';
 
 export default function Reader() {
@@ -237,9 +236,6 @@ export default function Reader() {
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
-
-            {/* Audio Player */}
-            <AudioPlayer />
 
             {/* Toast */}
             <Toast

@@ -13,6 +13,7 @@ import { useBookmarkStore } from './store/bookmarkStore'
 import { useReadingStore } from './store/readingStore'
 import { SplashScreen } from './components/SplashScreen'
 import { useNativeFeatures } from './hooks/useNativeFeatures'
+import { AudioPlayer } from './components/AudioPlayer'
 
 // Lazy load pages for better initial load performance
 const Reader = lazy(() => import('./pages/Reader'))
@@ -258,6 +259,9 @@ function App() {
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
+
+            {/* Global Audio Player - visible on all pages */}
+            <AudioPlayer />
         </div >
     )
 }

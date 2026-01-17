@@ -4,6 +4,29 @@ import { getAudioUrl, getDefaultReciter } from '../data/reciterProvider';
 
 export type RepeatMode = 'none' | 'ayah' | 'surah';
 
+// Update Media Session API for lock screen controls
+function updateMediaSession(
+    surahName: string | null,
+    ayahNumber: number | null,
+    isPlaying: boolean
+) {
+    if (!('mediaSession' in navigator) || !surahName || !ayahNumber) return;
+
+    try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: `Ayet ${ayahNumber}`,
+            artist: surahName,
+            album: 'The Holy Quran',
+            artwork: [
+                { src: '/logo.svg', sizes: '512x512', type: 'image/svg+xml' },
+            ]
+        });
+        navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
+    } catch (e) {
+        console.log('Media Session update error:', e);
+    }
+}
+
 interface AudioState {
     // Playback state
     isPlaying: boolean;
@@ -146,7 +169,10 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         audioElement.src = url;
         audioElement.playbackRate = playbackRate;
         audioElement.play()
-            .then(() => set({ isPlaying: true, isLoading: false }))
+            .then(() => {
+                set({ isPlaying: true, isLoading: false });
+                updateMediaSession(surahName, ayahNumber, true);
+            })
             .catch((e) => {
                 console.error('Audio play error:', e);
                 set({ isLoading: false });
@@ -154,18 +180,22 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     },
 
     pause: () => {
-        const { audioElement } = get();
+        const { audioElement, surahName, currentAyahNumber } = get();
         if (audioElement) {
             audioElement.pause();
             set({ isPlaying: false });
+            updateMediaSession(surahName, currentAyahNumber, false);
         }
     },
 
     resume: () => {
-        const { audioElement } = get();
+        const { audioElement, surahName, currentAyahNumber } = get();
         if (audioElement && audioElement.src) {
             audioElement.play()
-                .then(() => set({ isPlaying: true }))
+                .then(() => {
+                    set({ isPlaying: true });
+                    updateMediaSession(surahName, currentAyahNumber, true);
+                })
                 .catch(console.error);
         }
     },

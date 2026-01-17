@@ -18,27 +18,25 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center justify-between gap-1 p-2 h-[140px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97] overflow-hidden"
+                className="flex flex-col items-center p-3 min-h-[130px] bg-card border border-border/50 rounded-xl transition-all duration-300 hover:shadow-md hover:border-primary/30 active:scale-[0.97]"
             >
                 {/* Surah Number */}
-                <div className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-xs border border-primary/10">
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 mb-2 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-bold text-sm border border-primary/10">
                     {surah.id}
                 </div>
 
-                {/* Surah Name - allow 2 lines with proper overflow handling */}
-                <div className="w-full px-1 flex-1 flex items-center justify-center overflow-hidden">
-                    <h3 className="font-semibold text-[10px] text-foreground text-center leading-tight line-clamp-2 break-words">
-                        {surah.name_turkish}
-                    </h3>
-                </div>
+                {/* Surah Name - Turkish */}
+                <h3 className="font-semibold text-xs text-foreground text-center mb-1 leading-tight">
+                    {surah.name_turkish}
+                </h3>
 
-                {/* Arabic Name - single line */}
-                <span className="font-arabic text-xs text-muted-foreground text-center w-full truncate px-1 flex-shrink-0" dir="rtl">
+                {/* Arabic Name */}
+                <span className="font-arabic text-base text-muted-foreground text-center mb-1" dir="rtl">
                     {surah.name_arabic}
                 </span>
 
                 {/* Verse Count */}
-                <span className="flex-shrink-0 text-[9px] text-muted-foreground whitespace-nowrap">
+                <span className="text-[10px] text-muted-foreground mt-auto">
                     {surah.verse_count} {ui.verses}
                 </span>
             </Link>

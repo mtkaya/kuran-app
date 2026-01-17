@@ -59,41 +59,43 @@
   }
 
   .dark {
-    /* INKWELL #2C3639 - Dark mode background (darkest) */
-    --background: 195 13% 20%;
-    --foreground: 44 26% 82%;
-    /* AU LAIT for text */
+    /* Dark mode background - much darker for contrast */
+    --background: 195 15% 12%;
+    --foreground: 44 26% 88%;
 
-    /* LUNAR ECLIPSE #3F4E4F for cards - darker for better contrast */
-    --card: 174 12% 24%;
-    --card-foreground: 44 26% 90%;
+    /* Cards - significantly lighter than background for clear distinction */
+    --card: 195 12% 20%;
+    --card-foreground: 44 26% 92%;
 
-    --popover: 174 12% 24%;
-    --popover-foreground: 44 26% 90%;
+    --popover: 195 12% 22%;
+    --popover-foreground: 44 26% 92%;
 
-    /* CREME BRULEE #A27B5B - Primary in dark mode */
-    --primary: 25 31% 58%;
-    --primary-foreground: 195 13% 15%;
+    /* CREME BRULEE #A27B5B - Primary in dark mode - brighter */
+    --primary: 25 35% 55%;
+    --primary-foreground: 195 15% 10%;
 
-    --secondary: 174 11% 24%;
-    --secondary-foreground: 44 26% 85%;
+    /* Secondary - visible against background */
+    --secondary: 195 12% 25%;
+    --secondary-foreground: 44 26% 90%;
 
-    --muted: 195 10% 25%;
-    --muted-foreground: 44 20% 65%;
+    /* Muted - more contrast */
+    --muted: 195 10% 18%;
+    --muted-foreground: 44 20% 60%;
 
-    /* CREME BRULEE for accent */
-    --accent: 25 31% 58%;
-    --accent-foreground: 195 13% 15%;
+    /* CREME BRULEE for accent - brighter */
+    --accent: 25 35% 55%;
+    --accent-foreground: 195 15% 10%;
 
-    --destructive: 0 62.8% 45%;
+    --destructive: 0 62.8% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 174 11% 32%;
-    --input: 174 11% 32%;
-    --ring: 25 31% 58%;
+    /* Borders - more visible */
+    --border: 195 10% 28%;
+    --input: 195 10% 28%;
+    --ring: 25 35% 55%;
 
-    --glow-primary: 25 35% 55%;
-    --glow-gold: 25 40% 60%;
+    --glow-primary: 25 40% 50%;
+    --glow-gold: 25 45% 55%;
   }
 }
 
@@ -464,6 +466,21 @@
     inset: 4px;
     border: 1px solid hsl(var(--primary) / 0.5);
     border-radius: 50%;
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 

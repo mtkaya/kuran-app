@@ -3,7 +3,7 @@ import { SurahCard } from './components/SurahCard'
 import { useQuranData } from './hooks/useQuranData'
 import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3 } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
-import { useState, useMemo, useEffect, lazy, Suspense } from 'react'
+import { useState, useMemo, useEffect, lazy, Suspense, useCallback } from 'react'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -11,6 +11,8 @@ import { ContinueReading } from './components/ContinueReading'
 import { useSettingsStore } from './store/settingsStore'
 import { useBookmarkStore } from './store/bookmarkStore'
 import { useReadingStore } from './store/readingStore'
+import { SplashScreen } from './components/SplashScreen'
+import { useNativeFeatures } from './hooks/useNativeFeatures'
 
 // Lazy load pages for better initial load performance
 const Reader = lazy(() => import('./pages/Reader'))
@@ -24,6 +26,10 @@ function App() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
     const { readingMode, setReadingMode } = useSettingsStore()
     const [surahViewMode, setSurahViewMode] = useState<'list' | 'grid'>('list')
+    const [showSplash, setShowSplash] = useState(true)
+
+    // Initialize native features (back button, media session)
+    useNativeFeatures()
 
     // Hydrate all stores on mount
     useEffect(() => {
@@ -42,6 +48,16 @@ function App() {
         surah.name_arabic.includes(searchTerm) ||
         surah.id.toString().includes(searchTerm)
     )
+
+    // Handle splash screen completion
+    const handleSplashComplete = useCallback(() => {
+        setShowSplash(false);
+    }, []);
+
+    // Show splash screen on initial load
+    if (showSplash) {
+        return <SplashScreen onComplete={handleSplashComplete} minDisplayTime={2500} />;
+    }
 
     // Wait for hydration and data loading
     if (!isHydrated || isQuranLoading) {

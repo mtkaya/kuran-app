@@ -85,8 +85,11 @@ export const AudioPlayer: React.FC = () => {
                 onClick={handleProgressClick}
             >
                 <div
-                    className={`h-full bg-gradient-to-r from-primary to-accent transition-all duration-100 ${isPlaying ? 'shimmer' : ''}`}
-                    style={{ width: `${progress}%` }}
+                    className={`h-full bg-gradient-to-r from-primary to-accent ${isPlaying ? 'shimmer' : ''}`}
+                    style={{
+                        width: `${progress}%`,
+                        transition: 'width 0.3s ease-out'
+                    }}
                 />
             </div>
 

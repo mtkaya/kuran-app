@@ -3,6 +3,7 @@ import { useQuranData } from '../hooks/useQuranData';
 import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
 import { MushafImageView } from '../components/MushafImageView';
+import { ContentPanel } from '../components/ContentPanel';
 import { ArrowLeft, Settings } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
@@ -12,6 +13,7 @@ import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { SettingsPanel } from '../components/SettingsPanel';
 import { Toast, useToast } from '../components/Toast';
+import { Ayah } from '../types';
 
 export default function Reader() {
     const { id } = useParams();
@@ -19,6 +21,7 @@ export default function Reader() {
     const { setLastRead } = useReadingStore();
     const { currentAyahId, isPlaying, cleanup } = useAudioStore();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [selectedAyah, setSelectedAyah] = useState<Ayah | null>(null);
     const { toast, showToast, hideToast } = useToast();
     const observerRef = useRef<IntersectionObserver | null>(null);
     const { readingMode } = useSettingsStore();
@@ -203,6 +206,8 @@ export default function Reader() {
                                     surahName={surah.name_turkish}
                                     totalAyahs={surah.verse_count}
                                     onCopy={showToast}
+                                    onSelect={(a) => setSelectedAyah(a)}
+                                    isSelected={selectedAyah?.id === ayah.id}
                                 />
                                 {/* Ornamental Divider (not after last ayah) */}
                                 {index < surah.ayahs.length - 1 && (
@@ -242,6 +247,12 @@ export default function Reader() {
                 message={toast.message}
                 isVisible={toast.isVisible}
                 onHide={hideToast}
+            />
+
+            {/* Content Panel - Expandable Tefsir/Meal */}
+            <ContentPanel
+                currentAyah={selectedAyah || (currentAyahId ? surah.ayahs.find(a => a.id === currentAyahId) || null : null)}
+                surahName={surah.name_turkish}
             />
         </div>
     );

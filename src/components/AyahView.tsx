@@ -15,9 +15,11 @@ interface AyahViewProps {
     surahName: string;
     totalAyahs: number;
     onCopy?: (text: string) => void;
+    onSelect?: (ayah: Ayah) => void;
+    isSelected?: boolean;
 }
 
-export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy }) => {
+export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy, onSelect, isSelected }) => {
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
     const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode, arabicFont } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
@@ -81,9 +83,12 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
         <>
             <div
                 id={`ayah-${ayah.id}`}
-                className={`py-5 px-4 rounded-xl transition-all ${isCurrentlyPlaying
+                onClick={() => onSelect?.(ayah)}
+                className={`py-5 px-4 rounded-xl transition-all cursor-pointer ${isCurrentlyPlaying
                     ? 'bg-primary/10 border-2 border-primary/50 shadow-lg shadow-primary/10'
-                    : 'bg-card border border-border/50 hover:border-primary/30 hover:shadow-md'
+                    : isSelected
+                        ? 'bg-accent border-2 border-primary/30 shadow-md'
+                        : 'bg-card border border-border/50 hover:border-primary/30 hover:shadow-md'
                     }`}
             >
                 {/* Arabic Text (Right Aligned) */}

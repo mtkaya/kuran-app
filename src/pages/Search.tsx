@@ -49,7 +49,10 @@ export default function Search() {
     return (
         <div className="min-h-screen bg-background pb-20">
             {/* Header */}
-            <div className="sticky top-0 z-10 bg-card/80 backdrop-blur-md border-b px-4 py-3">
+            <div
+                className="sticky top-0 z-10 bg-card/80 backdrop-blur-md border-b px-4 pb-3"
+                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.75rem)' }}
+            >
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => navigate(-1)}
@@ -87,8 +90,8 @@ export default function Search() {
                             key={f}
                             onClick={() => setFilter(f)}
                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${filter === f
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-secondary hover:bg-secondary/80'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-secondary hover:bg-secondary/80'
                                 }`}
                         >
                             {getFilterIcon(f)}

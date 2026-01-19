@@ -19,7 +19,7 @@ export const Notes: React.FC = () => {
             {/* Header with Back Button */}
             <header
                 className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border"
-                style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.75rem)' }}
             >
                 <div className="flex items-center gap-3 px-4 py-3">
                     <button

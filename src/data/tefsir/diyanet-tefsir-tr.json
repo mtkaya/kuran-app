@@ -1,0 +1,123 @@
+{
+    "providerId": "diyanet-tefsir-tr",
+    "language": "tr",
+    "name": "Diyanet Tefsiri",
+    "description": "Türkiye Diyanet İşleri Başkanlığı Kur'an-ı Kerim Tefsiri",
+    "surahs": {
+        "1": {
+            "name": "Fatiha",
+            "ayahs": {
+                "1": {
+                    "text": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ (Bismillâhirrahmânirrahîm) cümlesi, Allah'ın adıyla başlamak, O'nun yardımını istemek ve O'na sığınmak anlamına gelir. 'Rahman' kelimesi, Allah'ın bütün yaratıklara yönelik sınırsız merhametini; 'Rahîm' ise özellikle müminlere olan özel rahmetini ifade eder. Bu âyet, her işe Allah'ın adıyla başlamanın önemini vurgular ve Müslümanların günlük hayatlarında besmele çekmelerinin hikmetini ortaya koyar.",
+                    "references": [
+                        "Elmalılı Hamdi Yazır, Hak Dini Kur'an Dili, c.1"
+                    ]
+                },
+                "2": {
+                    "text": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ (El-hamdü lillâhi rabbi'l-âlemîn) ifadesi, her türlü övgü ve şükrün yalnızca âlemlerin Rabbi olan Allah'a ait olduğunu bildirir. 'Hamd', nimetlere karşı şükretmek ve Allah'ı övmektir. 'Rabb' kelimesi; terbiye eden, yetiştiren, koruyan, rızık veren anlamlarını içerir. 'Âlemîn' ise insanlar, cinler, melekler, hayvanlar, bitkiler ve tüm varlık kategorilerini kapsar. Bu âyet, Allah'ın evrenin mutlak sahibi ve yöneticisi olduğunu ifade eder.",
+                    "references": [
+                        "İbn Kesir, Tefsiru'l-Kur'ani'l-Azîm, c.1"
+                    ]
+                },
+                "3": {
+                    "text": "الرَّحْمَٰنِ الرَّحِيمِ (Er-rahmânir-rahîm) Allah'ın iki önemli sıfatını tekrar vurgular. Rahman, dünyada mümin-kâfir ayırt etmeksizin herkese merhamet eden; Rahîm ise ahirette özellikle müminlere merhamet edecek olan demektir. Bu tekrar, Allah'ın rahmetinin ne kadar geniş ve kapsayıcı olduğunu gösterir. Peygamberimiz (s.a.v.) 'Allah'ın rahmeti gazabını geçmiştir' buyurmuştur.",
+                    "references": [
+                        "Buhari, Tevhid 15, 22, 28, 55"
+                    ]
+                },
+                "4": {
+                    "text": "مَالِكِ يَوْمِ الدِّينِ (Mâliki yevmi'd-dîn) Din (hesap/ceza) gününün sahibi anlamına gelir. Bu âyet, ahiret inancının temelini oluşturur. O gün, dünyada yapılan her şeyin hesabı sorulacak, iyiler mükâfatlandırılacak, kötüler cezalandırılacaktır. 'Mâlik' kelimesi mutlak egemenlik ve hükümranlığı ifade eder. O gün hiçbir kimsenin şefaati, Allah'ın izni olmadan geçerli olmayacaktır.",
+                    "references": [
+                        "Kurtubi, el-Câmi li Ahkâmi'l-Kur'an, c.1"
+                    ]
+                },
+                "5": {
+                    "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ (İyyâke na'büdü ve iyyâke nesta'în) 'Yalnız Sana kulluk eder ve yalnız Senden yardım dileriz' demektir. Bu âyet tevhidin özüdür. İbadet yalnızca Allah'a yapılır, yardım yalnızca O'ndan istenir. 'İyyâke' zamirinin öne alınması, ibadetin ve yardım dilemenin sadece Allah'a has kılınmasını (hasr/tahsis) ifade eder. Bu, şirkin her türlüsünü reddetme ve tam bir teslimiyeti gösterir.",
+                    "references": [
+                        "Zemahşeri, el-Keşşaf, c.1"
+                    ]
+                },
+                "6": {
+                    "text": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ (İhdina's-sırâta'l-müstakîm) 'Bizi doğru yola ilet' anlamındadır. Sırat-ı müstakim; Allah'ın razı olduğu, peygamberlerin ve salihlerin yoludur. Hidayet istemek, hem doğru yolu bulmak hem de o yolda sabit kalmak için Allah'ın yardımını dilemektir. Bu dua, insanın sürekli ilahi rehberliğe muhtaç olduğunu gösterir. Namaz kılan mümin, her rekatta bu duayı tekrar eder.",
+                    "references": [
+                        "Razi, Mefatihu'l-Gayb, c.1"
+                    ]
+                },
+                "7": {
+                    "text": "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ (Sırâta'llezîne en'amte aleyhim gayri'l-mağdûbi aleyhim vele'd-dâllîn) Bu âyet, nimete erişenlerin yolunu, gazaba uğrayanların ve sapıtanların yolundan ayırır. Nimete erişenler: peygamberler, sıddıklar, şehidler ve salihlerdir. Gazaba uğrayanlar: hakkı bilip de ona aykırı davrananlar; sapıtanlar ise hakkı bilmeden yanlış yolda olanlardır. 'Âmin' demek sünnettir ve 'Duamızı kabul et Ya Rabbi' anlamına gelir.",
+                    "references": [
+                        "Nisa 4/69",
+                        "Taberi, Camiu'l-Beyan, c.1"
+                    ]
+                }
+            }
+        },
+        "2": {
+            "name": "Bakara",
+            "ayahs": {
+                "1": {
+                    "text": "الٓمٓ (Elif-Lâm-Mîm) Hurûf-u Mukattaa olarak bilinen bu harfler, Kur'an-ı Kerim'de 29 surenin başında yer alır. Bu harflerin kesin anlamı hakkında çeşitli görüşler ileri sürülmüştür. Kimilerine göre bunlar Allah ile Peygamberi arasındaki sırlardır, kimilerine göre surelerin isimleri, kimilerine göre de Arap diline dikkat çekip muhatapları düşündürmeye yönelik mucizevi ifadelerdir. Kesin bilgi Allah katındadır.",
+                    "references": [
+                        "Suyuti, el-İtkan fi Ulumi'l-Kur'an"
+                    ]
+                },
+                "2": {
+                    "text": "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ (Zâlike'l-kitâbu lâ raybe fîhi hüden li'l-müttakîn) 'İşte bu, kendisinde şüphe olmayan, muttakiler için yol gösterici bir kitaptır.' Bu âyet, Kur'an'ın ilahi kaynağını ve güvenilirliğini vurgular. 'Müttaki' Allah'a karşı sorumluluk bilinci taşıyan, O'nun emir ve yasaklarına riayet eden kişidir. Kur'an'dan ancak bu bilinçle yaklaşanlar hidayet bulabilir.",
+                    "references": [
+                        "Said Nursi, İşaratü'l-İcaz"
+                    ]
+                },
+                "3": {
+                    "text": "الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ (Ellezîne yü'minûne bi'l-gaybi ve yukîmûne's-salâte ve mimmâ razaknâhüm yünfikûn) Muttakilerin özellikleri sıralanır: Gayba (Allah, melekler, ahiret, kader gibi görünmeyen gerçeklere) iman ederler, namazı dosdoğru kılarlar ve Allah'ın verdiği rızıktan infak ederler. Bu üç özellik; kalp (iman), beden (namaz) ve mal (infak) ile yapılan ibadetleri kapsar.",
+                    "references": [
+                        "Mevdudi, Tefhimu'l-Kur'an, c.1"
+                    ]
+                },
+                "4": {
+                    "text": "وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ (Ve'llezîne yü'minûne bimâ ünzile ileyke ve mâ ünzile min kablike ve bi'l-âhirati hüm yûkınûn) Muttakilerin bir diğer özelliği, hem Hz. Muhammed'e indirilen Kur'an'a hem de daha önce gönderilen kitaplara (Tevrat, Zebur, İncil) iman etmeleridir. Ayrıca ahirete kesin olarak inanırlar. Bu âyet, İslam'ın önceki ilahi mesajlarla bütünlük içinde olduğunu gösterir.",
+                    "references": [
+                        "İbn Atiyye, el-Muharreru'l-Veciz"
+                    ]
+                },
+                "5": {
+                    "text": "أُولَٰئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ وَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ (Ülâike alâ hüden min rabbihim ve ülâike hümü'l-müflihûn) 'İşte onlar Rablerinden gelen bir hidayet üzeredirler ve işte onlar kurtuluşa erenlerin ta kendileridir.' Bu âyet, yukarıdaki özelliklere sahip olanların hem dünya hem ahiret saadetine ereceğini müjdeler. 'Felah' hem dünyevi başarıyı hem de uhrevi kurtuluşu ifade eden kapsamlı bir kavramdır.",
+                    "references": [
+                        "Elmalılı Hamdi Yazır, Hak Dini Kur'an Dili, c.1"
+                    ]
+                }
+            }
+        },
+        "112": {
+            "name": "İhlas",
+            "ayahs": {
+                "1": {
+                    "text": "قُلْ هُوَ اللَّهُ أَحَدٌ (Kul hüva'llâhü ehad) 'De ki: O Allah birdir.' Bu âyet, tevhid akidesinin özünü ifade eder. 'Ehad' kelimesi, Allah'ın eşsiz, benzersiz ve biricik olduğunu vurgular. O'nun zatında, sıfatlarında ve fiillerinde ortağı yoktur. Bu sure, Kur'an'ın üçte birine denk sayılmıştır çünkü İslam'ın üç temel konusu olan tevhid, nübüvvet ve ahiretten tevhidi en mükemmel şekilde açıklar.",
+                    "references": [
+                        "Buhari, Fedailü'l-Kur'an 13",
+                        "Tirmizi, Fedailü'l-Kur'an 11"
+                    ]
+                },
+                "2": {
+                    "text": "اللَّهُ الصَّمَدُ (Allâhu's-samed) 'Allah Samed'dir.' Samed: Hiçbir şeye muhtaç olmayan, her şeyin kendisine muhtaç olduğu, her türlü ihtiyaç ve istekte kendisine başvurulan, eksiksiz ve mükemmel olan demektir. Allah, yarattıklarından hiçbir şeye muhtaç değildir; aksine bütün mahlûkat O'na muhtaçtır.",
+                    "references": [
+                        "İbn Abbas rivayeti",
+                        "İbn Kesir, Tefsiru'l-Kur'ani'l-Azîm, c.8"
+                    ]
+                },
+                "3": {
+                    "text": "لَمْ يَلِدْ وَلَمْ يُولَدْ (Lem yelid ve lem yûled) 'O doğurmamıştır ve doğurulmamıştır.' Bu âyet, Allah'ın çocuk edindiğini iddia edenlere (Hristiyanlar Hz. İsa için, müşrikler melekler için) cevap niteliğindedir. Allah ezeli ve ebedidir; O'nun başlangıcı ve sonu yoktur. Doğurmak ve doğurulmak yaratılmışlara ait özelliklerdir, Allah bundan münezzehtir.",
+                    "references": [
+                        "Taberi, Camiu'l-Beyan, c.30"
+                    ]
+                },
+                "4": {
+                    "text": "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ (Ve lem yekün lehû küfüven ehad) 'Hiçbir şey O'nun dengi değildir.' Bu âyet, Allah'ın benzersizliğini teyit eder. Ne zatında, ne sıfatlarında, ne de fiillerinde O'na denk veya benzer hiçbir varlık yoktur. Bu, 'Leyse kemislihi şey' (O'nun benzeri hiçbir şey yoktur - Şura 42/11) âyetinin bir açıklamasıdır. İhlas suresi, kısa olmasına rağmen tevhid akidesini en özlü ve kapsamlı şekilde anlatır.",
+                    "references": [
+                        "Şura 42/11",
+                        "Razi, Mefatihu'l-Gayb, c.32"
+                    ]
+                }
+            }
+        }
+    }
+}

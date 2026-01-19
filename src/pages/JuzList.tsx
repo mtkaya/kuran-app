@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useQuranData } from '../hooks/useQuranData';
-import { JUZ_DATA, TOTAL_JUZ, getJuzInfo } from '../data/juzData';
+import { JUZ_DATA, TOTAL_JUZ } from '../data/juzData';
 import { useMemo, useState } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
 

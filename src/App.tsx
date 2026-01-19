@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { useQuranData } from './hooks/useQuranData'
-import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3 } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3, ArrowDownUp, Layers } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect, lazy, Suspense, useCallback } from 'react'
 import { useLanguage } from './context/LanguageContext'
@@ -19,6 +19,8 @@ import { AudioPlayer } from './components/AudioPlayer'
 const Reader = lazy(() => import('./pages/Reader'))
 const Search = lazy(() => import('./pages/Search'))
 const Notes = lazy(() => import('./pages/Notes'))
+const RevelationOrder = lazy(() => import('./pages/RevelationOrder'))
+const JuzList = lazy(() => import('./pages/JuzList'))
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('')
@@ -159,6 +161,37 @@ function App() {
                                 <span className="font-medium">Notlarım</span>
                             </Link>
 
+                            {/* New Browse Options */}
+                            <div className="grid grid-cols-2 gap-2">
+                                {/* Revelation Order */}
+                                <Link
+                                    to="/revelation-order"
+                                    className="flex flex-col items-center gap-2 p-4 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-emerald-500/50 transition-all duration-300"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                                        <ArrowDownUp className="w-6 h-6 text-emerald-500" />
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="font-medium text-sm block">İniş Sırası</span>
+                                        <span className="text-xs text-muted-foreground">Nüzul Tertibi</span>
+                                    </div>
+                                </Link>
+
+                                {/* Juz List */}
+                                <Link
+                                    to="/juz"
+                                    className="flex flex-col items-center gap-2 p-4 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-blue-500/50 transition-all duration-300"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center">
+                                        <Layers className="w-6 h-6 text-blue-500" />
+                                    </div>
+                                    <div className="text-center">
+                                        <span className="font-medium text-sm block">Cüz Cüz</span>
+                                        <span className="text-xs text-muted-foreground">30 Cüz</span>
+                                    </div>
+                                </Link>
+                            </div>
+
                             {/* Search Bar - Enhanced */}
                             <Link
                                 to="/search"
@@ -251,6 +284,16 @@ function App() {
                 <Route path="/notes" element={
                     <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
                         <Notes />
+                    </Suspense>
+                } />
+                <Route path="/revelation-order" element={
+                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <RevelationOrder />
+                    </Suspense>
+                } />
+                <Route path="/juz" element={
+                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                        <JuzList />
                     </Suspense>
                 } />
             </Routes>

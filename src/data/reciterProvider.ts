@@ -244,6 +244,90 @@ export const RECITERS: Reciter[] = [
         audioType: 'translation',
         audioLanguage: 'en',
     },
+    // 🇹🇷 Türk Kariler
+    {
+        id: 'mustafa-ismail-tr',
+        name: 'Mustafa İsmail',
+        nameLocal: 'Mustafa İsmail',
+        arabicName: '',
+        identifier: 'turkish/mustafa_ismail',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'davut-kaya',
+        name: 'Davut Kaya',
+        nameLocal: 'Davut Kaya',
+        arabicName: '',
+        identifier: 'turkish/davut_kaya',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'ismail-bicer',
+        name: 'İsmail Biçer',
+        nameLocal: 'İsmail Biçer',
+        arabicName: '',
+        identifier: 'turkish/ismail_bicer',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'kani-karaca',
+        name: 'Kani Karaca',
+        nameLocal: 'Kani Karaca',
+        arabicName: '',
+        identifier: 'turkish/kani_karaca',
+        style: 'Mujawwad',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'abdurrahman-sadien',
+        name: 'Abdurrahman Sadien',
+        nameLocal: 'Abdurrahman Sadien',
+        arabicName: '',
+        identifier: 'turkish/abdurrahman_sadien',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'mehmet-emin-ay',
+        name: 'Mehmet Emin Ay',
+        nameLocal: 'Mehmet Emin Ay',
+        arabicName: '',
+        identifier: 'turkish/mehmet_emin_ay',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    {
+        id: 'fatih-colak',
+        name: 'Fatih Çollak',
+        nameLocal: 'Fatih Çollak',
+        arabicName: '',
+        identifier: 'turkish/fatih_colak',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+    },
+    // 🇹🇷 Türkçe Meal Sesleri
+    {
+        id: 'diyanet-meal-tr',
+        name: 'Diyanet Meali',
+        nameLocal: 'Diyanet Meali (Sesli)',
+        arabicName: '',
+        identifier: 'turkish/diyanet_meal',
+        style: 'Murattal',
+        country: '🇹🇷',
+        qiraat: 'Hafs',
+        audioType: 'translation',
+        audioLanguage: 'tr',
+    },
 ];
 
 const CDN_BASE = 'https://everyayah.com/data';
@@ -327,4 +411,18 @@ export function getArabicReciters(): Reciter[] {
  */
 export function getTranslationReciters(): Reciter[] {
     return RECITERS.filter(r => r.audioType === 'translation');
+}
+
+/**
+ * Get Turkish reciters
+ */
+export function getTurkishReciters(): Reciter[] {
+    return RECITERS.filter(r => r.country === '🇹🇷');
+}
+
+/**
+ * Get reciters by country
+ */
+export function getRecitersByCountry(countryFlag: string): Reciter[] {
+    return RECITERS.filter(r => r.country === countryFlag);
 }

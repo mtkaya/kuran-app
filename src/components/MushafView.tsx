@@ -12,9 +12,10 @@ interface MushafViewProps {
     surahId: number;
     initialAyahId?: number;
     onPageChange?: (page: number) => void;
+    onAyahSelect?: (ayah: any) => void;
 }
 
-export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange }) => {
+export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange, onAyahSelect }) => {
     const {
         currentAyahId,
         currentSurahId,
@@ -84,6 +85,8 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange })
         if (surah) {
             play(ayah.surah_id, ayah.id, ayah.ayah_number, surah.name_turkish, surah.verse_count);
         }
+        // Notify parent about ayah selection for ContentPanel
+        onAyahSelect?.(ayah);
     };
 
     return (

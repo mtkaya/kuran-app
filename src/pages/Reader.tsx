@@ -162,6 +162,7 @@ export default function Reader() {
                         <MushafView
                             surahId={surah.id}
                             initialAyahId={currentAyahId || undefined}
+                            onAyahSelect={(ayah) => setSelectedAyah(ayah)}
                         />
                     </div>
                 )}

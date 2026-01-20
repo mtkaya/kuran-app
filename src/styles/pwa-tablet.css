@@ -1,0 +1,502 @@
+/* ========================================
+   PWA & Tablet Responsive Styles
+   ======================================== */
+
+/* PWA Install Banner */
+.pwa-install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.98), rgba(17, 24, 39, 0.98));
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
+    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.pwa-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #d4af37;
+}
+
+.pwa-banner-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.pwa-banner-text strong {
+    font-size: 14px;
+    color: #fff;
+}
+
+.pwa-banner-text span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.pwa-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pwa-install-btn {
+    background: linear-gradient(135deg, #d4af37, #c49b30);
+    color: #0c1222;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pwa-install-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+.pwa-dismiss-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.pwa-dismiss-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* iOS Installation Guide Modal */
+.pwa-ios-guide-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.pwa-ios-guide {
+    background: linear-gradient(135deg, #1a2332, #111827);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.pwa-guide-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.pwa-guide-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.pwa-ios-guide h3 {
+    color: #d4af37;
+    margin: 0 0 16px;
+    font-size: 18px;
+}
+
+.pwa-ios-guide ol {
+    margin: 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pwa-ios-guide li {
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.ios-share-icon {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.pwa-guide-note {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 8px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    border-left: 3px solid #d4af37;
+}
+
+/* PWA Update Banner */
+.pwa-update-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #10b981, #059669);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    z-index: 9999;
+    color: #fff;
+    font-weight: 500;
+}
+
+.pwa-update-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.pwa-update-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Offline/Online Indicators */
+.offline-indicator,
+.online-indicator {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 9998;
+    animation: slideUpFade 0.3s ease;
+}
+
+@keyframes slideUpFade {
+    from {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+.offline-indicator {
+    background: rgba(239, 68, 68, 0.9);
+    color: #fff;
+}
+
+.online-indicator {
+    background: rgba(16, 185, 129, 0.9);
+    color: #fff;
+}
+
+/* ========================================
+   Tablet & Desktop Responsive Layouts
+   ======================================== */
+
+/* Tablet Portrait (768px - 1024px) */
+@media (min-width: 768px) {
+
+    /* Surah Grid - 3 columns on tablet */
+    .surah-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        padding: 20px;
+    }
+
+    /* Reader view adjustments */
+    .reader-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    /* Ayah text larger on tablet */
+    .ayah-arabic {
+        font-size: 2rem;
+        line-height: 2.2;
+    }
+
+    /* Translation text */
+    .ayah-translation {
+        font-size: 1.1rem;
+    }
+
+    /* Audio controls */
+    .audio-controls {
+        padding: 16px 24px;
+    }
+
+    /* Settings page */
+    .settings-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* Tablet Landscape & Small Desktop (1024px - 1280px) */
+@media (min-width: 1024px) {
+
+    /* Surah Grid - 4 columns */
+    .surah-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 24px 40px;
+    }
+
+    /* Split view layout */
+    .reader-split-view {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 24px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    /* Content panel sidebar */
+    .content-panel-sidebar {
+        position: sticky;
+        top: 80px;
+        height: calc(100vh - 100px);
+        overflow-y: auto;
+        border-left: 1px solid rgba(212, 175, 55, 0.2);
+        padding-left: 24px;
+    }
+
+    /* Mushaf view - larger images */
+    .mushaf-container {
+        max-width: 900px;
+    }
+
+    .mushaf-image {
+        border-radius: 12px;
+    }
+}
+
+/* Large Desktop (1280px+) */
+@media (min-width: 1280px) {
+
+    /* Surah Grid - 5 columns */
+    .surah-grid {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* Reader with wider margins */
+    .reader-container {
+        max-width: 900px;
+    }
+
+    /* Three column layout for desktop */
+    .reader-three-column {
+        display: grid;
+        grid-template-columns: 280px 1fr 350px;
+        gap: 24px;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* Surah list sidebar */
+    .surah-sidebar {
+        position: sticky;
+        top: 80px;
+        height: calc(100vh - 100px);
+        overflow-y: auto;
+        background: rgba(12, 18, 34, 0.5);
+        border-radius: 12px;
+        padding: 16px;
+    }
+}
+
+/* ========================================
+   iPad-Specific Optimizations
+   ======================================== */
+
+/* iPad Pro 12.9" */
+@media (min-width: 1024px) and (max-width: 1366px) and (hover: none) and (pointer: coarse) {
+
+    /* Larger touch targets */
+    .surah-card {
+        min-height: 80px;
+    }
+
+    button,
+    .btn,
+    .icon-button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Comfortable text size */
+    .ayah-arabic {
+        font-size: 2.25rem;
+    }
+}
+
+/* iPad with Split View / Slide Over */
+@media (min-width: 320px) and (max-width: 500px) and (hover: none) {
+
+    /* Compact mode for iPad multitasking */
+    .surah-grid {
+        grid-template-columns: 1fr;
+        padding: 12px;
+    }
+
+    .reader-container {
+        padding: 16px;
+    }
+}
+
+/* ========================================
+   PWA Standalone Mode Adjustments
+   ======================================== */
+
+@media (display-mode: standalone) {
+
+    /* Remove browser chrome padding */
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    /* Adjust header for notch */
+    .app-header {
+        padding-top: calc(12px + env(safe-area-inset-top));
+    }
+
+    /* Bottom navigation safe area */
+    .bottom-nav,
+    .audio-controls {
+        padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+}
+
+/* ========================================
+   macOS Desktop PWA Optimizations
+   ======================================== */
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+
+    /* Hover effects for desktop */
+    .surah-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(212, 175, 55, 0.15);
+    }
+
+    .ayah-container:hover {
+        background: rgba(212, 175, 55, 0.05);
+    }
+
+    /* Scrollbar styling for macOS */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(12, 18, 34, 0.5);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: rgba(212, 175, 55, 0.3);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(212, 175, 55, 0.5);
+    }
+
+    /* Keyboard focus indicators */
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+        outline: 2px solid #d4af37;
+        outline-offset: 2px;
+    }
+}
+
+/* ========================================
+   Print Styles (for PDF export)
+   ======================================== */
+
+@media print {
+
+    .app-header,
+    .bottom-nav,
+    .audio-controls,
+    .pwa-install-banner,
+    .pwa-update-banner {
+        display: none !important;
+    }
+
+    .reader-container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .ayah-container {
+        page-break-inside: avoid;
+    }
+}

@@ -1,6 +1,9 @@
 /* Import Arabic fonts including Quran Mushaf calligraphy */
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Rakkas&family=Reem+Kufi:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
 
+/* PWA and Tablet Responsive Styles - must be imported at the top */
+@import './styles/pwa-tablet.css';
+
 /* KFGQPC Mushaf Font - Authentic Quran Script */
 @font-face {
   font-family: 'KFGQPC Uthmanic Script Hafs';

@@ -1,18 +1,89 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+
+  <!-- App Title & Description -->
+  <title>Kur'an-ı Kerim: İndeksli</title>
+  <meta name="description"
+    content="Türkçe, İngilizce ve daha fazla dilde mealli Kur'an-ı Kerim uygulaması. Sesli okuma, tefsir, Mushaf görünümü ve kişisel notlar." />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#d4af37" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c1222" media="(prefers-color-scheme: dark)" />
+  <meta name="background-color" content="#0c1222" />
+
+  <!-- iOS/iPadOS Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Kur'an-ı Kerim</title>
+  <meta name="apple-mobile-web-app-title" content="Kur'an-ı Kerim" />
+
+  <!-- iOS Icons -->
+  <link rel="apple-touch-icon" href="/icons/ios/152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/ios/180.png" />
+  <link rel="apple-touch-icon" sizes="167x167" href="/icons/ios/167.png" />
+  <link rel="apple-touch-icon" sizes="1024x1024" href="/icons/ios/1024.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/ios/32.png" />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Kur'an-ı Kerim: İndeksli" />
+  <meta property="og:description" content="Türkçe, İngilizce ve daha fazla dilde mealli Kur'an-ı Kerim uygulaması." />
+  <meta property="og:image" content="/icons/icon-512x512.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kur'an-ı Kerim: İndeksli" />
+  <meta name="twitter:description" content="Türkçe, İngilizce ve daha fazla dilde mealli Kur'an-ı Kerim uygulaması." />
+
+  <!-- Additional SEO -->
+  <meta name="keywords" content="Kuran, Kur'an, Quran, Islam, Meal, Tefsir, Mushaf, Arapça, Türkçe, İngilizce" />
+  <meta name="author" content="ARF Hause" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kuran.arfhause.com" />
 </head>
 
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+
+  <!-- Register Service Worker for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope);
+
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New version available
+                  console.log('New version available! Refresh to update.');
+                }
+              });
+            });
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error);
+          });
+      });
+    }
+  </script>
 </body>
 
 </html>

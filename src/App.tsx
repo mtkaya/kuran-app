@@ -14,6 +14,7 @@ import { useReadingStore } from './store/readingStore'
 import { SplashScreen } from './components/SplashScreen'
 import { useNativeFeatures } from './hooks/useNativeFeatures'
 import { AudioPlayer } from './components/AudioPlayer'
+import { PWAInstallBanner, PWAUpdateBanner, OfflineIndicator } from './components/PWAComponents'
 
 // Lazy load pages for better initial load performance
 const Reader = lazy(() => import('./pages/Reader'))
@@ -305,6 +306,11 @@ function App() {
 
             {/* Global Audio Player - visible on all pages */}
             <AudioPlayer />
+
+            {/* PWA Components */}
+            <PWAInstallBanner />
+            <PWAUpdateBanner />
+            <OfflineIndicator />
         </div >
     )
 }

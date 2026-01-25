@@ -22,7 +22,7 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
                 </h3>
 
                 {/* Arabic Name */}
-                <span className="font-arabic text-[9px] text-muted-foreground text-center leading-none mt-0.5 line-clamp-1 w-full" dir="rtl">
+                <span className="font-arabic text-[8px] text-muted-foreground text-center leading-none mt-0.5 line-clamp-1 w-full" dir="rtl">
                     {surah.name_arabic}
                 </span>
             </Link>
@@ -33,17 +33,17 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
     return (
         <Link
             to={`/surah/${surah.id}`}
-            className="flex items-center justify-between p-2.5 bg-card border border-border/50 rounded-xl transition-all duration-300 group active:scale-[0.98]"
+            className="flex items-center justify-between p-2 bg-card border border-border/50 rounded-lg transition-all duration-300 group active:scale-[0.98]"
         >
             <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-sm text-foreground truncate">
+                <h3 className="font-semibold text-xs text-foreground truncate">
                     {surah.name_turkish}
                 </h3>
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <span className="font-arabic text-sm">{surah.name_arabic}</span>
-                    <span className="w-1 h-1 rounded-full bg-muted-foreground/40"></span>
+                <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground mt-0.5">
+                    <span className="font-arabic text-xs">{surah.name_arabic}</span>
+                    <span className="w-0.5 h-0.5 rounded-full bg-muted-foreground/40"></span>
                     <span className="flex items-center gap-0.5">
-                        <BookOpen className="w-3 h-3" />
+                        <BookOpen className="w-2.5 h-2.5" />
                         {surah.verse_count}
                     </span>
                 </div>

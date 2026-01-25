@@ -9,20 +9,20 @@ interface SurahCardProps {
 
 export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' }) => {
 
-    // Grid/Compact variant - Fixed height for 5 rows visible
+    // Grid/Compact variant - Ultra compact for 5-column layout
     if (variant === 'grid') {
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center justify-center gap-1 p-2 h-[72px] min-w-0 bg-card border border-border/50 rounded-xl transition-all duration-200 hover:shadow-md hover:border-primary/30 active:scale-[0.97] overflow-hidden"
+                className="flex flex-col items-center justify-center gap-0.5 p-1 h-[60px] min-w-0 bg-card border border-border/50 rounded-lg transition-all duration-200 hover:shadow-sm hover:border-primary/30 active:scale-[0.97] overflow-hidden"
             >
                 {/* Surah Name - Turkish */}
-                <h3 className="font-semibold text-[11px] text-foreground text-center leading-tight line-clamp-1 w-full">
+                <h3 className="font-semibold text-[8px] text-foreground text-center leading-tight line-clamp-1 w-full px-0.5">
                     {surah.name_turkish}
                 </h3>
 
                 {/* Arabic Name */}
-                <span className="font-arabic text-[13px] text-muted-foreground text-center leading-tight line-clamp-1 w-full" dir="rtl">
+                <span className="font-arabic text-[10px] text-muted-foreground text-center leading-tight line-clamp-1 w-full" dir="rtl">
                     {surah.name_arabic}
                 </span>
             </Link>

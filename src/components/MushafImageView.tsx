@@ -204,15 +204,11 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     <ChevronLeft className="w-5 h-5" />
                 </button>
 
-                {/* Mushaf Edition Selector */}
-                <button
-                    onClick={() => setShowEditionSelector(!showEditionSelector)}
-                    className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
-                    aria-label="Mushaf Seç"
-                >
-                    <span className="text-sm">{currentEdition.flag}</span>
-                    <BookOpen className="w-3.5 h-3.5" />
-                </button>
+                {/* Page Info */}
+                <div className="flex items-center gap-2">
+                    <span className="text-lg">{currentEdition.flag}</span>
+                    <span className="text-sm font-medium">{currentPage} / {PAGE_COUNT}</span>
+                </div>
 
                 {/* Zoom Controls */}
                 <div className="flex items-center gap-1">
@@ -266,47 +262,6 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     <ChevronRight className="w-5 h-5" />
                 </button>
             </div>
-
-            {/* Mushaf Edition Selector Dropdown */}
-            {showEditionSelector && (
-                <div className="absolute top-14 left-1/2 -translate-x-1/2 z-50 bg-card border border-border rounded-xl shadow-xl p-2 min-w-[280px] max-h-[60vh] overflow-y-auto">
-                    <div className="text-xs font-semibold text-muted-foreground px-2 py-1 mb-1">
-                        Mushaf Seçin
-                    </div>
-                    {MUSHAF_EDITIONS.map((edition) => (
-                        <button
-                            key={edition.id}
-                            onClick={() => {
-                                setMushafEdition(edition.id);
-                                setShowEditionSelector(false);
-                                setIsLoading(true);
-                                setImageError(false);
-                            }}
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors text-left ${mushafEdition === edition.id
-                                ? 'bg-primary/10 border border-primary/30'
-                                : 'hover:bg-secondary'
-                                }`}
-                        >
-                            <span className="text-2xl">{edition.flag}</span>
-                            <div className="flex-1 min-w-0">
-                                <div className="font-medium text-sm truncate">{edition.name}</div>
-                                <div className="text-xs text-muted-foreground truncate">{edition.description}</div>
-                            </div>
-                            {!edition.isLocal && (
-                                <span className="text-[10px] px-1.5 py-0.5 bg-blue-500/10 text-blue-500 rounded">Online</span>
-                            )}
-                        </button>
-                    ))}
-                </div>
-            )}
-
-            {/* Click outside to close dropdown */}
-            {showEditionSelector && (
-                <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setShowEditionSelector(false)}
-                />
-            )}
 
             {/* Page Image - fills remaining space */}
             <div

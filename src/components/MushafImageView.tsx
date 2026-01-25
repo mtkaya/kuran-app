@@ -1,6 +1,6 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
@@ -23,14 +23,13 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-    const [showEditionSelector, setShowEditionSelector] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const lastTouchDistance = useRef<number>(0);
 
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
-    const { mushafEdition, setMushafEdition } = useSettingsStore();
+    const { mushafEdition } = useSettingsStore();
     const currentEdition = getMushafEdition(mushafEdition) || MUSHAF_EDITIONS[0];
 
     // Sync page with audio playback

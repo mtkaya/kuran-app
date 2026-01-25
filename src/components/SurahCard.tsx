@@ -25,11 +25,6 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
                 <h3 className="font-medium text-[10px] text-muted-foreground text-center leading-tight line-clamp-2 w-full px-0.5">
                     {surah.name_turkish}
                 </h3>
-
-                {/* Number Badge - Bottom Center */}
-                <div className="w-6 h-6 flex items-center justify-center rounded-full bg-primary/10 text-primary text-[10px] font-bold mt-1">
-                    {surah.id}
-                </div>
             </Link>
         );
     }

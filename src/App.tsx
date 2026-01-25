@@ -1,13 +1,13 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { useQuranData } from './hooks/useQuranData'
-import { Search as SearchIcon, Settings, BookOpen, ScrollText, FileText, List, Grid3X3, ArrowDownUp, Layers } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText, List, Grid3X3, ArrowDownUp, Layers, FileText } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect, lazy, Suspense, useCallback } from 'react'
 import { useLanguage } from './context/LanguageContext'
 import { getUIStrings } from './i18n/strings'
 import { ThemeToggle } from './components/ThemeToggle'
-import { ContinueReading } from './components/ContinueReading'
+// ContinueReading import removed for cleaner home design
 import { useSettingsStore } from './store/settingsStore'
 import { useBookmarkStore } from './store/bookmarkStore'
 import { useReadingStore } from './store/readingStore'
@@ -97,6 +97,20 @@ function App() {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-0.5">
+                                        <Link
+                                            to="/search"
+                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
+                                            aria-label={ui.searchInQuran}
+                                        >
+                                            <SearchIcon className="w-5 h-5" />
+                                        </Link>
+                                        <Link
+                                            to="/notes"
+                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
+                                            aria-label="Notlarım"
+                                        >
+                                            <FileText className="w-5 h-5" />
+                                        </Link>
                                         <ThemeToggle />
                                         <button
                                             onClick={() => setIsSettingsOpen(true)}
@@ -111,106 +125,73 @@ function App() {
                         </header>
 
                         {/* Main Content */}
-                        <main className="max-w-lg mx-auto px-4 space-y-4 pb-8 pt-6">
-                            {/* Continue Reading Card */}
-                            <div>
-                                <ContinueReading />
-                            </div>
-
-                            {/* Reading Mode Selection - 3 Options */}
-                            <div className="grid grid-cols-3 gap-2 mb-4">
+                        <main className="max-w-lg mx-auto px-4 space-y-3 pb-8 pt-4">
+                            {/* Reading Mode Selection - Compact 3 Options */}
+                            <div className="grid grid-cols-3 gap-1.5">
                                 <button
                                     onClick={() => setReadingMode('normal')}
-                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'normal'
-                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'normal'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <ScrollText className="w-4 h-4" />
+                                    <ScrollText className="w-3.5 h-3.5" />
                                     <span className="font-medium text-xs">Normal</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('mushaf')}
-                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'mushaf'
-                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'mushaf'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <BookOpen className="w-4 h-4" />
+                                    <BookOpen className="w-3.5 h-3.5" />
                                     <span className="font-medium text-xs">Mushaf</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('digital')}
-                                    className={`flex flex-col items-center justify-center gap-1 p-2 rounded-xl border transition-all duration-200 ${readingMode === 'digital'
-                                        ? 'bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20'
+                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'digital'
+                                        ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <BookOpen className="w-4 h-4" />
+                                    <BookOpen className="w-3.5 h-3.5" />
                                     <span className="font-medium text-xs">Dijital</span>
                                 </button>
                             </div>
 
-                            {/* Notes Link */}
-                            <Link
-                                to="/notes"
-                                className="flex items-center gap-3 w-full px-4 py-3 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-primary/50 transition-all duration-300"
-                            >
-                                <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center">
-                                    <FileText className="w-5 h-5 text-amber-500" />
-                                </div>
-                                <span className="font-medium">Notlarım</span>
-                            </Link>
-
-                            {/* New Browse Options */}
-                            <div className="grid grid-cols-2 gap-2">
-                                {/* Revelation Order */}
+                            {/* Compact Navigation Row */}
+                            <div className="flex items-center gap-2">
+                                {/* Revelation Order - Compact */}
                                 <Link
                                     to="/revelation-order"
-                                    className="flex flex-col items-center gap-2 p-4 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-emerald-500/50 transition-all duration-300"
+                                    className="flex items-center gap-2 flex-1 py-2.5 px-3 bg-card border border-border rounded-lg text-foreground hover:shadow-md hover:border-emerald-500/50 transition-all duration-200"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                                        <ArrowDownUp className="w-6 h-6 text-emerald-500" />
+                                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+                                        <ArrowDownUp className="w-4 h-4 text-emerald-500" />
                                     </div>
-                                    <div className="text-center">
-                                        <span className="font-medium text-sm block">İniş Sırası</span>
-                                        <span className="text-xs text-muted-foreground">Nüzul Tertibi</span>
-                                    </div>
+                                    <span className="font-medium text-xs">Nüzul</span>
                                 </Link>
 
-                                {/* Juz List */}
+                                {/* Juz List - Compact */}
                                 <Link
                                     to="/juz"
-                                    className="flex flex-col items-center gap-2 p-4 bg-card border border-border rounded-xl text-foreground hover:shadow-lg hover:border-blue-500/50 transition-all duration-300"
+                                    className="flex items-center gap-2 flex-1 py-2.5 px-3 bg-card border border-border rounded-lg text-foreground hover:shadow-md hover:border-blue-500/50 transition-all duration-200"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center">
-                                        <Layers className="w-6 h-6 text-blue-500" />
+                                    <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                                        <Layers className="w-4 h-4 text-blue-500" />
                                     </div>
-                                    <div className="text-center">
-                                        <span className="font-medium text-sm block">Cüz Cüz</span>
-                                        <span className="text-xs text-muted-foreground">30 Cüz</span>
-                                    </div>
+                                    <span className="font-medium text-xs">Cüz</span>
                                 </Link>
                             </div>
 
-                            {/* Search Bar - Enhanced */}
-                            <Link
-                                to="/search"
-                                className="flex items-center gap-3 w-full px-4 py-4 glass rounded-xl text-muted-foreground hover:shadow-lg transition-all duration-300 card-hover touch-target"
-                            >
-                                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                                    <SearchIcon className="w-5 h-5 text-primary" />
-                                </div>
-                                <span className="font-medium">{ui.searchInQuran}</span>
-                            </Link>
-
-                            {/* Quick Search for Surahs */}
+                            {/* Surah Search - Simple Input */}
                             <div className="relative">
-                                <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                 <input
                                     type="text"
                                     placeholder={ui.searchPlaceholder}
-                                    className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all outline-none touch-target"
+                                    className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all outline-none text-sm"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -249,8 +230,8 @@ function App() {
 
                             {/* Surah List - List or Grid View */}
                             <div className={surahViewMode === 'grid'
-                                ? 'grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2'
-                                : 'space-y-2'
+                                ? 'grid grid-cols-5 gap-1.5'
+                                : 'space-y-1.5'
                             }>
                                 {filteredSurahs.map((surah, index) => (
                                     <div

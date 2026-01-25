@@ -39,6 +39,7 @@ export interface UserSettings {
     memorizationMode: boolean;
     readingMode: ReadingMode;
     arabicFont: string;
+    mushafEdition: string;   // Mushaf edition ID (diyanet, madina, indopak, etc.)
 }
 
 export interface StorageSchema {
@@ -58,6 +59,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     memorizationMode: false,
     readingMode: 'normal',
     arabicFont: 'Amiri Quran',
+    mushafEdition: 'diyanet',
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

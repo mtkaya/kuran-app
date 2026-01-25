@@ -61,21 +61,5 @@ export function getMushafPageUrl(editionId: string, page: number): string {
     // Replace {page} placeholder with actual page number
     const fileName = edition.filePattern.replace('{page}', paddedPage);
 
-    if (edition.isLocal) {
-        return `${edition.baseUrl}/${fileName}`;
-    }
-
     return `${edition.baseUrl}/${fileName}`;
-}
-
-/**
- * Get all available Mushaf editions grouped by region
- */
-export function getMushafEditionsByRegion(): Record<string, MushafEdition[]> {
-    return {
-        'Türkiye': MUSHAF_EDITIONS.filter(e => e.countryCode === 'TR'),
-        'Ortadoğu': MUSHAF_EDITIONS.filter(e => ['SA', 'SY'].includes(e.countryCode)),
-        'Kuzey Afrika': MUSHAF_EDITIONS.filter(e => ['MA', 'LY'].includes(e.countryCode)),
-        'Güney Asya': MUSHAF_EDITIONS.filter(e => e.countryCode === 'PK'),
-    };
 }

@@ -14,15 +14,15 @@ export const SurahCard: React.FC<SurahCardProps> = ({ surah, variant = 'list' })
         return (
             <Link
                 to={`/surah/${surah.id}`}
-                className="flex flex-col items-center justify-center gap-0.5 p-1 h-[60px] min-w-0 bg-card border border-border/50 rounded-lg transition-all duration-200 hover:shadow-sm hover:border-primary/30 active:scale-[0.97] overflow-hidden"
+                className="flex flex-col items-center justify-center gap-1 p-1 h-[80px] min-w-0 bg-card border border-border/50 rounded-lg transition-all duration-200 hover:shadow-sm hover:border-primary/30 active:scale-[0.97] overflow-hidden"
             >
                 {/* Arabic Name - Prominent at TOP */}
-                <span className="font-arabic text-[12px] text-foreground text-center leading-none mt-1 line-clamp-1 w-full" dir="rtl">
+                <span className="font-arabic text-[14px] text-foreground text-center leading-none mt-1 line-clamp-1 w-full" dir="rtl">
                     {surah.name_arabic}
                 </span>
 
                 {/* Surah Name - Turkish - Smaller at BOTTOM */}
-                <h3 className="font-medium text-[8px] text-muted-foreground text-center leading-tight line-clamp-1 w-full px-0.5 -mt-0.5">
+                <h3 className="font-medium text-[9px] text-muted-foreground text-center leading-tight line-clamp-2 w-full px-0.5">
                     {surah.name_turkish}
                 </h3>
             </Link>

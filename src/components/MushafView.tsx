@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Maximize2, Minimize2 } from 'lucide-react';
+import { Maximize2, Minimize2, ArrowDownUp, Layers } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { MushafTextView } from './MushafTextView';
 import { MushafTranslationPanel } from './MushafTranslationPanel';
 import { getPageForAyah } from '../data/pageMapping';
@@ -91,6 +92,24 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange, o
 
     return (
         <div className="flex flex-col gap-6">
+            {/* Navigation Options - Quick Access to Nuzul/Juz */}
+            <div className="flex gap-2">
+                <Link
+                    to="/revelation-order"
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 bg-card border border-border rounded-xl hover:bg-accent transition-colors text-sm font-medium"
+                >
+                    <ArrowDownUp className="w-4 h-4 text-emerald-500" />
+                    <span>Nüzul Sırası</span>
+                </Link>
+                <Link
+                    to="/juz"
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 bg-card border border-border rounded-xl hover:bg-accent transition-colors text-sm font-medium"
+                >
+                    <Layers className="w-4 h-4 text-blue-500" />
+                    <span>Cüzler</span>
+                </Link>
+            </div>
+
             {/* Mushaf Text View */}
             <div className={`relative transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-background p-4' : ''}`}>
                 {/* Fullscreen Toggle */}

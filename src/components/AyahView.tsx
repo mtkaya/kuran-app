@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Ayah } from '../types';
-import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText } from 'lucide-react';
+import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText, Flag } from 'lucide-react';
 import { NoteModal } from './NoteModal';
 import { useBookmarkStore } from '../store/bookmarkStore';
+import { useReadingStore } from '../store/readingStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
 import { useNotesStore } from '../store/notesStore';
@@ -20,6 +21,7 @@ interface AyahViewProps {
 }
 
 export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs, onCopy, onSelect, isSelected }) => {
+    const { lastRead } = useReadingStore();
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
     const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode, arabicFont } = useSettingsStore();
     const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
@@ -36,6 +38,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
 
     const bookmarked = isBookmarked(ayah.surah_id, ayah.id);
+    const isLastRead = lastRead?.surahId === ayah.surah_id && lastRead?.ayahId === ayah.id;
     const isCurrentlyPlaying = isPlaying && currentAyahId === ayah.id;
     const ayahNotes = getNotesByAyah(ayah.id);
     const hasNotes = ayahNotes.length > 0;
@@ -96,6 +99,12 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                     className={`text-right mb-4 overflow-hidden ${memorizationMode && !revealed ? 'cursor-pointer' : ''}`}
                     onClick={() => memorizationMode && !revealed && setRevealed(true)}
                 >
+                    {isLastRead && (
+                        <div className="inline-flex items-center gap-1.5 px-2 py-1 mb-2 bg-primary/10 text-primary rounded-full text-xs font-medium">
+                            <Flag className="w-3 h-3 fill-primary" />
+                            <span>Son Okunan</span>
+                        </div>
+                    )}
                     <p
                         className={`font-arabic leading-loose font-medium transition-all duration-300 break-words ${memorizationMode && !revealed ? 'blur-md select-none' : ''
                             }`}

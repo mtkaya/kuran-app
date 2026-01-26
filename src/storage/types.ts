@@ -40,6 +40,7 @@ export interface UserSettings {
     readingMode: ReadingMode;
     arabicFont: string;
     mushafEdition: string;   // Mushaf edition ID (diyanet, madina, indopak, etc.)
+    hasSeenTutorial: boolean; // Tutorial overlay shown status
 }
 
 export interface StorageSchema {
@@ -60,6 +61,7 @@ export const DEFAULT_SETTINGS: UserSettings = {
     readingMode: 'normal',
     arabicFont: 'Amiri Quran',
     mushafEdition: 'diyanet',
+    hasSeenTutorial: false,
 };
 
 export const DEFAULT_STORAGE: StorageSchema = {

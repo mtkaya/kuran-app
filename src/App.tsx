@@ -15,6 +15,7 @@ import { SplashScreen } from './components/SplashScreen'
 import { useNativeFeatures } from './hooks/useNativeFeatures'
 import { AudioPlayer } from './components/AudioPlayer'
 import { PWAInstallBanner, PWAUpdateBanner, OfflineIndicator } from './components/PWAComponents'
+import { TutorialOverlay } from './components/TutorialOverlay'
 
 // Lazy load pages for better initial load performance
 const Reader = lazy(() => import('./pages/Reader'))
@@ -292,6 +293,7 @@ function App() {
             <PWAInstallBanner />
             <PWAUpdateBanner />
             <OfflineIndicator />
+            <TutorialOverlay />
         </div >
     )
 }

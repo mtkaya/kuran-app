@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import { SurahCard } from './components/SurahCard'
 import { useQuranData } from './hooks/useQuranData'
-import { Search as SearchIcon, Settings, BookOpen, ScrollText, List, Grid3X3, ArrowDownUp, Layers, FileText } from 'lucide-react'
+import { Search as SearchIcon, Settings, BookOpen, ScrollText, List, Grid3X3, FileText } from 'lucide-react'
 import { SettingsPanel } from './components/SettingsPanel'
 import { useState, useMemo, useEffect, lazy, Suspense, useCallback } from 'react'
 import { useLanguage } from './context/LanguageContext'
@@ -159,31 +159,6 @@ function App() {
                                     <BookOpen className="w-3.5 h-3.5" />
                                     <span className="font-medium text-xs">Dijital</span>
                                 </button>
-                            </div>
-
-                            {/* Compact Navigation Row */}
-                            <div className="flex items-center gap-2">
-                                {/* Revelation Order - Compact */}
-                                <Link
-                                    to="/revelation-order"
-                                    className="flex items-center gap-2 flex-1 py-2.5 px-3 bg-card border border-border rounded-lg text-foreground hover:shadow-md hover:border-emerald-500/50 transition-all duration-200"
-                                >
-                                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                                        <ArrowDownUp className="w-4 h-4 text-emerald-500" />
-                                    </div>
-                                    <span className="font-medium text-xs">Nüzul</span>
-                                </Link>
-
-                                {/* Juz List - Compact */}
-                                <Link
-                                    to="/juz"
-                                    className="flex items-center gap-2 flex-1 py-2.5 px-3 bg-card border border-border rounded-lg text-foreground hover:shadow-md hover:border-blue-500/50 transition-all duration-200"
-                                >
-                                    <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                                        <Layers className="w-4 h-4 text-blue-500" />
-                                    </div>
-                                    <span className="font-medium text-xs">Cüz</span>
-                                </Link>
                             </div>
 
                             {/* Surah Search - Simple Input */}

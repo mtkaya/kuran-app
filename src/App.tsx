@@ -231,7 +231,7 @@ function App() {
 
                             {/* Surah List - List or Grid View */}
                             <div className={surahViewMode === 'grid'
-                                ? 'grid grid-cols-5 gap-1 overflow-hidden'
+                                ? 'grid grid-cols-4 gap-1.5 overflow-hidden'
                                 : 'space-y-1.5'
                             }>
                                 {filteredSurahs.map((surah, index) => (

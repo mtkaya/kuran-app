@@ -32,6 +32,20 @@ export const MUSHAF_EDITIONS: MushafEdition[] = [
         coverOffset: 0,
         isLocal: true,
     },
+    {
+        id: 'madina',
+        name: 'Medine Mushafı',
+        nameArabic: 'مصحف المدينة المنورة',
+        country: 'Suudi Arabistan',
+        countryCode: 'SA',
+        flag: '🇸🇦',
+        description: 'Kral Fahd Kur\'an Basım Kompleksi (Dünya Standardı)',
+        pageCount: 604,
+        baseUrl: 'https://files.quran.app/hafs/madani/width_1024',
+        filePattern: 'page{page}.png',
+        coverOffset: 0,
+        isLocal: false,
+    },
 ];
 
 // Default Mushaf edition

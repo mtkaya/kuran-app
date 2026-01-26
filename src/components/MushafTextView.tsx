@@ -177,8 +177,21 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                             }`}
                     >
                         {word.isEndMarker ? (
-                            <span className="inline-flex items-center justify-center w-5 h-5 text-xs border border-primary/50 rounded-full">
-                                {word.text}
+                            /* Enhanced Ayah End Marker - Islamic Style */
+                            <span className="inline-flex items-center justify-center relative group">
+                                {/* Outer decorative ring */}
+                                <span className="absolute inset-0 w-7 h-7 rounded-full border-2 border-primary/30 transform rotate-45" />
+                                {/* Inner decorative ring */}
+                                <span className="absolute inset-0.5 w-6 h-6 rounded-full border border-primary/20" />
+                                {/* Background with gradient */}
+                                <span className="relative w-7 h-7 rounded-full bg-gradient-to-br from-primary/10 via-primary/5 to-transparent flex items-center justify-center shadow-sm">
+                                    {/* Ayah number */}
+                                    <span className="text-[10px] font-semibold text-primary/90 number-font leading-none">
+                                        {word.text}
+                                    </span>
+                                </span>
+                                {/* Optional glow effect on hover */}
+                                <span className="absolute inset-0 w-7 h-7 rounded-full opacity-0 group-hover:opacity-100 bg-primary/10 transition-opacity duration-300" />
                             </span>
                         ) : (
                             word.text

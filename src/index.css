@@ -486,6 +486,52 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Enhanced Ayah Marker - Mushaf Style */
+  .ayah-marker {
+    @apply relative inline-flex items-center justify-center;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .ayah-marker::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        hsl(var(--primary) / 0.15) 0%,
+        hsl(var(--primary) / 0.05) 50%,
+        transparent 100%);
+    border-radius: 50%;
+    border: 1.5px solid hsl(var(--primary) / 0.4);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.1);
+  }
+
+  .ayah-marker::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 0.5px solid hsl(var(--primary) / 0.25);
+    border-radius: 50%;
+  }
+
+  /* Ayah Marker Playing Animation */
+  .ayah-marker-playing {
+    animation: markerPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes markerPulse {
+
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 hsl(var(--primary) / 0.3);
+    }
+
+    50% {
+      box-shadow: 0 0 12px 4px hsl(var(--primary) / 0.15);
+    }
+  }
 }
 
 /* Arabic Font - Amiri Quran */

@@ -1,0 +1,547 @@
+/* ========================================
+   Web & Tablet Enhanced Responsive Styles
+   ======================================== */
+
+/* ========================================
+   CSS Custom Properties for Responsive
+   ======================================== */
+:root {
+    --container-max-width: 1400px;
+    --sidebar-width: 280px;
+    --content-panel-width: 380px;
+    --header-height: 64px;
+    --tablet-header-height: 72px;
+    --desktop-header-height: 80px;
+}
+
+/* ========================================
+   Base Layout Wrapper
+   ======================================== */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================================
+   Tablet Layout (768px+)
+   ======================================== */
+@media (min-width: 768px) {
+
+    /* Container widths */
+    .container-tablet {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+
+    /* Header adjustments */
+    .gradient-header {
+        padding: 1.5rem 2rem !important;
+    }
+
+    .gradient-header h1 {
+        font-size: 1.5rem !important;
+    }
+
+    /* Surah cards in tablet - 2 column list or 5-6 column grid */
+    .surah-list-tablet {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .surah-grid-tablet {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+    }
+
+    /* Reading mode selector - larger */
+    .reading-mode-selector {
+        gap: 8px;
+    }
+
+    .reading-mode-selector button {
+        padding: 12px 20px;
+        font-size: 0.875rem;
+    }
+
+    /* Search input larger */
+    .search-input-tablet {
+        padding: 14px 16px;
+        padding-left: 44px;
+        font-size: 1rem;
+    }
+
+    /* Ayah cards bigger on tablet */
+    .ayah-card-tablet {
+        padding: 24px;
+        border-radius: 16px;
+    }
+
+    .ayah-card-tablet .font-arabic {
+        font-size: 28px !important;
+    }
+
+    /* Audio player larger controls */
+    .audio-player-tablet {
+        padding: 16px 24px;
+    }
+
+    .audio-player-tablet button {
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    /* Settings panel as modal on tablet */
+    .settings-panel-tablet {
+        max-width: 500px;
+        margin: 0 auto;
+        border-radius: 24px 24px 0 0;
+    }
+
+    /* Mushaf view optimized */
+    .mushaf-container-tablet {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+/* ========================================
+   Desktop Layout (1024px+)
+   ======================================== */
+@media (min-width: 1024px) {
+
+    /* Container with max width */
+    .container-desktop {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+
+    /* Desktop Header - Full width with centered content */
+    .desktop-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: hsl(var(--card) / 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid hsl(var(--border));
+        padding: 16px 32px;
+    }
+
+    .desktop-header-content {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    /* Desktop Navigation Links */
+    .desktop-nav {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .desktop-nav-link {
+        padding: 10px 16px;
+        border-radius: 8px;
+        color: hsl(var(--muted-foreground));
+        font-weight: 500;
+        font-size: 0.875rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .desktop-nav-link:hover {
+        background: hsl(var(--accent) / 0.1);
+        color: hsl(var(--foreground));
+    }
+
+    .desktop-nav-link.active {
+        background: hsl(var(--primary) / 0.1);
+        color: hsl(var(--primary));
+    }
+
+    /* Desktop Main Content with Sidebar */
+    .desktop-layout {
+        display: grid;
+        grid-template-columns: var(--sidebar-width) 1fr;
+        gap: 0;
+        min-height: calc(100vh - var(--desktop-header-height));
+    }
+
+    .desktop-layout-full {
+        display: block;
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 24px 32px;
+    }
+
+    /* Sidebar */
+    .desktop-sidebar {
+        position: sticky;
+        top: var(--desktop-header-height);
+        height: calc(100vh - var(--desktop-header-height));
+        overflow-y: auto;
+        border-right: 1px solid hsl(var(--border));
+        background: hsl(var(--card));
+        padding: 16px;
+    }
+
+    .desktop-sidebar-section {
+        margin-bottom: 24px;
+    }
+
+    .desktop-sidebar-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: hsl(var(--muted-foreground));
+        padding: 8px 12px;
+        margin-bottom: 8px;
+    }
+
+    /* Surah list in sidebar */
+    .sidebar-surah-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .sidebar-surah-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+
+    .sidebar-surah-item:hover {
+        background: hsl(var(--accent) / 0.1);
+    }
+
+    .sidebar-surah-item.active {
+        background: hsl(var(--primary) / 0.1);
+        border-left: 3px solid hsl(var(--primary));
+    }
+
+    .sidebar-surah-number {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: hsl(var(--secondary));
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: hsl(var(--muted-foreground));
+    }
+
+    .sidebar-surah-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .sidebar-surah-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: hsl(var(--foreground));
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .sidebar-surah-meta {
+        font-size: 0.75rem;
+        color: hsl(var(--muted-foreground));
+    }
+
+    /* Main Content Area */
+    .desktop-main {
+        padding: 24px 32px;
+        max-width: 900px;
+    }
+
+    /* Reader with Split View */
+    .reader-split-view {
+        display: grid;
+        grid-template-columns: 1fr var(--content-panel-width);
+        gap: 24px;
+        max-width: 1200px;
+    }
+
+    .reader-main-content {
+        padding-right: 24px;
+    }
+
+    .reader-side-panel {
+        position: sticky;
+        top: calc(var(--desktop-header-height) + 24px);
+        height: calc(100vh - var(--desktop-header-height) - 48px);
+        overflow-y: auto;
+        border-left: 1px solid hsl(var(--border));
+        padding-left: 24px;
+    }
+
+    /* Surah Grid - 4 or 5 columns on desktop */
+    .surah-grid-desktop {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    /* Desktop Card Hover Effects */
+    .desktop-card {
+        transition: all 0.2s ease;
+    }
+
+    .desktop-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* ========================================
+   Large Desktop (1440px+)
+   ======================================== */
+@media (min-width: 1440px) {
+    :root {
+        --container-max-width: 1600px;
+        --sidebar-width: 320px;
+        --content-panel-width: 420px;
+    }
+
+    .surah-grid-desktop {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    /* Three column reader layout */
+    .reader-three-column {
+        display: grid;
+        grid-template-columns: var(--sidebar-width) 1fr var(--content-panel-width);
+        gap: 0;
+    }
+}
+
+/* ========================================
+   Responsive Typography
+   ======================================== */
+@media (min-width: 768px) {
+    .text-responsive-sm {
+        font-size: 0.9rem;
+    }
+
+    .text-responsive-base {
+        font-size: 1rem;
+    }
+
+    .text-responsive-lg {
+        font-size: 1.25rem;
+    }
+
+    .text-responsive-xl {
+        font-size: 1.5rem;
+    }
+
+    .text-responsive-2xl {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .text-responsive-sm {
+        font-size: 0.95rem;
+    }
+
+    .text-responsive-base {
+        font-size: 1.05rem;
+    }
+
+    .text-responsive-lg {
+        font-size: 1.35rem;
+    }
+
+    .text-responsive-xl {
+        font-size: 1.75rem;
+    }
+
+    .text-responsive-2xl {
+        font-size: 2.25rem;
+    }
+}
+
+/* ========================================
+   Responsive Spacing
+   ======================================== */
+@media (min-width: 768px) {
+    .pt-responsive {
+        padding-top: 1.5rem;
+    }
+
+    .pb-responsive {
+        padding-bottom: 2rem;
+    }
+
+    .px-responsive {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .gap-responsive {
+        gap: 1.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .pt-responsive {
+        padding-top: 2rem;
+    }
+
+    .pb-responsive {
+        padding-bottom: 2.5rem;
+    }
+
+    .px-responsive {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .gap-responsive {
+        gap: 1.5rem;
+    }
+}
+
+/* ========================================
+   Hide/Show Based on Breakpoint
+   ======================================== */
+.hide-mobile {
+    display: none !important;
+}
+
+.show-mobile {
+    display: flex !important;
+}
+
+@media (min-width: 768px) {
+    .hide-tablet {
+        display: none !important;
+    }
+
+    .show-tablet {
+        display: flex !important;
+    }
+
+    .hide-mobile {
+        display: flex !important;
+    }
+
+    .show-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hide-desktop {
+        display: none !important;
+    }
+
+    .show-desktop {
+        display: flex !important;
+    }
+
+    .hide-tablet.show-desktop {
+        display: flex !important;
+    }
+}
+
+/* ========================================
+   Touch vs Mouse Optimization
+   ======================================== */
+
+/* Touch devices - larger targets */
+@media (hover: none) and (pointer: coarse) {
+    .touch-target {
+        min-height: 48px;
+        min-width: 48px;
+    }
+
+    button,
+    a,
+    .clickable {
+        min-height: 44px;
+    }
+}
+
+/* Mouse devices - enhanced hover states */
+@media (hover: hover) and (pointer: fine) {
+    .hover-lift:hover {
+        transform: translateY(-2px);
+    }
+
+    .hover-glow:hover {
+        box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+}
+
+/* ========================================
+   Landscape Orientation Fixes
+   ======================================== */
+@media (orientation: landscape) and (max-height: 500px) {
+
+    /* Compact header in landscape mobile */
+    .gradient-header {
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+    }
+
+    /* Reduce bottom padding */
+    .pb-32 {
+        padding-bottom: 5rem;
+    }
+}
+
+/* ========================================
+   Print Media Query
+   ======================================== */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .print-full-width {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .print-break-before {
+        page-break-before: always;
+    }
+
+    .print-break-after {
+        page-break-after: always;
+    }
+
+    .print-avoid-break {
+        page-break-inside: avoid;
+    }
+}

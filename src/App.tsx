@@ -81,93 +81,96 @@ function App() {
             <Routes>
                 <Route path="/" element={
                     <div className="min-h-screen">
-                        {/* Minimal Header */}
+                        {/* Responsive Header */}
                         <header
-                            className="gradient-header text-white px-safe pb-8"
+                            className="gradient-header text-white px-safe pb-8 lg:pb-6"
                             style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1rem)' }}
                         >
-                            <div className="max-w-lg mx-auto px-4">
+                            <div className="max-w-lg lg:max-w-4xl xl:max-w-6xl mx-auto px-4 lg:px-8">
                                 <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <img src="./logo.svg" alt="Logo" className="w-9 h-9" />
+                                    <div className="flex items-center gap-3 lg:gap-4">
+                                        <img src="./logo.svg" alt="Logo" className="w-9 h-9 lg:w-11 lg:h-11" />
                                         <div>
-                                            <h1 className="text-lg font-bold tracking-tight">
+                                            <h1 className="text-lg lg:text-xl font-bold tracking-tight">
                                                 {ui.appTitle}
                                             </h1>
-                                            <p className="text-white/60 text-xs">{ui.appSubtitle}</p>
+                                            <p className="text-white/60 text-xs lg:text-sm">{ui.appSubtitle}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-0.5">
+                                    <div className="flex items-center gap-0.5 lg:gap-1">
                                         <Link
                                             to="/search"
-                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
+                                            className="p-2 lg:px-3 lg:py-2 hover:bg-white/10 rounded-full lg:rounded-lg text-white/80 transition-colors flex items-center gap-2"
                                             aria-label={ui.searchInQuran}
                                         >
                                             <SearchIcon className="w-5 h-5" />
+                                            <span className="hidden lg:inline text-sm font-medium">Ara</span>
                                         </Link>
                                         <Link
                                             to="/notes"
-                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
+                                            className="p-2 lg:px-3 lg:py-2 hover:bg-white/10 rounded-full lg:rounded-lg text-white/80 transition-colors flex items-center gap-2"
                                             aria-label="Notlarım"
                                         >
                                             <FileText className="w-5 h-5" />
+                                            <span className="hidden lg:inline text-sm font-medium">Notlar</span>
                                         </Link>
                                         <ThemeToggle />
                                         <button
                                             onClick={() => setIsSettingsOpen(true)}
-                                            className="p-2 hover:bg-white/10 rounded-full text-white/80 transition-colors"
+                                            className="p-2 lg:px-3 lg:py-2 hover:bg-white/10 rounded-full lg:rounded-lg text-white/80 transition-colors flex items-center gap-2"
                                             aria-label={ui.settings}
                                         >
                                             <Settings className="w-5 h-5" />
+                                            <span className="hidden lg:inline text-sm font-medium">Ayarlar</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </header>
 
-                        {/* Main Content */}
-                        <main className="max-w-lg mx-auto px-4 space-y-3 pb-8 pt-4">
+                        {/* Main Content - Responsive */}
+                        <main className="max-w-lg lg:max-w-4xl xl:max-w-6xl mx-auto px-4 lg:px-8 space-y-3 lg:space-y-4 pb-8 pt-4 lg:pt-6">
                             {/* Reading Mode Selection - Compact 3 Options */}
-                            <div className="grid grid-cols-3 gap-1.5">
+                            <div className="grid grid-cols-3 gap-1.5 lg:gap-3 lg:max-w-md">
                                 <button
                                     onClick={() => setReadingMode('normal')}
-                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'normal'
+                                    className={`flex items-center justify-center gap-1.5 lg:gap-2 py-2 lg:py-3 px-3 lg:px-4 rounded-lg border transition-all duration-200 ${readingMode === 'normal'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <ScrollText className="w-3.5 h-3.5" />
-                                    <span className="font-medium text-xs">Normal</span>
+                                    <ScrollText className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+                                    <span className="font-medium text-xs lg:text-sm">Normal</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('mushaf')}
-                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'mushaf'
+                                    className={`flex items-center justify-center gap-1.5 lg:gap-2 py-2 lg:py-3 px-3 lg:px-4 rounded-lg border transition-all duration-200 ${readingMode === 'mushaf'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <BookOpen className="w-3.5 h-3.5" />
-                                    <span className="font-medium text-xs">Mushaf</span>
+                                    <BookOpen className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+                                    <span className="font-medium text-xs lg:text-sm">Mushaf</span>
                                 </button>
                                 <button
                                     onClick={() => setReadingMode('digital')}
-                                    className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition-all duration-200 ${readingMode === 'digital'
+                                    className={`flex items-center justify-center gap-1.5 lg:gap-2 py-2 lg:py-3 px-3 lg:px-4 rounded-lg border transition-all duration-200 ${readingMode === 'digital'
                                         ? 'bg-primary text-primary-foreground border-primary shadow-md'
                                         : 'bg-card text-muted-foreground border-border hover:border-primary/50'
                                         }`}
                                 >
-                                    <BookOpen className="w-3.5 h-3.5" />
-                                    <span className="font-medium text-xs">Dijital</span>
+                                    <BookOpen className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
+                                    <span className="font-medium text-xs lg:text-sm">Dijital</span>
                                 </button>
                             </div>
 
                             {/* Surah Search - Simple Input */}
-                            <div className="relative">
-                                <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                            <div className="relative lg:max-w-md">
+                                <SearchIcon className="absolute left-3 lg:left-4 top-1/2 -translate-y-1/2 w-4 h-4 lg:w-5 lg:h-5 text-muted-foreground" />
                                 <input
                                     type="text"
                                     placeholder={ui.searchPlaceholder}
-                                    className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all outline-none text-sm"
+                                    className="w-full pl-10 lg:pl-12 pr-4 py-2.5 lg:py-3 bg-card border border-border rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all outline-none text-sm lg:text-base"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -177,37 +180,37 @@ function App() {
                             <div className="flex items-center justify-between pt-2 mt-4">
                                 <div className="flex items-center gap-2">
                                     <div className="w-1 h-5 bg-primary rounded-full"></div>
-                                    <h2 className="font-semibold text-foreground">Sureler</h2>
-                                    <span className="text-xs text-muted-foreground">({filteredSurahs.length})</span>
+                                    <h2 className="font-semibold text-foreground lg:text-lg">Sureler</h2>
+                                    <span className="text-xs lg:text-sm text-muted-foreground">({filteredSurahs.length})</span>
                                 </div>
 
                                 {/* View Toggle Buttons */}
                                 <div className="flex gap-1 bg-secondary/50 p-1 rounded-lg">
                                     <button
                                         onClick={() => setSurahViewMode('list')}
-                                        className={`p-1.5 rounded-md transition-all ${surahViewMode === 'list'
+                                        className={`p-1.5 lg:p-2 rounded-md transition-all ${surahViewMode === 'list'
                                             ? 'bg-primary text-primary-foreground shadow-sm'
                                             : 'text-muted-foreground hover:text-foreground'}`}
                                         aria-label="Liste Görünümü"
                                     >
-                                        <List className="w-4 h-4" />
+                                        <List className="w-4 h-4 lg:w-5 lg:h-5" />
                                     </button>
                                     <button
                                         onClick={() => setSurahViewMode('grid')}
-                                        className={`p-1.5 rounded-md transition-all ${surahViewMode === 'grid'
+                                        className={`p-1.5 lg:p-2 rounded-md transition-all ${surahViewMode === 'grid'
                                             ? 'bg-primary text-primary-foreground shadow-sm'
                                             : 'text-muted-foreground hover:text-foreground'}`}
                                         aria-label="Izgara Görünümü"
                                     >
-                                        <Grid3X3 className="w-4 h-4" />
+                                        <Grid3X3 className="w-4 h-4 lg:w-5 lg:h-5" />
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Surah List - List or Grid View */}
+                            {/* Surah List - Responsive Grid */}
                             <div className={surahViewMode === 'grid'
-                                ? 'grid grid-cols-4 gap-1.5 overflow-hidden'
-                                : 'space-y-1.5'
+                                ? 'grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-1.5 lg:gap-2 overflow-hidden'
+                                : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1.5 lg:gap-3'
                             }>
                                 {filteredSurahs.map((surah, index) => (
                                     <div

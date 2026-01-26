@@ -3,6 +3,7 @@
 
 /* PWA and Tablet Responsive Styles - must be imported at the top */
 @import './styles/pwa-tablet.css';
+@import './styles/web-tablet.css';
 
 /* KFGQPC Mushaf Font - Authentic Quran Script */
 @font-face {

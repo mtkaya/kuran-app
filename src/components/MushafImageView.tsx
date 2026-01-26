@@ -1,10 +1,11 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2 } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
+import { useOrientation } from '../hooks/useOrientation';
 
 interface MushafImageViewProps {
     surahId: number;
@@ -18,6 +19,7 @@ const ZOOM_STEP = 0.25;
 export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initialAyah = 1 }) => {
     const [currentPage, setCurrentPage] = useState(() => getPageForAyah(surahId, initialAyah));
     const [isLoading, setIsLoading] = useState(true);
+    const [_isLoadingSecond, setIsLoadingSecond] = useState(true);
     const [imageError, setImageError] = useState(false);
     const [zoom, setZoom] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -25,6 +27,10 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
     const [showEditionSelector, setShowEditionSelector] = useState(false);
     const [isFitWidth, setIsFitWidth] = useState(false);
+    const [isDualPageMode, setIsDualPageMode] = useState(false);
+
+    // Orientation detection
+    const { isLandscape } = useOrientation();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
@@ -33,6 +39,23 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
     const { mushafEdition, setMushafEdition } = useSettingsStore();
     const currentEdition = getMushafEdition(mushafEdition) || MUSHAF_EDITIONS[0];
+
+    // Auto-enable dual page mode in landscape on tablets/desktop
+    useEffect(() => {
+        if (isLandscape && window.innerWidth >= 768) {
+            setIsDualPageMode(true);
+        } else {
+            setIsDualPageMode(false);
+        }
+    }, [isLandscape]);
+
+    // Calculate left and right page numbers for dual-page mode (Quran style: right page is lower number)
+    const rightPage = isDualPageMode ? (currentPage % 2 === 0 ? currentPage : currentPage - 1) : currentPage;
+    const leftPage = isDualPageMode ? rightPage + 1 : currentPage;
+
+    // Ensure valid page numbers
+    const displayRightPage = Math.max(1, Math.min(PAGE_COUNT, rightPage));
+    const displayLeftPage = Math.min(PAGE_COUNT, leftPage);
 
     // Sync page with audio playback
     useEffect(() => {
@@ -170,14 +193,16 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     }, []);
 
     const goToPrevPage = () => {
+        const step = isDualPageMode ? 2 : 1;
         if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
+            setCurrentPage(Math.max(1, currentPage - step));
         }
     };
 
     const goToNextPage = () => {
+        const step = isDualPageMode ? 2 : 1;
         if (currentPage < PAGE_COUNT) {
-            setCurrentPage(currentPage + 1);
+            setCurrentPage(Math.min(PAGE_COUNT, currentPage + step));
         }
     };
 
@@ -215,12 +240,24 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     <BookOpen className="w-3.5 h-3.5" />
                 </button>
 
-                {/* Page Info */}
+                {/* Page Info - Shows dual page info in landscape */}
                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium">{currentPage} / {PAGE_COUNT}</span>
+                    {isDualPageMode ? (
+                        <span className="text-sm font-medium">{displayRightPage}-{displayLeftPage} / {PAGE_COUNT}</span>
+                    ) : (
+                        <span className="text-sm font-medium">{currentPage} / {PAGE_COUNT}</span>
+                    )}
                 </div>
 
-
+                {/* Dual Page Mode Toggle */}
+                <button
+                    onClick={() => setIsDualPageMode(!isDualPageMode)}
+                    className={`p-2 rounded-full transition-colors hidden sm:flex ${isDualPageMode ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`}
+                    aria-label={isDualPageMode ? "Tek Sayfa" : "Çift Sayfa"}
+                    title={isDualPageMode ? "Tek Sayfa Görünümü" : "Çift Sayfa Görünümü"}
+                >
+                    <Columns2 className="w-4 h-4" />
+                </button>
 
                 {/* Vertical Scroll / Fit Width Toggle */}
                 <button
@@ -426,7 +463,47 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                             Tekrar dene
                         </button>
                     </div>
+                ) : isDualPageMode ? (
+                    /* Dual Page Mode - Two pages side by side like a real book */
+                    <div className="flex items-center justify-center gap-1 md:gap-2 lg:gap-4 h-full px-2">
+                        {/* Left Page (higher page number in Quran) */}
+                        {displayLeftPage <= PAGE_COUNT && (
+                            <div className="flex-1 h-full flex items-center justify-center max-w-[48%]">
+                                <img
+                                    src={getMushafPageUrl(mushafEdition, displayLeftPage)}
+                                    alt={`Kur'an sayfa ${displayLeftPage} - ${currentEdition.name}`}
+                                    onLoad={() => setIsLoadingSecond(false)}
+                                    onError={handleImageError}
+                                    draggable={false}
+                                    className="max-w-full max-h-full object-contain select-none shadow-lg rounded-sm"
+                                    style={{
+                                        opacity: isLoading ? 0 : 1,
+                                        transition: 'opacity 0.3s ease'
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {/* Page Divider / Binding Effect */}
+                        <div className="w-px md:w-1 h-[80%] bg-gradient-to-b from-transparent via-border to-transparent opacity-50" />
+                        {/* Right Page (lower page number in Quran) */}
+                        <div className="flex-1 h-full flex items-center justify-center max-w-[48%]">
+                            <img
+                                ref={imageRef}
+                                src={getMushafPageUrl(mushafEdition, displayRightPage)}
+                                alt={`Kur'an sayfa ${displayRightPage} - ${currentEdition.name}`}
+                                onLoad={handleImageLoad}
+                                onError={handleImageError}
+                                draggable={false}
+                                className="max-w-full max-h-full object-contain select-none shadow-lg rounded-sm"
+                                style={{
+                                    opacity: isLoading ? 0 : 1,
+                                    transition: 'opacity 0.3s ease'
+                                }}
+                            />
+                        </div>
+                    </div>
                 ) : (
+                    /* Single Page Mode */
                     <img
                         ref={imageRef}
                         src={getMushafPageUrl(mushafEdition, currentPage)}
@@ -451,8 +528,17 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                 <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-full pointer-events-auto">
                     <span className="text-base">{currentEdition.flag}</span>
                     <div className="w-px h-4 bg-white/30" />
-                    <span className="font-medium">{currentPage}</span>
-                    <span className="text-white/60">/ {PAGE_COUNT}</span>
+                    {isDualPageMode ? (
+                        <>
+                            <span className="font-medium">{displayRightPage}-{displayLeftPage}</span>
+                            <span className="text-white/60">/ {PAGE_COUNT}</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="font-medium">{currentPage}</span>
+                            <span className="text-white/60">/ {PAGE_COUNT}</span>
+                        </>
+                    )}
                 </div>
             </div>
         </div >

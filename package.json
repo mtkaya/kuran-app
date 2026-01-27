@@ -1,8 +1,14 @@
 {
   "name": "kuran-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "electron/main.cjs",
+  "author": {
+    "name": "MTKaya",
+    "email": "info@arfhause.com"
+  },
+  "description": "Kur'an-ı Kerim: İndeksli - Dijital Kuran Uygulaması",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,7 +16,68 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:win": "npm run build && electron-builder --win",
+    "electron:build:mac": "npm run build && electron-builder --mac",
+    "electron:build:linux": "npm run build && electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.arfhause.holyquran.indexed",
+    "productName": "Kur'an-ı Kerim",
+    "directories": {
+      "output": "electron-dist"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "public/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "public/icons/icon-512x512.png",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "public/icons/icon-512x512.png",
+      "uninstallerIcon": "public/icons/icon-512x512.png",
+      "installerHeaderIcon": "public/icons/icon-512x512.png",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Kur'an-ı Kerim"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "public/icons/icon-512x512.png",
+      "category": "public.app-category.education"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "public/icons/icon-512x512.png",
+      "category": "Education"
+    }
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
@@ -36,11 +103,16 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^4.0.17",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^9.2.1",
+    "cross-env": "^7.0.3",
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0",
     "jsdom": "^27.4.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.17",
+    "wait-on": "^9.0.3"
   }
 }

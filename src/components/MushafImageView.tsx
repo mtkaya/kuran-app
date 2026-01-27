@@ -1,6 +1,6 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
@@ -28,6 +28,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [showEditionSelector, setShowEditionSelector] = useState(false);
     const [isFitWidth, setIsFitWidth] = useState(false);
     const [isDualPageMode, setIsDualPageMode] = useState(false);
+    const [showControls, setShowControls] = useState(true);
 
     // Orientation detection
     const { isLandscape } = useOrientation();
@@ -218,9 +219,32 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const pageInfo = getPageFirstAyah(currentPage);
 
     return (
-        <div className="flex flex-col h-full bg-background">
-            {/* Page Navigation Header */}
-            <div className="flex items-center justify-between px-2 py-2 bg-card/80 backdrop-blur-sm border-b border-border/30">
+        <div className="flex flex-col h-full bg-background relative">
+            {/* Floating Toggle Button - Always visible when controls hidden */}
+            {!showControls && (
+                <button
+                    onClick={() => setShowControls(true)}
+                    className="absolute top-2 left-1/2 -translate-x-1/2 z-30 p-2 bg-black/60 backdrop-blur-sm rounded-full shadow-lg border border-white/10 transition-all duration-300 hover:bg-black/80"
+                    aria-label="Kontrolleri Göster"
+                >
+                    <ChevronDownIcon className="w-5 h-5 text-white" />
+                </button>
+            )}
+
+            {/* Page Navigation Header - Toggleable */}
+            <div
+                className={`flex items-center justify-between px-2 py-2 bg-card/80 backdrop-blur-sm border-b border-border/30 transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none absolute w-full'
+                    }`}
+            >
+                {/* Hide Controls Button */}
+                <button
+                    onClick={() => setShowControls(false)}
+                    className="p-2 rounded-full hover:bg-secondary transition-colors"
+                    aria-label="Kontrolleri Gizle"
+                >
+                    <ChevronUp className="w-5 h-5" />
+                </button>
+
                 <button
                     onClick={goToPrevPage}
                     disabled={currentPage <= 1}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Maximize2, Minimize2, ArrowDownUp, Layers } from 'lucide-react';
+import { ArrowDownUp, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { MushafTextView } from './MushafTextView';
 import { MushafTranslationPanel } from './MushafTranslationPanel';
@@ -28,7 +28,6 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange, o
 
     // State
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isFullscreen, setIsFullscreen] = useState(false);
 
     // Page Content State for translation panel
     const [pageAyahs, setPageAyahs] = useState<any[]>([]);
@@ -111,15 +110,7 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange, o
             </div>
 
             {/* Mushaf Text View */}
-            <div className={`relative transition-all duration-300 ${isFullscreen ? 'fixed inset-0 z-50 bg-background p-4' : ''}`}>
-                {/* Fullscreen Toggle */}
-                <button
-                    onClick={() => setIsFullscreen(!isFullscreen)}
-                    className="absolute top-2 right-2 z-10 p-2 bg-black/40 hover:bg-black/60 text-white rounded-full backdrop-blur-sm transition-colors"
-                >
-                    {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
-                </button>
-
+            <div className="relative">
                 <MushafTextView
                     initialPage={currentPage}
                     onPageChange={handlePageChange}

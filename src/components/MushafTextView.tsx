@@ -214,15 +214,15 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
             <div className="absolute inset-2 border-2 border-primary/20 rounded-xl pointer-events-none" />
             <div className="absolute inset-4 border border-primary/10 rounded-lg pointer-events-none" />
 
-            {/* Left Side Navigation - Previous Page - Full Height */}
-            {currentPage > 1 && (
+            {/* Left Side Navigation - NEXT Page (RTL: Quran reads right-to-left) */}
+            {currentPage < 604 && (
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
-                        goToPrevPage();
+                        goToNextPage();
                     }}
                     className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 z-20 flex items-center justify-start group transition-all duration-300 outline-none"
-                    aria-label="Önceki sayfa"
+                    aria-label="Sonraki sayfa"
                 >
                     {/* Full height gradient background */}
                     <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -230,21 +230,21 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                     {/* Arrow icon - centered vertically */}
                     <div className="relative ml-2 flex items-center justify-center transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300">
                         <div className="p-2 rounded-full bg-background/80 shadow-lg border border-border">
-                            <ChevronRight className="w-5 h-5 text-primary" />
+                            <ChevronLeft className="w-5 h-5 text-primary" />
                         </div>
                     </div>
                 </button>
             )}
 
-            {/* Right Side Navigation - Next Page - Full Height */}
-            {currentPage < 604 && (
+            {/* Right Side Navigation - PREVIOUS Page (RTL: Quran reads right-to-left) */}
+            {currentPage > 1 && (
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
-                        goToNextPage();
+                        goToPrevPage();
                     }}
                     className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 z-20 flex items-center justify-end group transition-all duration-300 outline-none"
-                    aria-label="Sonraki sayfa"
+                    aria-label="Önceki sayfa"
                 >
                     {/* Full height gradient background */}
                     <div className="absolute inset-0 bg-gradient-to-l from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -252,7 +252,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                     {/* Arrow icon - centered vertically */}
                     <div className="relative mr-2 flex items-center justify-center transform translate-x-full group-hover:translate-x-0 transition-transform duration-300">
                         <div className="p-2 rounded-full bg-background/80 shadow-lg border border-border">
-                            <ChevronLeft className="w-5 h-5 text-primary" />
+                            <ChevronRight className="w-5 h-5 text-primary" />
                         </div>
                     </div>
                 </button>

@@ -412,12 +412,12 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     touchAction: 'none'
                 }}
             >
-                {/* Left Side Navigation - Previous Page - Full Height */}
-                {currentPage > 1 && zoom === 1 && (
+                {/* Left Side Navigation - NEXT Page (RTL: Quran reads right-to-left) */}
+                {currentPage < PAGE_COUNT && zoom === 1 && (
                     <button
-                        onClick={goToPrevPage}
+                        onClick={goToNextPage}
                         className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 z-20 flex items-center justify-start group transition-all duration-300"
-                        aria-label="Önceki sayfa"
+                        aria-label="Sonraki sayfa"
                     >
                         {/* Full height gradient background */}
                         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent opacity-30 group-hover:opacity-80 group-active:opacity-100 transition-opacity duration-300" />
@@ -432,18 +432,18 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
 
                         {/* Page number tooltip - appears on hover */}
                         <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg">
-                            <span className="font-medium">{currentPage - 1}</span>
+                            <span className="font-medium">{currentPage + 1}</span>
                             <span className="text-white/60 ml-1">/ {PAGE_COUNT}</span>
                         </div>
                     </button>
                 )}
 
-                {/* Right Side Navigation - Next Page - Full Height */}
-                {currentPage < PAGE_COUNT && zoom === 1 && (
+                {/* Right Side Navigation - PREVIOUS Page (RTL: Quran reads right-to-left) */}
+                {currentPage > 1 && zoom === 1 && (
                     <button
-                        onClick={goToNextPage}
+                        onClick={goToPrevPage}
                         className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 z-20 flex items-center justify-end group transition-all duration-300"
-                        aria-label="Sonraki sayfa"
+                        aria-label="Önceki sayfa"
                     >
                         {/* Full height gradient background */}
                         <div className="absolute inset-0 bg-gradient-to-l from-black/40 via-black/20 to-transparent opacity-30 group-hover:opacity-80 group-active:opacity-100 transition-opacity duration-300" />
@@ -458,7 +458,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
 
                         {/* Page number tooltip - appears on hover */}
                         <div className="absolute right-full mr-2 top-1/2 -translate-y-1/2 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap shadow-lg">
-                            <span className="font-medium">{currentPage + 1}</span>
+                            <span className="font-medium">{currentPage - 1}</span>
                             <span className="text-white/60 ml-1">/ {PAGE_COUNT}</span>
                         </div>
                     </button>

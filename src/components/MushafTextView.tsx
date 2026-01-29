@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { ChevronLeft, ChevronRight, Loader2, ChevronDown, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { fetchMushafPage, preloadAdjacentPages, MushafPageData, MushafLine } from '../data/mushafPageData';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
@@ -17,6 +17,13 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
     const [pageData, setPageData] = useState<MushafPageData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Zoom state
+    const [zoom, setZoom] = useState(1);
+    const [lastPinchDistance, setLastPinchDistance] = useState<number | null>(null);
+    const MIN_ZOOM = 0.8;
+    const MAX_ZOOM = 2.5;
+    const ZOOM_STEP = 0.1;
 
     const { arabicFont, arabicFontSize } = useSettingsStore();
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
@@ -116,25 +123,66 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
         }
     };
 
-    // Touch/swipe handling
-    const [touchStart, setTouchStart] = useState<number | null>(null);
-    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    // Zoom handlers
+    const handleZoomIn = useCallback(() => {
+        setZoom(prev => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
+    }, []);
+
+    const handleZoomOut = useCallback(() => {
+        setZoom(prev => Math.max(prev - ZOOM_STEP, MIN_ZOOM));
+    }, []);
+
+    const resetZoom = useCallback(() => {
+        setZoom(1);
+    }, []);
+
+    // Pinch-to-zoom handler
+    const handlePinchZoom = useCallback((e: React.TouchEvent) => {
+        if (e.touches.length === 2) {
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            const distance = Math.hypot(
+                touch2.clientX - touch1.clientX,
+                touch2.clientY - touch1.clientY
+            );
+
+            if (lastPinchDistance !== null) {
+                const scale = distance / lastPinchDistance;
+                setZoom(prev => {
+                    const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * scale));
+                    return newZoom;
+                });
+            }
+            setLastPinchDistance(distance);
+        }
+    }, [lastPinchDistance]);
+
+    const handleTouchEnd = useCallback(() => {
+        setLastPinchDistance(null);
+    }, []);
+
+    // Touch/swipe handling with Refs for performance
+    const touchStartRef = useRef<number | null>(null);
+    const touchEndRef = useRef<number | null>(null);
     const minSwipeDistance = 50;
 
     const onTouchStart = (e: React.TouchEvent) => {
-        setTouchEnd(null);
-        setTouchStart(e.targetTouches[0].clientX);
+        touchEndRef.current = null;
+        touchStartRef.current = e.targetTouches[0].clientX;
     };
 
     const onTouchMove = (e: React.TouchEvent) => {
-        setTouchEnd(e.targetTouches[0].clientX);
+        touchEndRef.current = e.targetTouches[0].clientX;
     };
 
     const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
-        const distance = touchStart - touchEnd;
-        if (distance > minSwipeDistance) goToNextPage();
-        if (distance < -minSwipeDistance) goToPrevPage();
+        if (!touchStartRef.current || !touchEndRef.current) return;
+        const distance = touchStartRef.current - touchEndRef.current;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) goToNextPage();
+        if (isRightSwipe) goToPrevPage();
     };
 
     // Check if a line contains the current playing verse
@@ -206,10 +254,58 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
         <div
             ref={containerRef}
             className="mushaf-text-container relative bg-[#fdf8f0] dark:bg-[#1a1814] rounded-2xl overflow-hidden shadow-lg border border-border/30"
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
+            style={{ touchAction: 'pan-x pan-y' }} // Allow scroll but prevent browser zoom
+            onTouchStart={(e) => {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                } else {
+                    onTouchStart(e);
+                }
+            }}
+            onTouchMove={(e) => {
+                if (e.touches.length === 2) {
+                    handlePinchZoom(e);
+                } else {
+                    onTouchMove(e);
+                }
+            }}
+            onTouchEnd={() => {
+                handleTouchEnd();
+                onTouchEnd();
+            }}
         >
+            {/* Zoom Controls - Top Right */}
+            <div className="absolute top-2 right-2 z-30 flex items-center gap-1 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg border border-border">
+                <button
+                    onClick={handleZoomOut}
+                    disabled={zoom <= MIN_ZOOM}
+                    className="p-1.5 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    aria-label="Uzaklaştır"
+                >
+                    <ZoomOut className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-medium w-10 text-center text-muted-foreground">
+                    {Math.round(zoom * 100)}%
+                </span>
+                <button
+                    onClick={handleZoomIn}
+                    disabled={zoom >= MAX_ZOOM}
+                    className="p-1.5 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    aria-label="Yakınlaştır"
+                >
+                    <ZoomIn className="w-4 h-4" />
+                </button>
+                {zoom !== 1 && (
+                    <button
+                        onClick={resetZoom}
+                        className="p-1.5 rounded-full hover:bg-secondary transition-colors ml-1"
+                        aria-label="Sıfırla"
+                    >
+                        <RotateCcw className="w-4 h-4" />
+                    </button>
+                )}
+            </div>
+
             {/* Decorative Border */}
             <div className="absolute inset-2 border-2 border-primary/20 rounded-xl pointer-events-none" />
             <div className="absolute inset-4 border border-primary/10 rounded-lg pointer-events-none" />
@@ -258,8 +354,11 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                 </button>
             )}
 
-            {/* Page Content */}
-            <div className="relative p-3 sm:p-6 min-h-[70vh] overflow-x-hidden">
+            {/* Page Content - with zoom transform */}
+            <div
+                className="relative p-3 sm:p-6 min-h-[70vh] overflow-auto transition-transform duration-200 origin-top-center"
+                style={{ transform: `scale(${zoom})`, transformOrigin: 'top center' }}
+            >
                 {/* Surah Header */}
                 {pageData?.surahInfo && pageData.surahInfo.length > 0 && (
                     <div className="text-center mb-6">

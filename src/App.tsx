@@ -16,6 +16,7 @@ import { useNativeFeatures } from './hooks/useNativeFeatures'
 import { AudioPlayer } from './components/AudioPlayer'
 import { PWAInstallBanner, PWAUpdateBanner, OfflineIndicator } from './components/PWAComponents'
 import { TutorialOverlay } from './components/TutorialOverlay'
+import { getTodayHijri } from './utils/hijriCalendar'
 
 // Lazy load pages for better initial load performance
 const Reader = lazy(() => import('./pages/Reader'))
@@ -54,6 +55,9 @@ function App() {
         surah.name_arabic.includes(searchTerm) ||
         surah.id.toString().includes(searchTerm)
     )
+
+    // Get today's Hijri date
+    const hijriDate = useMemo(() => getTodayHijri(), [])
 
     // Handle splash screen completion
     const handleSplashComplete = useCallback(() => {
@@ -96,6 +100,9 @@ function App() {
                                                 {ui.appTitle}
                                             </h1>
                                             <p className="text-white/60 text-xs lg:text-sm">{ui.appSubtitle}</p>
+                                            <p className="text-white/50 text-[10px] lg:text-xs mt-0.5">
+                                                {hijriDate.day} {hijriDate.monthName} {hijriDate.year} H
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-0.5 lg:gap-1">

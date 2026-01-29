@@ -99,8 +99,7 @@ function App() {
                                             <h1 className="text-lg lg:text-xl font-bold tracking-tight">
                                                 {ui.appTitle}
                                             </h1>
-                                            <p className="text-white/60 text-xs lg:text-sm">{ui.appSubtitle}</p>
-                                            <p className="text-white/50 text-[10px] lg:text-xs mt-0.5">
+                                            <p className="text-white/60 text-[10px] lg:text-xs mt-0.5">
                                                 {hijriDate.day} {hijriDate.monthName} {hijriDate.year} H
                                             </p>
                                         </div>

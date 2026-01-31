@@ -97,13 +97,15 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
 
                 {/* Transliteration Toggle */}
                 <div className="mb-6">
-                    <label className="flex items-center justify-between cursor-pointer">
+                    <label
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setShowTransliteration(!showTransliteration)}
+                    >
                         <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                             <Type className="w-4 h-4" />
                             {ui.showTransliteration}
                         </span>
-                        <button
-                            onClick={() => setShowTransliteration(!showTransliteration)}
+                        <div
                             className={`relative w-12 h-6 rounded-full transition-colors ${showTransliteration ? 'bg-primary' : 'bg-secondary'
                                 }`}
                         >
@@ -111,7 +113,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                                 className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${showTransliteration ? 'translate-x-6' : ''
                                     }`}
                             />
-                        </button>
+                        </div>
                     </label>
                     {showTransliteration && (
                         <p className="text-xs text-muted-foreground mt-2 italic">
@@ -122,13 +124,15 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
 
                 {/* Tajweed Toggle */}
                 <div className="mb-6">
-                    <label className="flex items-center justify-between cursor-pointer">
+                    <label
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setShowTajweed(!showTajweed)}
+                    >
                         <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                             <Palette className="w-4 h-4" />
                             {ui.showTajweed}
                         </span>
-                        <button
-                            onClick={() => setShowTajweed(!showTajweed)}
+                        <div
                             className={`relative w-12 h-6 rounded-full transition-colors ${showTajweed ? 'bg-primary' : 'bg-secondary'
                                 }`}
                         >
@@ -136,7 +140,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                                 className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${showTajweed ? 'translate-x-6' : ''
                                     }`}
                             />
-                        </button>
+                        </div>
                     </label>
                     {showTajweed && (
                         <p className="text-xs text-muted-foreground mt-2">
@@ -194,13 +198,15 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
 
                 {/* Memorization Mode Toggle */}
                 <div className="mb-6">
-                    <label className="flex items-center justify-between cursor-pointer">
+                    <label
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setMemorizationMode(!memorizationMode)}
+                    >
                         <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
                             <Brain className="w-4 h-4" />
                             {ui.memorizationMode}
                         </span>
-                        <button
-                            onClick={() => setMemorizationMode(!memorizationMode)}
+                        <div
                             className={`relative w-12 h-6 rounded-full transition-colors ${memorizationMode ? 'bg-primary' : 'bg-secondary'
                                 }`}
                         >
@@ -208,7 +214,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                                 className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${memorizationMode ? 'translate-x-6' : ''
                                     }`}
                             />
-                        </button>
+                        </div>
                     </label>
                     {memorizationMode && (
                         <p className="text-xs text-muted-foreground mt-2">

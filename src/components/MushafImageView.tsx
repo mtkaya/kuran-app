@@ -1,6 +1,6 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2, ChevronUp } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
@@ -221,15 +221,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     return (
         <div className="flex flex-col h-full bg-background relative">
             {/* Floating Toggle Button - Always visible when controls hidden */}
-            {!showControls && (
-                <button
-                    onClick={() => setShowControls(true)}
-                    className="absolute top-2 left-1/2 -translate-x-1/2 z-30 p-2 bg-black/60 backdrop-blur-sm rounded-full shadow-lg border border-white/10 transition-all duration-300 hover:bg-black/80"
-                    aria-label="Kontrolleri Göster"
-                >
-                    <ChevronDownIcon className="w-5 h-5 text-white" />
-                </button>
-            )}
+            {/* Floating Toggle Button removed - Use tap to toggle */}
 
             {/* Page Navigation Header - Toggleable */}
             <div
@@ -411,6 +403,12 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     cursor: zoom > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default',
                     touchAction: 'none'
                 }}
+                onClick={() => {
+                    // Only toggle if not dragging and not double clicking
+                    if (!isDragging && zoom === 1) {
+                        setShowControls(prev => !prev);
+                    }
+                }}
             >
                 {/* Left Side Navigation - NEXT Page (RTL: Quran reads right-to-left) */}
                 {currentPage < PAGE_COUNT && zoom === 1 && (
@@ -546,8 +544,8 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                 )}
             </div>
 
-            {/* Bottom Page Info & Quick Navigation */}
-            <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4 py-3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10">
+            {/* Bottom Page Info & Quick Navigation - Only visible when controls are shown */}
+            <div className={`absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4 py-3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10 transition-all duration-300 ${showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'}`}>
                 {/* Current Edition & Page Info */}
                 <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-full pointer-events-auto">
                     <span className="text-base">{currentEdition.flag}</span>

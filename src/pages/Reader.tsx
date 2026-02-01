@@ -120,32 +120,35 @@ export default function Reader() {
     return (
         <div className="min-h-screen bg-background pb-32">
             {/* Responsive Header */}
-            <div
-                className="sticky top-0 z-10 bg-card/95 backdrop-blur-md border-b px-4 lg:px-8 py-3 flex items-center justify-between"
-                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1.5rem)' }}
-            >
-                <div className="flex items-center gap-4">
-                    <Link to="/" className="p-2 -ml-2 hover:bg-accent rounded-full text-foreground/80">
-                        <ArrowLeft className="w-6 h-6" />
-                    </Link>
-                    <div>
-                        <h1 className="font-bold text-lg lg:text-xl">{surah.name_turkish}</h1>
-                        <p className="text-xs lg:text-sm text-muted-foreground">{surah.name_arabic} • {surah.verse_count} ayet</p>
+            {/* Responsive Header - Hidden in Mushaf Mode for Immersive View */}
+            {readingMode !== 'mushaf' && (
+                <div
+                    className="sticky top-0 z-10 bg-card/95 backdrop-blur-md border-b px-4 lg:px-8 py-3 flex items-center justify-between"
+                    style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 1.5rem)' }}
+                >
+                    <div className="flex items-center gap-4">
+                        <Link to="/" className="p-2 -ml-2 hover:bg-accent rounded-full text-foreground/80">
+                            <ArrowLeft className="w-6 h-6" />
+                        </Link>
+                        <div>
+                            <h1 className="font-bold text-lg lg:text-xl">{surah.name_turkish}</h1>
+                            <p className="text-xs lg:text-sm text-muted-foreground">{surah.name_arabic} • {surah.verse_count} ayet</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        {/* Desktop: Show reading mode info */}
+                        <span className="hidden lg:inline text-sm text-muted-foreground capitalize">{readingMode} Mod</span>
+                        <button
+                            onClick={() => setIsSettingsOpen(true)}
+                            className="p-2 lg:px-3 lg:py-2 hover:bg-accent rounded-full lg:rounded-lg text-foreground/80 flex items-center gap-2"
+                            aria-label={ui.settings}
+                        >
+                            <Settings className="w-5 h-5" />
+                            <span className="hidden lg:inline text-sm">Ayarlar</span>
+                        </button>
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    {/* Desktop: Show reading mode info */}
-                    <span className="hidden lg:inline text-sm text-muted-foreground capitalize">{readingMode} Mod</span>
-                    <button
-                        onClick={() => setIsSettingsOpen(true)}
-                        className="p-2 lg:px-3 lg:py-2 hover:bg-accent rounded-full lg:rounded-lg text-foreground/80 flex items-center gap-2"
-                        aria-label={ui.settings}
-                    >
-                        <Settings className="w-5 h-5" />
-                        <span className="hidden lg:inline text-sm">Ayarlar</span>
-                    </button>
-                </div>
-            </div>
+            )}
 
             {/* Content - Responsive Layout */}
             <div className={readingMode === 'mushaf'
@@ -158,6 +161,7 @@ export default function Reader() {
                         <MushafImageView
                             surahId={surah.id}
                             initialAyah={1}
+                            onOpenSettings={() => setIsSettingsOpen(true)}
                         />
                     </div>
                 )}

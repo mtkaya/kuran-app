@@ -1,7 +1,8 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ZoomIn, ZoomOut, RotateCcw, BookOpen, Columns2, ChevronUp } from 'lucide-react';
-import { getPageForAyah, PAGE_COUNT, getPageFirstAyah } from '../data/pageMapping';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings } from 'lucide-react';
+import { getPageForAyah, PAGE_COUNT } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
@@ -10,28 +11,32 @@ import { useOrientation } from '../hooks/useOrientation';
 interface MushafImageViewProps {
     surahId: number;
     initialAyah?: number;
+    onOpenSettings?: () => void;
 }
 
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 3;
 const ZOOM_STEP = 0.25;
 
-export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initialAyah = 1 }) => {
-    const [currentPage, setCurrentPage] = useState(() => getPageForAyah(surahId, initialAyah));
+export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initialAyah, onOpenSettings }) => {
+    const [currentPage, setCurrentPage] = useState(() => getPageForAyah(surahId, initialAyah || 1));
     const [isLoading, setIsLoading] = useState(true);
-    const [_isLoadingSecond, setIsLoadingSecond] = useState(true);
     const [imageError, setImageError] = useState(false);
+
+    // Zoom and pan state
     const [zoom, setZoom] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+    // UI state
     const [showEditionSelector, setShowEditionSelector] = useState(false);
-    const [isFitWidth, setIsFitWidth] = useState(false);
     const [isDualPageMode, setIsDualPageMode] = useState(false);
     const [showControls, setShowControls] = useState(true);
 
     // Orientation detection
     const { isLandscape } = useOrientation();
+    const navigate = useNavigate();
 
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
@@ -78,20 +83,6 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const resetZoom = useCallback(() => {
         setZoom(1);
         setPosition({ x: 0, y: 0 });
-    }, []);
-
-    const handleZoomIn = useCallback(() => {
-        setZoom(prev => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
-    }, []);
-
-    const handleZoomOut = useCallback(() => {
-        setZoom(prev => {
-            const newZoom = Math.max(prev - ZOOM_STEP, MIN_ZOOM);
-            if (newZoom <= 1) {
-                setPosition({ x: 0, y: 0 });
-            }
-            return newZoom;
-        });
     }, []);
 
     // Double-click to zoom
@@ -216,129 +207,35 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
         setImageError(true);
     };
 
-    const pageInfo = getPageFirstAyah(currentPage);
+
 
     return (
         <div className="flex flex-col h-full bg-background relative">
             {/* Floating Toggle Button - Always visible when controls hidden */}
             {/* Floating Toggle Button removed - Use tap to toggle */}
 
-            {/* Page Navigation Header - Toggleable */}
+            {/* Minimal Header - Only Back & Settings */}
             <div
-                className={`flex items-center justify-between px-2 py-2 bg-card/80 backdrop-blur-sm border-b border-border/30 transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none absolute w-full'
+                className={`absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/60 to-transparent transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
                     }`}
+                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.5rem)' }}
             >
-                {/* Hide Controls Button */}
                 <button
-                    onClick={() => setShowControls(false)}
-                    className="p-2 rounded-full hover:bg-secondary transition-colors"
-                    aria-label="Kontrolleri Gizle"
+                    onClick={() => navigate(-1)}
+                    className="p-2 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors"
                 >
-                    <ChevronUp className="w-5 h-5" />
+                    <ArrowLeft className="w-6 h-6" />
                 </button>
 
-                <button
-                    onClick={goToPrevPage}
-                    disabled={currentPage <= 1}
-                    className="p-2 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Önceki sayfa"
-                >
-                    <ChevronLeft className="w-5 h-5" />
-                </button>
-
-                {/* Mushaf Edition Selector */}
-                <button
-                    onClick={() => setShowEditionSelector(!showEditionSelector)}
-                    className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
-                    aria-label="Mushaf Seç"
-                >
-                    <span className="text-sm">{currentEdition.flag}</span>
-                    <BookOpen className="w-3.5 h-3.5" />
-                </button>
-
-                {/* Page Info - Shows dual page info in landscape */}
-                <div className="flex items-center gap-2">
-                    {isDualPageMode ? (
-                        <span className="text-sm font-medium">{displayRightPage}-{displayLeftPage} / {PAGE_COUNT}</span>
-                    ) : (
-                        <span className="text-sm font-medium">{currentPage} / {PAGE_COUNT}</span>
-                    )}
-                </div>
-
-                {/* Dual Page Mode Toggle */}
-                <button
-                    onClick={() => setIsDualPageMode(!isDualPageMode)}
-                    className={`p-2 rounded-full transition-colors hidden sm:flex ${isDualPageMode ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`}
-                    aria-label={isDualPageMode ? "Tek Sayfa" : "Çift Sayfa"}
-                    title={isDualPageMode ? "Tek Sayfa Görünümü" : "Çift Sayfa Görünümü"}
-                >
-                    <Columns2 className="w-4 h-4" />
-                </button>
-
-                {/* Vertical Scroll / Fit Width Toggle */}
-                <button
-                    onClick={() => {
-                        setIsFitWidth(!isFitWidth);
-                        resetZoom();
-                    }}
-                    className={`p-2 rounded-full transition-colors hidden sm:flex ${isFitWidth ? 'bg-primary text-primary-foreground' : 'hover:bg-secondary'}`}
-                    aria-label={isFitWidth ? "Sayfaya Sığdır" : "Genişliğe Sığdır"}
-                    title={isFitWidth ? "Sayfaya Sığdır" : "Genişliğe Sığdır"}
-                >
-                    <BookOpen className={`w-4 h-4 ${isFitWidth ? 'rotate-90' : ''}`} />
-                </button>
-
-                {/* Zoom Controls */}
-                <div className="flex items-center gap-1">
+                <div className="flex gap-2">
+                    {/* Settings Button (Gear) */}
                     <button
-                        onClick={handleZoomOut}
-                        disabled={zoom <= MIN_ZOOM || isFitWidth}
-                        className="p-1.5 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                        aria-label="Uzaklaştır"
+                        onClick={onOpenSettings}
+                        className="p-2 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors"
                     >
-                        <ZoomOut className="w-4 h-4" />
+                        <Settings className="w-6 h-6" />
                     </button>
-                    <span className="text-xs font-medium w-8 text-center text-muted-foreground">
-                        {isFitWidth ? 'Oto' : `${Math.round(zoom * 100)}%`}
-                    </span>
-                    <button
-                        onClick={handleZoomIn}
-                        disabled={zoom >= MAX_ZOOM || isFitWidth}
-                        className="p-1.5 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                        aria-label="Yakınlaştır"
-                    >
-                        <ZoomIn className="w-4 h-4" />
-                    </button>
-                    {zoom !== 1 && !isFitWidth && (
-                        <button
-                            onClick={resetZoom}
-                            className="p-1.5 rounded-full hover:bg-secondary transition-colors"
-                            aria-label="Sıfırla"
-                        >
-                            <RotateCcw className="w-4 h-4" />
-                        </button>
-                    )}
                 </div>
-
-                <div className="text-center min-w-[60px]">
-                    <span className="text-xs font-medium">
-                        {currentPage} / {PAGE_COUNT}
-                    </span>
-                    {pageInfo && (
-                        <p className="text-[10px] text-muted-foreground">
-                            {pageInfo.surah}:{pageInfo.ayah}
-                        </p>
-                    )}
-                </div>
-
-                <button
-                    onClick={goToNextPage}
-                    disabled={currentPage >= PAGE_COUNT}
-                    className="p-2 rounded-full hover:bg-secondary disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                    aria-label="Sonraki sayfa"
-                >
-                    <ChevronRight className="w-5 h-5" />
-                </button>
             </div>
 
             {/* Mushaf Edition Selector Dropdown */}
@@ -494,7 +391,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                                 <img
                                     src={getMushafPageUrl(mushafEdition, displayLeftPage)}
                                     alt={`Kur'an sayfa ${displayLeftPage} - ${currentEdition.name}`}
-                                    onLoad={() => setIsLoadingSecond(false)}
+                                    onLoad={() => { }} // Loading tracked globally
                                     onError={handleImageError}
                                     draggable={false}
                                     className="max-w-full max-h-full object-contain select-none shadow-lg rounded-sm"
@@ -544,25 +441,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                 )}
             </div>
 
-            {/* Bottom Page Info & Quick Navigation - Only visible when controls are shown */}
-            <div className={`absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4 py-3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10 transition-all duration-300 ${showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'}`}>
-                {/* Current Edition & Page Info */}
-                <div className="flex items-center gap-3 bg-black/50 backdrop-blur-sm text-white text-xs px-4 py-2 rounded-full pointer-events-auto">
-                    <span className="text-base">{currentEdition.flag}</span>
-                    <div className="w-px h-4 bg-white/30" />
-                    {isDualPageMode ? (
-                        <>
-                            <span className="font-medium">{displayRightPage}-{displayLeftPage}</span>
-                            <span className="text-white/60">/ {PAGE_COUNT}</span>
-                        </>
-                    ) : (
-                        <>
-                            <span className="font-medium">{currentPage}</span>
-                            <span className="text-white/60">/ {PAGE_COUNT}</span>
-                        </>
-                    )}
-                </div>
-            </div>
+            {/* Bottom Info Removed for clean view */}
         </div >
     );
 };

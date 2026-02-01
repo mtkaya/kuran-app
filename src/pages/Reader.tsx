@@ -260,11 +260,13 @@ export default function Reader() {
                 onHide={hideToast}
             />
 
-            {/* Content Panel - Expandable Tefsir/Meal */}
-            <ContentPanel
-                currentAyah={selectedAyah || (currentAyahId ? surah.ayahs.find(a => a.id === currentAyahId) || null : null)}
-                surahName={surah.name_turkish}
-            />
+            {/* Content Panel - Expandable Tefsir/Meal - Hidden in Mushaf Mode */}
+            {readingMode !== 'mushaf' && (
+                <ContentPanel
+                    currentAyah={selectedAyah || (currentAyahId ? surah.ayahs.find(a => a.id === currentAyahId) || null : null)}
+                    surahName={surah.name_turkish}
+                />
+            )}
         </div>
     );
 }

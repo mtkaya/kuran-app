@@ -289,43 +289,43 @@ function App() {
                                     </div>
                                 )}
                             </div>
-                        </main>
-                    </div>
+                        </main >
+                    </div >
                 } />
-                <Route path="/surah/:id" element={
-                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                < Route path="/surah/:id" element={
+                    < Suspense fallback={< div className="flex items-center justify-center min-h-screen" > <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div >}>
                         <Reader />
-                    </Suspense>
+                    </Suspense >
                 } />
-                <Route path="/search" element={
-                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                < Route path="/search" element={
+                    < Suspense fallback={< div className="flex items-center justify-center min-h-screen" > <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div >}>
                         <Search />
-                    </Suspense>
+                    </Suspense >
                 } />
-                <Route path="/notes" element={
-                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                < Route path="/notes" element={
+                    < Suspense fallback={< div className="flex items-center justify-center min-h-screen" > <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div >}>
                         <Notes />
-                    </Suspense>
+                    </Suspense >
                 } />
-                <Route path="/revelation-order" element={
-                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                < Route path="/revelation-order" element={
+                    < Suspense fallback={< div className="flex items-center justify-center min-h-screen" > <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div >}>
                         <RevelationOrder />
-                    </Suspense>
+                    </Suspense >
                 } />
-                <Route path="/juz-list" element={
-                    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                < Route path="/juz-list" element={
+                    < Suspense fallback={< div className="flex items-center justify-center min-h-screen" > <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div></div >}>
                         <JuzList />
-                    </Suspense>
+                    </Suspense >
                 } />
-            </Routes>
+            </Routes >
 
             <SettingsPanel
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
             />
 
-            {/* Global Audio Player - visible on all pages */}
-            <AudioPlayer />
+            {/* Global Audio Player - visible on all pages except Mushaf mode */}
+            {readingMode !== 'mushaf' && <AudioPlayer />}
 
             {/* PWA Components */}
             <PWAInstallBanner />

@@ -118,7 +118,7 @@ export default function Reader() {
     }
 
     return (
-        <div className="min-h-screen bg-background pb-32">
+        <div className={`min-h-screen bg-background ${readingMode === 'mushaf' ? 'pb-0' : 'pb-32'}`}>
             {/* Responsive Header */}
             {/* Responsive Header - Hidden in Mushaf Mode for Immersive View */}
             {readingMode !== 'mushaf' && (

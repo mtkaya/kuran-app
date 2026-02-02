@@ -2,8 +2,9 @@ import React, { useState, useMemo } from 'react';
 import { Layers, Search, BookOpen, FileText } from 'lucide-react';
 import { useQuranData } from '../hooks/useQuranData';
 import { useLanguage } from '../context/LanguageContext';
-import { JUZ_DATA } from '../data/juzData';
+import { JUZ_DATA, JuzInfo } from '../data/juzData';
 import { getPageForAyah, PAGE_COUNT } from '../data/pageMapping';
+import { Surah } from '../types';
 
 interface MushafNavigatorProps {
     isOpen: boolean;
@@ -35,7 +36,7 @@ export const MushafNavigator: React.FC<MushafNavigatorProps> = ({
         }
     }, [isOpen]);
 
-    const handleSurahClick = (surah: any) => {
+    const handleSurahClick = (surah: Surah) => {
         onClose();
         // Delay page change to allow drawer to close smoothly without frame drop
         setTimeout(() => {
@@ -44,7 +45,7 @@ export const MushafNavigator: React.FC<MushafNavigatorProps> = ({
         }, 300);
     };
 
-    const handleJuzClick = (juz: any) => {
+    const handleJuzClick = (juz: JuzInfo) => {
         onClose();
         // Delay page change to allow drawer to close smoothly without frame drop
         setTimeout(() => {

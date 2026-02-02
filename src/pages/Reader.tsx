@@ -152,7 +152,7 @@ export default function Reader() {
 
             {/* Content - Responsive Layout */}
             <div className={readingMode === 'mushaf'
-                ? 'h-[calc(100vh-80px)]'
+                ? 'h-[100dvh] w-full'
                 : 'max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 lg:px-8 pb-4 pt-4 lg:pt-6'
             }>
                 {/* Mushaf Mode - Real Page Images */}

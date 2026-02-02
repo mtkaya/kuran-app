@@ -1,12 +1,18 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings, Bookmark, ZoomIn, ZoomOut } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
+import { useBookmarkStore } from '../store/bookmarkStore';
 import { useOrientation } from '../hooks/useOrientation';
+import { MushafNavigator } from './MushafNavigator';
+import { getPageFirstAyah } from '../data/pageMapping';
+import { getJuzForAyah } from '../data/juzData';
+import { useQuranData } from '../hooks/useQuranData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MushafImageViewProps {
     surahId: number;
@@ -33,6 +39,11 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [showEditionSelector, setShowEditionSelector] = useState(false);
     const [isDualPageMode, setIsDualPageMode] = useState(false);
     const [showControls, setShowControls] = useState(true);
+    const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
+
+    // Context for data
+    const { currentLanguage } = useLanguage();
+    const { quranData } = useQuranData(currentLanguage);
 
     // Orientation detection
     const { isLandscape } = useOrientation();
@@ -44,6 +55,7 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
 
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
     const { mushafEdition, setMushafEdition } = useSettingsStore();
+    const { toggleBookmark, isBookmarked } = useBookmarkStore();
     const currentEdition = getMushafEdition(mushafEdition) || MUSHAF_EDITIONS[0];
 
     // Auto-enable dual page mode in landscape on tablets/desktop
@@ -207,6 +219,20 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
         setImageError(true);
     };
 
+    const handleZoomIn = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setZoom(prev => Math.min(MAX_ZOOM, prev + 0.5));
+    };
+
+    const handleZoomOut = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setZoom(prev => {
+            const newZoom = Math.max(MIN_ZOOM, prev - 0.5);
+            if (newZoom <= 1) setPosition({ x: 0, y: 0 });
+            return newZoom;
+        });
+    };
+
 
 
     return (
@@ -215,28 +241,145 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
             {/* Floating Toggle Button removed - Use tap to toggle */}
 
             {/* Minimal Header - Only Back & Settings */}
+            {/* Minimal Header - Custom Layout */}
+            {/* Minimal Header - Custom Layout */}
             <div
-                className={`absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/60 to-transparent transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'
+                className={`absolute top-0 left-0 right-0 z-50 flex items-start justify-between px-4 py-3 transition-all duration-300 pointer-events-none ${showControls ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
                     }`}
-                style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 0.5rem)' }}
+                style={{ paddingTop: 'calc(env(safe-area-inset-top, 50px) + 1.5rem)' }}
             >
+                {/* Left: Back Button */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="p-2 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors"
+                    className="pointer-events-auto p-3 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors shadow-sm"
                 >
                     <ArrowLeft className="w-6 h-6" />
                 </button>
 
-                <div className="flex gap-2">
-                    {/* Settings Button (Gear) */}
+                {/* Center: Info Button (Opens Navigator) */}
+                <button
+                    onClick={() => setIsNavigatorOpen(true)}
+                    className="pointer-events-auto flex flex-col items-center bg-black/40 backdrop-blur-md border border-white/10 rounded-xl px-6 py-2 text-white hover:bg-black/60 transition-all active:scale-95 shadow-sm mx-2"
+                >
+                    <span className="text-[10px] text-white/70 font-medium tracking-wide uppercase">
+                        {(() => {
+                            const pageInfo = getPageFirstAyah(currentPage);
+                            if (!pageInfo) return 'Cüz 1';
+                            const juz = getJuzForAyah(pageInfo.surah, pageInfo.ayah);
+                            return `${juz}. Cüz • Sayfa ${currentPage}`;
+                        })()}
+                    </span>
+                    <span className="font-semibold text-sm">
+                        {(() => {
+                            const pageInfo = getPageFirstAyah(currentPage);
+                            if (!pageInfo) return 'Kuran-ı Kerim';
+                            const surah = quranData.find(s => s.id === pageInfo.surah);
+                            return surah ? surah.name_turkish : '...';
+                        })()}
+                    </span>
+                </button>
+
+                {/* Right: Actions */}
+                <div className="flex gap-2 pointer-events-auto">
+                    {/* Bookmark Button */}
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            const pageInfo = getPageFirstAyah(currentPage);
+                            if (pageInfo) {
+                                const surah = quranData.find(s => s.id === pageInfo.surah);
+                                toggleBookmark({
+                                    surahId: pageInfo.surah,
+                                    ayahId: 0,
+                                    ayahNumber: pageInfo.ayah,
+                                    surahName: surah?.name_turkish || '',
+                                });
+                            }
+                        }}
+                        className="p-3 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors shadow-sm"
+                    >
+                        {(() => {
+                            const pageInfo = getPageFirstAyah(currentPage);
+                            const surah = quranData.find(s => s.id === pageInfo?.surah);
+                            const ayah = surah?.ayahs.find(a => a.ayah_number === pageInfo?.ayah);
+                            const isBm = ayah ? isBookmarked(ayah.surah_id, ayah.id) : false;
+
+                            return <Bookmark className={`w-6 h-6 ${isBm ? 'fill-white' : ''}`} />;
+                        })()}
+                    </button>
+
+                    {/* Settings Button */}
                     <button
                         onClick={onOpenSettings}
-                        className="p-2 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors"
+                        className="p-3 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors shadow-sm"
                     >
                         <Settings className="w-6 h-6" />
                     </button>
                 </div>
             </div>
+
+            {/* Bottom Navigation Buttons - Visible when controls shown */}
+            <div
+                className={`absolute bottom-0 left-0 right-0 z-40 px-6 pb-6 pt-4 flex items-end justify-between transition-all duration-300 pointer-events-none ${showControls && !isNavigatorOpen ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+                    }`}
+                style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 20px) + 1.5rem)' }}
+            >
+                {/* Previous Page Button (Left) */}
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        goToNextPage();
+                    }}
+                    disabled={currentPage >= PAGE_COUNT}
+                    className="pointer-events-auto flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/10 hover:bg-black/60 transition-all active:scale-95 disabled:opacity-0 shadow-lg"
+                >
+                    <ChevronLeft className="w-7 h-7 lg:w-8 lg:h-8 mr-0.5" />
+                </button>
+
+                {/* Center: Zoom Controls */}
+                <div className="pointer-events-auto flex items-center gap-2 bg-black/40 backdrop-blur-md border border-white/10 rounded-full p-1.5 shadow-lg mb-1">
+                    <button
+                        onClick={handleZoomOut}
+                        disabled={zoom <= MIN_ZOOM}
+                        className="p-2.5 rounded-full hover:bg-white/10 text-white transition-colors disabled:opacity-30 active:scale-95"
+                    >
+                        <ZoomOut className="w-5 h-5" />
+                    </button>
+                    <div className="w-px h-4 bg-white/20" />
+                    <button
+                        onClick={handleZoomIn}
+                        disabled={zoom >= MAX_ZOOM}
+                        className="p-2.5 rounded-full hover:bg-white/10 text-white transition-colors disabled:opacity-30 active:scale-95"
+                    >
+                        <ZoomIn className="w-5 h-5" />
+                    </button>
+                </div>
+
+                {/* Next Page Button (Right) */}
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        goToPrevPage();
+                    }}
+                    disabled={currentPage <= 1}
+                    className="pointer-events-auto flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-black/40 backdrop-blur-md text-white border border-white/10 hover:bg-black/60 transition-all active:scale-95 disabled:opacity-0 shadow-lg"
+                >
+                    <ChevronRight className="w-7 h-7 lg:w-8 lg:h-8 ml-0.5" />
+                </button>
+            </div>
+
+            {/* Navigator Sheet */}
+            <MushafNavigator
+                isOpen={isNavigatorOpen}
+                onClose={() => setIsNavigatorOpen(false)}
+                currentPage={currentPage}
+                onPageChange={(page) => {
+                    setCurrentPage(page);
+                    // Also close controls after navigating
+                    setShowControls(false);
+                }}
+                surahId={getPageFirstAyah(currentPage)?.surah}
+            />
 
             {/* Mushaf Edition Selector Dropdown */}
             {

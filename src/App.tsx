@@ -106,14 +106,6 @@ function App() {
                                     </div>
                                     <div className="flex items-center gap-0.5 lg:gap-1">
                                         <Link
-                                            to="/search"
-                                            className="p-2 lg:px-3 lg:py-2 hover:bg-white/10 rounded-full lg:rounded-lg text-white/80 transition-colors flex items-center gap-2"
-                                            aria-label={ui.searchInQuran}
-                                        >
-                                            <SearchIcon className="w-5 h-5" />
-                                            <span className="hidden lg:inline text-sm font-medium">Ara</span>
-                                        </Link>
-                                        <Link
                                             to="/notes"
                                             className="p-2 lg:px-3 lg:py-2 hover:bg-white/10 rounded-full lg:rounded-lg text-white/80 transition-colors flex items-center gap-2"
                                             aria-label="Notlarım"

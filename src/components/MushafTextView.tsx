@@ -449,13 +449,38 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                 </button>
 
                 <div className="flex items-center gap-2">
-                    {/* Son Okunan Badge */}
-                    {isLastReadPage && (
-                        <div className="flex items-center gap-1 px-2 py-1 bg-red-500/15 text-red-600 dark:text-red-400 rounded-full text-xs font-semibold border border-red-500/20">
-                            <Flag className="w-3 h-3 fill-red-500" />
-                            <span>Son Okunan</span>
-                        </div>
-                    )}
+                    {/* Save Last Read Button */}
+                    <button
+                        onClick={() => {
+                            const pageInfo = getPageFirstAyah(currentPage);
+                            if (pageInfo) {
+                                const surah = quranData.find(s => s.id === pageInfo.surah);
+                                if (surah) {
+                                    setLastRead({
+                                        surahId: pageInfo.surah,
+                                        ayahId: 0,
+                                        ayahNumber: pageInfo.ayah,
+                                        surahName: surah.name_turkish,
+                                        page: currentPage,
+                                    });
+                                    setInitialLastReadPage(currentPage);
+
+                                    // Haptic feedback
+                                    if (navigator.vibrate) {
+                                        navigator.vibrate(50);
+                                    }
+                                }
+                            }
+                        }}
+                        className={`p-2 rounded-lg transition-all ${isLastReadPage
+                                ? 'bg-red-500 text-white hover:bg-red-600'
+                                : 'bg-primary/10 text-primary hover:bg-primary/20'
+                            }`}
+                        title="Son okunan yeri kaydet"
+                    >
+                        <Flag className={`w-5 h-5 ${isLastReadPage ? 'fill-white' : ''}`} />
+                    </button>
+
                     <span className="text-sm text-muted-foreground">Sayfa</span>
                     <span className="px-3 py-1 bg-primary/10 text-primary font-bold rounded-lg">
                         {currentPage}

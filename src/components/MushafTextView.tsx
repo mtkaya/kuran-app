@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Loader2, ChevronDown, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ChevronDown, ZoomIn, ZoomOut, RotateCcw, Flag } from 'lucide-react';
 import { fetchMushafPage, preloadAdjacentPages, MushafPageData, MushafLine } from '../data/mushafPageData';
 import { useSettingsStore } from '../store/settingsStore';
 import { useAudioStore } from '../store/audioStore';
+import { useReadingStore } from '../store/readingStore';
+import { getPageFirstAyah } from '../data/pageMapping';
+import { useQuranData } from '../hooks/useQuranData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MushafTextViewProps {
     initialPage?: number;
@@ -27,6 +31,22 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
 
     const { arabicFont, arabicFontSize } = useSettingsStore();
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
+    const { lastRead, setLastRead } = useReadingStore();
+    const { currentLanguage } = useLanguage();
+    const { quranData } = useQuranData(currentLanguage);
+
+    // Track initial last read page (captured once on mount)
+    const [initialLastReadPage, setInitialLastReadPage] = useState<number | null>(null);
+
+    // Capture the initial last read page on first render
+    useEffect(() => {
+        if (initialLastReadPage === null && lastRead?.page) {
+            setInitialLastReadPage(lastRead.page);
+        }
+    }, [lastRead, initialLastReadPage]);
+
+    // Check if current page is the initial last read page (only show badge once, on that specific page)
+    const isLastReadPage = initialLastReadPage !== null && initialLastReadPage === currentPage;
 
     const containerRef = useRef<HTMLDivElement>(null);
     const onPageChangeRef = useRef(onPageChange);
@@ -36,6 +56,23 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
     useEffect(() => {
         onPageChangeRef.current = onPageChange;
     }, [onPageChange]);
+
+    // Save last read position when page changes
+    useEffect(() => {
+        const pageInfo = getPageFirstAyah(currentPage);
+        if (pageInfo) {
+            const surah = quranData.find(s => s.id === pageInfo.surah);
+            if (surah) {
+                setLastRead({
+                    surahId: pageInfo.surah,
+                    ayahId: 0,
+                    ayahNumber: pageInfo.ayah,
+                    surahName: surah.name_turkish,
+                    page: currentPage,
+                });
+            }
+        }
+    }, [currentPage, quranData, setLastRead]);
 
     // Sync with parent's page if it changes (e.g., from audio playback)
     useEffect(() => {
@@ -412,6 +449,13 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                 </button>
 
                 <div className="flex items-center gap-2">
+                    {/* Son Okunan Badge */}
+                    {isLastReadPage && (
+                        <div className="flex items-center gap-1 px-2 py-1 bg-red-500/15 text-red-600 dark:text-red-400 rounded-full text-xs font-semibold border border-red-500/20">
+                            <Flag className="w-3 h-3 fill-red-500" />
+                            <span>Son Okunan</span>
+                        </div>
+                    )}
                     <span className="text-sm text-muted-foreground">Sayfa</span>
                     <span className="px-3 py-1 bg-primary/10 text-primary font-bold rounded-lg">
                         {currentPage}

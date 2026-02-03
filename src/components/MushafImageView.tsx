@@ -1,12 +1,13 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings, Bookmark, ZoomIn, ZoomOut } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings, Bookmark, ZoomIn, ZoomOut, Flag } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { useBookmarkStore } from '../store/bookmarkStore';
+import { useReadingStore } from '../store/readingStore';
 import { useOrientation } from '../hooks/useOrientation';
 import { MushafNavigator } from './MushafNavigator';
 import { getPageFirstAyah } from '../data/pageMapping';
@@ -56,7 +57,21 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
     const { mushafEdition, setMushafEdition } = useSettingsStore();
     const { toggleBookmark, isBookmarked } = useBookmarkStore();
+    const { lastRead, setLastRead } = useReadingStore();
     const currentEdition = getMushafEdition(mushafEdition) || MUSHAF_EDITIONS[0];
+
+    // Track initial last read page (captured once on mount)
+    const [initialLastReadPage, setInitialLastReadPage] = useState<number | null>(null);
+
+    // Capture the initial last read page on first render
+    useEffect(() => {
+        if (initialLastReadPage === null && lastRead?.page) {
+            setInitialLastReadPage(lastRead.page);
+        }
+    }, [lastRead, initialLastReadPage]);
+
+    // Check if current page is the initial last read page (only show ribbon once, on that specific page)
+    const isLastReadPage = initialLastReadPage !== null && initialLastReadPage === currentPage;
 
     // Auto-enable dual page mode in landscape on tablets/desktop
     useEffect(() => {
@@ -74,6 +89,23 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     // Ensure valid page numbers
     const displayRightPage = Math.max(1, Math.min(PAGE_COUNT, rightPage));
     const displayLeftPage = Math.min(PAGE_COUNT, leftPage);
+
+    // Save last read position when page changes
+    useEffect(() => {
+        const pageInfo = getPageFirstAyah(currentPage);
+        if (pageInfo) {
+            const surah = quranData.find(s => s.id === pageInfo.surah);
+            if (surah) {
+                setLastRead({
+                    surahId: pageInfo.surah,
+                    ayahId: 0,
+                    ayahNumber: pageInfo.ayah,
+                    surahName: surah.name_turkish,
+                    page: currentPage,
+                });
+            }
+        }
+    }, [currentPage, quranData, setLastRead]);
 
     // Sync page with audio playback
     useEffect(() => {
@@ -450,6 +482,26 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     }
                 }}
             >
+                {/* Son Okunan Ribbon Bookmark - Top Right of Image */}
+                {isLastReadPage && (
+                    <div className="absolute top-4 right-4 z-30 pointer-events-none animate-in fade-in slide-in-from-top duration-500">
+                        {/* Ribbon shape */}
+                        <div className="relative">
+                            {/* Ribbon body */}
+                            <div className="bg-gradient-to-b from-red-500 to-red-600 text-white px-3 py-2 rounded-t-lg shadow-lg border-l-2 border-r-2 border-t-2 border-red-400/50">
+                                <div className="flex items-center gap-1.5">
+                                    <Flag className="w-3.5 h-3.5 fill-white" />
+                                    <span className="text-[10px] font-bold tracking-wide">SON OKUNAN</span>
+                                </div>
+                            </div>
+                            {/* Ribbon tail */}
+                            <div className="flex justify-center">
+                                <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[12px] border-l-transparent border-r-transparent border-t-red-600" />
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 {/* Left Side Navigation - NEXT Page (RTL: Quran reads right-to-left) */}
                 {currentPage < PAGE_COUNT && zoom === 1 && (
                     <button

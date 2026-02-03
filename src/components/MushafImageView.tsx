@@ -1,12 +1,11 @@
 // MushafImageView - Display real Mushaf page images with zoom support
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings, Bookmark, ZoomIn, ZoomOut, Flag } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, ArrowLeft, Settings, ZoomIn, ZoomOut, Flag } from 'lucide-react';
 import { getPageForAyah, PAGE_COUNT } from '../data/pageMapping';
 import { getMushafPageUrl, MUSHAF_EDITIONS, getMushafEdition } from '../data/mushafProvider';
 import { useAudioStore } from '../store/audioStore';
 import { useSettingsStore } from '../store/settingsStore';
-import { useBookmarkStore } from '../store/bookmarkStore';
 import { useReadingStore } from '../store/readingStore';
 import { useOrientation } from '../hooks/useOrientation';
 import { MushafNavigator } from './MushafNavigator';
@@ -24,6 +23,7 @@ interface MushafImageViewProps {
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 3;
 const ZOOM_STEP = 0.25;
+const LONG_PRESS_DURATION = 600; // ms
 
 export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initialAyah, onOpenSettings }) => {
     const [currentPage, setCurrentPage] = useState(() => getPageForAyah(surahId, initialAyah || 1));
@@ -42,6 +42,10 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const [showControls, setShowControls] = useState(true);
     const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
 
+    // Marker position state (percentage based)
+    const [markerPosition, setMarkerPosition] = useState<{ x: number; y: number } | null>(null);
+    const [showMarkerFeedback, setShowMarkerFeedback] = useState(false);
+
     // Context for data
     const { currentLanguage } = useLanguage();
     const { quranData } = useQuranData(currentLanguage);
@@ -53,20 +57,27 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     const containerRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
     const lastTouchDistance = useRef<number>(0);
+    const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+    const longPressPosition = useRef<{ x: number; y: number } | null>(null);
 
     const { currentSurahId, currentAyahNumber, isPlaying } = useAudioStore();
     const { mushafEdition, setMushafEdition } = useSettingsStore();
-    const { toggleBookmark, isBookmarked } = useBookmarkStore();
     const { lastRead, setLastRead } = useReadingStore();
     const currentEdition = getMushafEdition(mushafEdition) || MUSHAF_EDITIONS[0];
 
-    // Track initial last read page (captured once on mount)
+    // Track initial last read page and marker position (captured once on mount)
     const [initialLastReadPage, setInitialLastReadPage] = useState<number | null>(null);
+    const [initialMarkerPosition, setInitialMarkerPosition] = useState<{ x: number; y: number } | null>(null);
 
-    // Capture the initial last read page on first render
+    // Capture the initial last read page and marker position on first render
     useEffect(() => {
         if (initialLastReadPage === null && lastRead?.page) {
             setInitialLastReadPage(lastRead.page);
+            // Also capture initial marker position if available
+            if (lastRead.markerX !== undefined && lastRead.markerY !== undefined) {
+                setInitialMarkerPosition({ x: lastRead.markerX, y: lastRead.markerY });
+                setMarkerPosition({ x: lastRead.markerX, y: lastRead.markerY });
+            }
         }
     }, [lastRead, initialLastReadPage]);
 
@@ -182,21 +193,80 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     // Touch events for pinch-to-zoom
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         if (e.touches.length === 2) {
+            // Clear long press timer on multi-touch
+            if (longPressTimer.current) {
+                clearTimeout(longPressTimer.current);
+                longPressTimer.current = null;
+            }
             const distance = Math.hypot(
                 e.touches[0].clientX - e.touches[1].clientX,
                 e.touches[0].clientY - e.touches[1].clientY
             );
             lastTouchDistance.current = distance;
-        } else if (e.touches.length === 1 && zoom > 1) {
-            setIsDragging(true);
-            setDragStart({
-                x: e.touches[0].clientX - position.x,
-                y: e.touches[0].clientY - position.y
-            });
+        } else if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            const container = containerRef.current;
+
+            // Store touch position for long press
+            if (container) {
+                const rect = container.getBoundingClientRect();
+                const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                longPressPosition.current = { x, y };
+            }
+
+            // Start long press timer
+            longPressTimer.current = setTimeout(() => {
+                if (longPressPosition.current && zoom === 1) {
+                    // Long press triggered - place marker
+                    setMarkerPosition(longPressPosition.current);
+                    setShowMarkerFeedback(true);
+
+                    // Save marker position to storage
+                    const pageInfo = getPageFirstAyah(currentPage);
+                    if (pageInfo) {
+                        const surah = quranData.find(s => s.id === pageInfo.surah);
+                        if (surah) {
+                            setLastRead({
+                                surahId: pageInfo.surah,
+                                ayahId: 0,
+                                ayahNumber: pageInfo.ayah,
+                                surahName: surah.name_turkish,
+                                page: currentPage,
+                                markerX: longPressPosition.current.x,
+                                markerY: longPressPosition.current.y,
+                            });
+                        }
+                    }
+
+                    // Haptic feedback (vibration)
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
+
+                    // Hide feedback after animation
+                    setTimeout(() => setShowMarkerFeedback(false), 1500);
+                }
+            }, LONG_PRESS_DURATION);
+
+            // Handle panning if zoomed
+            if (zoom > 1) {
+                setIsDragging(true);
+                setDragStart({
+                    x: touch.clientX - position.x,
+                    y: touch.clientY - position.y
+                });
+            }
         }
-    }, [zoom, position]);
+    }, [zoom, position, currentPage, quranData, setLastRead]);
 
     const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        // Cancel long press on move
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
+        }
+
         if (e.touches.length === 2) {
             e.preventDefault();
             const distance = Math.hypot(
@@ -224,6 +294,12 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
     }, [isDragging, zoom, dragStart]);
 
     const handleTouchEnd = useCallback(() => {
+        // Clear long press timer
+        if (longPressTimer.current) {
+            clearTimeout(longPressTimer.current);
+            longPressTimer.current = null;
+        }
+        longPressPosition.current = null;
         lastTouchDistance.current = 0;
         setIsDragging(false);
     }, []);
@@ -313,31 +389,49 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
 
                 {/* Right: Actions */}
                 <div className="flex gap-2 pointer-events-auto">
-                    {/* Bookmark Button */}
+                    {/* Save Last Read Position Button */}
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             const pageInfo = getPageFirstAyah(currentPage);
                             if (pageInfo) {
                                 const surah = quranData.find(s => s.id === pageInfo.surah);
-                                toggleBookmark({
-                                    surahId: pageInfo.surah,
-                                    ayahId: 0,
-                                    ayahNumber: pageInfo.ayah,
-                                    surahName: surah?.name_turkish || '',
-                                });
+                                if (surah) {
+                                    // Save current position as last read
+                                    setLastRead({
+                                        surahId: pageInfo.surah,
+                                        ayahId: 0,
+                                        ayahNumber: pageInfo.ayah,
+                                        surahName: surah.name_turkish,
+                                        page: currentPage,
+                                        markerX: markerPosition?.x,
+                                        markerY: markerPosition?.y,
+                                    });
+
+                                    // Update initial values so ribbon shows immediately
+                                    setInitialLastReadPage(currentPage);
+                                    if (markerPosition) {
+                                        setInitialMarkerPosition(markerPosition);
+                                    }
+
+                                    // Show feedback
+                                    setShowMarkerFeedback(true);
+                                    setTimeout(() => setShowMarkerFeedback(false), 1500);
+
+                                    // Haptic feedback
+                                    if (navigator.vibrate) {
+                                        navigator.vibrate(50);
+                                    }
+                                }
                             }
                         }}
-                        className="p-3 rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-black/60 transition-colors shadow-sm"
+                        className={`p-3 rounded-full backdrop-blur-md transition-all shadow-sm ${isLastReadPage
+                            ? 'bg-red-500 text-white hover:bg-red-600'
+                            : 'bg-black/40 text-white hover:bg-black/60'
+                            }`}
+                        title="Son okunan yeri kaydet"
                     >
-                        {(() => {
-                            const pageInfo = getPageFirstAyah(currentPage);
-                            const surah = quranData.find(s => s.id === pageInfo?.surah);
-                            const ayah = surah?.ayahs.find(a => a.ayah_number === pageInfo?.ayah);
-                            const isBm = ayah ? isBookmarked(ayah.surah_id, ayah.id) : false;
-
-                            return <Bookmark className={`w-6 h-6 ${isBm ? 'fill-white' : ''}`} />;
-                        })()}
+                        <Flag className={`w-6 h-6 ${isLastReadPage ? 'fill-white' : ''}`} />
                     </button>
 
                     {/* Settings Button */}
@@ -482,9 +576,22 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                     }
                 }}
             >
-                {/* Son Okunan Ribbon Bookmark - Top Right of Image */}
+                {/* Son Okunan Marker - Shows at custom position or default top-right */}
                 {isLastReadPage && (
-                    <div className="absolute top-4 right-4 z-30 pointer-events-none animate-in fade-in slide-in-from-top duration-500">
+                    <div
+                        className="absolute z-30 pointer-events-none animate-in fade-in slide-in-from-top duration-500"
+                        style={{
+                            // Use custom marker position if available, otherwise default to top-right
+                            ...(markerPosition || initialMarkerPosition ? {
+                                left: `${(markerPosition || initialMarkerPosition)!.x}%`,
+                                top: `${(markerPosition || initialMarkerPosition)!.y}%`,
+                                transform: 'translate(-50%, -100%)'
+                            } : {
+                                top: '1rem',
+                                right: '1rem'
+                            })
+                        }}
+                    >
                         {/* Ribbon shape */}
                         <div className="relative">
                             {/* Ribbon body */}
@@ -498,6 +605,24 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                             <div className="flex justify-center">
                                 <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[12px] border-l-transparent border-r-transparent border-t-red-600" />
                             </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Long Press Feedback - Shows when marker is being placed */}
+                {showMarkerFeedback && markerPosition && (
+                    <div
+                        className="absolute z-40 pointer-events-none animate-in zoom-in fade-in duration-300"
+                        style={{
+                            left: `${markerPosition.x}%`,
+                            top: `${markerPosition.y}%`,
+                            transform: 'translate(-50%, -50%)'
+                        }}
+                    >
+                        {/* Pulsing circle effect */}
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-red-500/30 rounded-full animate-ping" style={{ width: '60px', height: '60px', marginLeft: '-30px', marginTop: '-30px' }} />
+                            <div className="w-4 h-4 bg-red-500 rounded-full shadow-lg border-2 border-white" />
                         </div>
                     </div>
                 )}

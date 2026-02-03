@@ -100,8 +100,8 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                     onClick={() => memorizationMode && !revealed && setRevealed(true)}
                 >
                     {isLastRead && (
-                        <div className="inline-flex items-center gap-1.5 px-2 py-1 mb-2 bg-primary/10 text-primary rounded-full text-xs font-medium">
-                            <Flag className="w-3 h-3 fill-primary" />
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-2 bg-red-500/15 text-red-600 dark:text-red-400 rounded-full text-xs font-semibold shadow-sm border border-red-500/20">
+                            <Flag className="w-3.5 h-3.5 fill-red-500" />
                             <span>Son Okunan</span>
                         </div>
                     )}

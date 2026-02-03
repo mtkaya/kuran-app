@@ -14,6 +14,7 @@ export interface ReadingPosition {
     ayahId: number;
     ayahNumber: number;
     surahName: string;
+    page?: number;
     timestamp?: number;
 }
 

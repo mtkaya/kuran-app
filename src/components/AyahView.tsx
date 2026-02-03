@@ -213,6 +213,31 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                         <Share2 className="w-5 h-5" />
                     </button>
 
+                    {/* Mark as Last Read Button */}
+                    <button
+                        onClick={() => {
+                            const { setLastRead } = useReadingStore.getState();
+                            setLastRead({
+                                surahId: ayah.surah_id,
+                                ayahId: ayah.id,
+                                ayahNumber: ayah.ayah_number,
+                                surahName,
+                            });
+                            if (navigator.vibrate) {
+                                navigator.vibrate(50);
+                            }
+                            onCopy?.('Son okunan olarak işaretlendi!');
+                        }}
+                        className={`p-2 rounded-lg transition-colors ${isLastRead
+                            ? 'text-red-500 bg-red-500/10'
+                            : 'text-muted-foreground hover:text-red-500 hover:bg-red-500/5'
+                            }`}
+                        aria-label="Son okunan olarak işaretle"
+                        title="Son okunan olarak işaretle"
+                    >
+                        <Flag className={`w-5 h-5 ${isLastRead ? 'fill-red-500' : ''}`} />
+                    </button>
+
                     {/* Related Verses Placeholder */}
                     {ayah.related_ayahs && (
                         <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-md self-center ml-auto">

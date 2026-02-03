@@ -15,6 +15,9 @@ export interface ReadingPosition {
     ayahNumber: number;
     surahName: string;
     page?: number;
+    // Marker position as percentage (0-100) for custom placement on Mushaf
+    markerX?: number;
+    markerY?: number;
     timestamp?: number;
 }
 

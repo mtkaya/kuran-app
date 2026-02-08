@@ -31,7 +31,6 @@ interface ContentPanelProps {
 const TABS: { id: ContentType; label: string; labelTr: string; icon: React.ReactNode }[] = [
     { id: 'meal', label: 'Translation', labelTr: 'Meal', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'tefsir', label: 'Tafsir', labelTr: 'Tefsir', icon: <Book className="w-4 h-4" /> },
-    { id: 'related', label: 'Related', labelTr: 'İlgili Ayetler', icon: <Link2 className="w-4 h-4" /> },
 ];
 
 export const ContentPanel: React.FC<ContentPanelProps> = ({

@@ -1,4 +1,4 @@
-# 📖 Kur'an-ı Kerim: İndeksli
+# Kur'an-ı Kerim: İndeksli
 
 Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaüstü (Windows/Mac/Linux) desteği.
 
@@ -8,13 +8,13 @@ Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaü
 
 ## ✨ Özellikler
 
-### 📚 Okuma Modları
+### Okuma Modları
 - **Normal Mod**: Ayet ayet okuma, meal ve transliterasyon desteği
 - **Mushaf Modu**: Gerçek Mushaf sayfası görüntüleri (15+ farklı Mushaf edition)
 - **Dijital Mushaf**: Sayfa bazlı dijital metin görünümü
 - **Çift Sayfa Görünümü**: Tablet/masaüstünde kitap gibi okuma deneyimi
 
-### 🌍 Çoklu Dil Desteği
+### Çoklu Dil Desteği
 | Dil | Meal/Tercüme |
 |-----|--------------|
 | 🇹🇷 Türkçe | Diyanet İşleri Meali |
@@ -26,13 +26,13 @@ Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaü
 | 🇵🇰 Urduca | Ahmed Ali |
 | 🇧🇩 Bengalce | Muhiuddin Khan |
 
-### 🎧 Sesli Okuma
+### Sesli Okuma
 - **10+ Kari**: Mishary Rashid Alafasy, Abdul Basit, Mahmoud Khalil Al-Hussary ve daha fazlası
 - **Ayet Takibi**: Ses çalarken aktif ayet vurgulanır
 - **Arka Plan Oynatma**: Uygulama arka plandayken dinlemeye devam
 - **Medya Kontrolleri**: iOS/Android bildirim merkezi kontrolü
 
-### 📖 Gelişmiş Özellikler
+### Gelişmiş Özellikler
 - **Tefsir Desteği**: Diyanet Tefsiri ve daha fazlası
 - **Son Okunan İşareti**: Kaldığınız yerden devam edin
 - **Yer İmleri**: Favori ayetlerinizi kaydedin
@@ -42,7 +42,7 @@ Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaü
 - **Nüzul Sırası**: İniş sırasına göre sureler
 - **Transliterasyon**: Arapça okunuşu Latin harfleriyle
 
-### 🎨 Kullanıcı Deneyimi
+### Kullanıcı Deneyimi
 - **Karanlık/Aydınlık Tema**: Göz yorgunluğunu azaltın
 - **Özelleştirilebilir Font**: Arapça font boyutu ayarı
 - **Multiple Arabic Fonts**: Uthmanic Hafs, Naskh, Me Quran
@@ -50,7 +50,7 @@ Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaü
 - **Responsive Tasarım**: Tüm ekran boyutlarına uyum
 - **PWA Desteği**: Tarayıcıdan yüklenebilir
 
-### 📱 Platform Desteği
+### Platform Desteği
 | Platform | Durum | Teknoloji |
 |----------|-------|-----------|
 | 🌐 Web | ✅ | React + Vite |
@@ -60,7 +60,7 @@ Modern, çok platformlu Kur'an-ı Kerim uygulaması. Web, iOS, Android ve masaü
 | 🍎 macOS | ✅ | Electron |
 | 🐧 Linux | ✅ | Electron |
 
-## 🚀 Başlangıç
+## Başlangıç
 
 ### Gereksinimler
 - Node.js 18+
@@ -107,7 +107,7 @@ npm run electron:build:linux
 npm run electron:dev
 ```
 
-## 🏗️ Proje Yapısı
+## ️ Proje Yapısı
 
 ```
 kuran-app/
@@ -142,7 +142,7 @@ kuran-app/
     └── audio/           # Ses dosyaları (opsiyonel)
 ```
 
-## 🛠️ Teknoloji Yığını
+## ️ Teknoloji Yığını
 
 | Kategori | Teknoloji |
 |----------|-----------|
@@ -156,25 +156,25 @@ kuran-app/
 | **Desktop** | Electron 40 |
 | **Testing** | Vitest, Testing Library |
 
-## 📊 Veri Kaynakları
+## Veri Kaynakları
 
 - **Kuran Metni**: [AlQuran Cloud API](https://alquran.cloud/)
 - **Mushaf Görselleri**: Çeşitli Mushaf Edition'ları (Madina, Pakistan, Tajweed, vb.)
 - **Ses Dosyaları**: EveryAyah.com, Quran.com API
 
-## 🔒 Gizlilik
+## Gizlilik
 
 Uygulama hiçbir kişisel veri toplamaz. Tüm ayarlar ve veriler cihazınızda yerel olarak saklanır.
 
-## 📄 Lisans
+## Lisans
 
 MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
-## 🤝 Katkıda Bulunma
+## Katkıda Bulunma
 
 Pull request'ler kabul edilmektedir. Büyük değişiklikler için lütfen önce bir issue açın.
 
-## 📧 İletişim
+## İletişim
 
 - **Geliştirici**: MTKaya
 - **Email**: info@arfhause.com

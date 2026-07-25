@@ -473,8 +473,8 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                             }
                         }}
                         className={`p-2 rounded-lg transition-all ${isLastReadPage
-                                ? 'bg-red-500 text-white hover:bg-red-600'
-                                : 'bg-primary/10 text-primary hover:bg-primary/20'
+                            ? 'bg-red-500 text-white hover:bg-red-600'
+                            : 'bg-primary/10 text-primary hover:bg-primary/20'
                             }`}
                         title="Son okunan yeri kaydet"
                     >

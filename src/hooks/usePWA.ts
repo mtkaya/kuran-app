@@ -42,14 +42,21 @@ export function usePWA(): UsePWAReturn {
         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isMacOS = /macintosh|mac os x/.test(userAgent) && navigator.maxTouchPoints === 0;
 
+    // Detect if running as a native Capacitor app
+    const isNativeApp = !!(window as any).Capacitor?.isNativePlatform?.() ||
+        !!(window as any).Capacitor?.platform ||
+        document.URL.startsWith('capacitor://') ||
+        document.URL.startsWith('ionic://');
+
     // Check if running as standalone PWA
     const isStandalone =
         window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true;
+        (window.navigator as any).standalone === true ||
+        isNativeApp;
 
     // Check if already installed
     useEffect(() => {
-        if (isStandalone) {
+        if (isStandalone || isNativeApp) {
             setIsInstalled(true);
         }
 

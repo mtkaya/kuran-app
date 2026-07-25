@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320">
+  <defs>
+    <!-- Renk tanımları -->
+    <linearGradient id="pageGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5E6D3"/>
+      <stop offset="100%" style="stop-color:#EDE0CC"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Kitap Dış Kapak - Koyu Kahve/Mor Çerçeve -->
+  <rect x="40" y="40" width="320" height="240" rx="4" ry="4" fill="#6B5B6E"/>
+  
+  <!-- Kitap İç Sayfa Alanı - Krem Rengi -->
+  <rect x="52" y="52" width="296" height="216" rx="2" ry="2" fill="#F5E6D3"/>
+  
+  <!-- Altın/Turuncu İç Çerçeve -->
+  <rect x="65" y="65" width="270" height="190" rx="2" ry="2" fill="none" stroke="#D4A556" stroke-width="4"/>
+  
+  <!-- Kitap Orta Cilt Çizgisi -->
+  <line x1="200" y1="65" x2="200" y2="255" stroke="#C49A45" stroke-width="3"/>
+  
+  <!-- Sol Sayfa Satırları -->
+  <g stroke="#5D4E60" stroke-width="1.5" stroke-linecap="round">
+    <line x1="80" y1="90" x2="185" y2="90"/>
+    <line x1="80" y1="108" x2="185" y2="108"/>
+    <line x1="80" y1="126" x2="185" y2="126"/>
+    <line x1="80" y1="144" x2="185" y2="144"/>
+    <line x1="80" y1="162" x2="185" y2="162"/>
+    <line x1="80" y1="180" x2="185" y2="180"/>
+    <line x1="80" y1="198" x2="185" y2="198"/>
+    <line x1="80" y1="216" x2="185" y2="216"/>
+    <line x1="80" y1="234" x2="185" y2="234"/>
+  </g>
+  
+  <!-- Sağ Sayfa Satırları -->
+  <g stroke="#5D4E60" stroke-width="1.5" stroke-linecap="round">
+    <line x1="215" y1="90" x2="320" y2="90"/>
+    <line x1="215" y1="108" x2="320" y2="108"/>
+    <line x1="215" y1="126" x2="320" y2="126"/>
+    <line x1="215" y1="144" x2="320" y2="144"/>
+    <line x1="215" y1="162" x2="320" y2="162"/>
+    <line x1="215" y1="180" x2="320" y2="180"/>
+    <line x1="215" y1="198" x2="320" y2="198"/>
+    <line x1="215" y1="216" x2="320" y2="216"/>
+    <line x1="215" y1="234" x2="320" y2="234"/>
+  </g>
+  
+  <!-- Tesbih İpi - Üst kısım -->
+  <line x1="200" y1="20" x2="200" y2="52" stroke="#5D4E60" stroke-width="2"/>
+  
+  <!-- Tesbih Boncukları - Sol Taraf (yukarıdan aşağı) -->
+  <g fill="#5D4E60">
+    <!-- Üst boncuklar -->
+    <circle cx="200" cy="25" r="5"/>
+    
+    <!-- Sol taraf boncukları -->
+    <circle cx="188" cy="60" r="5"/>
+    <circle cx="183" cy="78" r="5"/>
+    <circle cx="180" cy="96" r="5"/>
+    <circle cx="178" cy="114" r="5"/>
+    <circle cx="177" cy="132" r="5"/>
+    
+    <!-- Sol büyük boncuk (kırmızı/turuncu) -->
+    <circle cx="176" cy="152" r="7" fill="#C67B5C"/>
+    
+    <circle cx="177" cy="172" r="5"/>
+    <circle cx="178" cy="190" r="5"/>
+    <circle cx="180" cy="208" r="5"/>
+    <circle cx="183" cy="226" r="5"/>
+    <circle cx="188" cy="244" r="5"/>
+  </g>
+  
+  <!-- Tesbih Boncukları - Sağ Taraf (yukarıdan aşağı) -->
+  <g fill="#5D4E60">
+    <!-- Sağ taraf boncukları -->
+    <circle cx="212" cy="60" r="5"/>
+    <circle cx="217" cy="78" r="5"/>
+    <circle cx="220" cy="96" r="5"/>
+    <circle cx="222" cy="114" r="5"/>
+    <circle cx="223" cy="132" r="5"/>
+    
+    <!-- Sağ büyük boncuk (kırmızı/turuncu) -->
+    <circle cx="224" cy="152" r="7" fill="#C67B5C"/>
+    
+    <circle cx="223" cy="172" r="5"/>
+    <circle cx="222" cy="190" r="5"/>
+    <circle cx="220" cy="208" r="5"/>
+    <circle cx="217" cy="226" r="5"/>
+    <circle cx="212" cy="244" r="5"/>
+  </g>
+  
+  <!-- Tesbih İpleri - Boncukları birleştiren -->
+  <g stroke="#5D4E60" stroke-width="1.5" fill="none">
+    <!-- Sol ip -->
+    <path d="M200,30 Q188,45 188,60"/>
+    <path d="M188,65 Q185,70 183,78"/>
+    <path d="M183,83 Q181,89 180,96"/>
+    <path d="M180,101 Q179,107 178,114"/>
+    <path d="M178,119 Q177,125 177,132"/>
+    <path d="M177,137 Q176,144 176,152"/>
+    <path d="M176,159 Q177,165 177,172"/>
+    <path d="M177,177 Q178,183 178,190"/>
+    <path d="M178,195 Q179,201 180,208"/>
+    <path d="M180,213 Q181,219 183,226"/>
+    <path d="M183,231 Q185,237 188,244"/>
+    
+    <!-- Sağ ip -->
+    <path d="M200,30 Q212,45 212,60"/>
+    <path d="M212,65 Q215,70 217,78"/>
+    <path d="M217,83 Q219,89 220,96"/>
+    <path d="M220,101 Q221,107 222,114"/>
+    <path d="M222,119 Q223,125 223,132"/>
+    <path d="M223,137 Q224,144 224,152"/>
+    <path d="M224,159 Q223,165 223,172"/>
+    <path d="M223,177 Q222,183 222,190"/>
+    <path d="M222,195 Q221,201 220,208"/>
+    <path d="M220,213 Q219,219 217,226"/>
+    <path d="M217,231 Q215,237 212,244"/>
+  </g>
+  
+  <!-- Alt birleşme noktası -->
+  <path d="M188,249 Q195,260 200,265 Q205,260 212,249" stroke="#5D4E60" stroke-width="1.5" fill="none"/>
+  
+  <!-- Alt boncuk -->
+  <circle cx="200" cy="270" r="6" fill="#5D4E60"/>
+  
+  <!-- Püskül üst parça -->
+  <ellipse cx="200" cy="282" rx="8" ry="5" fill="#5D4E60"/>
+  
+  <!-- Püskül ipleri -->
+  <g stroke="#5D4E60" stroke-width="1.5" stroke-linecap="round">
+    <line x1="194" y1="287" x2="192" y2="310"/>
+    <line x1="197" y1="287" x2="196" y2="312"/>
+    <line x1="200" y1="287" x2="200" y2="313"/>
+    <line x1="203" y1="287" x2="204" y2="312"/>
+    <line x1="206" y1="287" x2="208" y2="310"/>
+  </g>
+  
+</svg>

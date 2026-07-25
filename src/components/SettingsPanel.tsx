@@ -368,14 +368,25 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                 {/* Brand Signature */}
                 <div className="mt-8 pt-6 border-t border-border/50">
                     <div className="text-center space-y-3">
-                        {/* Contact */}
-                        <a
-                            href="mailto:info@arfhause.com"
-                            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                        >
-                            <span>📧</span>
-                            <span>İletişim</span>
-                        </a>
+                        {/* Contact & Legal */}
+                        <div className="flex items-center justify-center gap-4">
+                            <a
+                                href="mailto:info@arfhause.com"
+                                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                <span>📧</span>
+                                <span>İletişim</span>
+                            </a>
+                            <a
+                                href="https://mtkaya.github.io/kuran-app/privacy-policy.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                <span>🔒</span>
+                                <span>Gizlilik Politikası</span>
+                            </a>
+                        </div>
 
                         {/* Brand Signature */}
                         <div className="flex flex-col items-center gap-1">

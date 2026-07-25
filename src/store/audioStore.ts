@@ -1,4 +1,5 @@
 // Audio Store - Player state management
+// With preloading for seamless ayah transitions
 import { create } from 'zustand';
 import { getAudioUrl, getDefaultReciter } from '../data/reciterProvider';
 
@@ -52,6 +53,10 @@ interface AudioState {
     // Audio element reference
     audioElement: HTMLAudioElement | null;
 
+    // Preloaded next ayah audio element
+    preloadedAudio: HTMLAudioElement | null;
+    preloadedAyahNumber: number | null;
+
     // Actions
     initAudio: () => void;
     play: (surahId: number, ayahId: number, ayahNumber: number, surahName: string, totalAyahs: number) => void;
@@ -65,6 +70,30 @@ interface AudioState {
     setRepeatMode: (mode: RepeatMode) => void;
     setReciter: (reciterId: string) => void;
     cleanup: () => void;
+}
+
+/**
+ * Preload the next ayah's audio in the background
+ */
+function preloadNextAyahAudio(
+    reciterId: string,
+    surahId: number,
+    nextAyahNumber: number,
+    totalAyahs: number
+): HTMLAudioElement | null {
+    if (nextAyahNumber > totalAyahs) return null;
+
+    try {
+        const url = getAudioUrl(reciterId, surahId, nextAyahNumber);
+        const preloadAudio = new Audio();
+        preloadAudio.preload = 'auto';
+        preloadAudio.src = url;
+        // Start loading the audio data
+        preloadAudio.load();
+        return preloadAudio;
+    } catch {
+        return null;
+    }
 }
 
 export const useAudioStore = create<AudioState>((set, get) => ({
@@ -83,6 +112,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     repeatMode: 'none',
     selectedReciterId: getDefaultReciter().identifier,
     audioElement: null,
+    preloadedAudio: null,
+    preloadedAyahNumber: null,
 
     // Initialize audio element
     initAudio: () => {
@@ -100,6 +131,33 @@ export const useAudioStore = create<AudioState>((set, get) => ({
                     progress: (audio.currentTime / duration) * 100,
                 });
             }
+
+            // Start preloading next ayah when current is 50% done
+            const state = get();
+            if (
+                duration > 0 &&
+                audio.currentTime > duration * 0.5 &&
+                !state.preloadedAudio &&
+                state.currentAyahNumber &&
+                state.totalAyahs &&
+                state.currentSurahId &&
+                state.currentAyahNumber < state.totalAyahs
+            ) {
+                const nextAyahNum = state.currentAyahNumber + 1;
+                const preloaded = preloadNextAyahAudio(
+                    state.selectedReciterId,
+                    state.currentSurahId,
+                    nextAyahNum,
+                    state.totalAyahs
+                );
+                if (preloaded) {
+                    preloaded.playbackRate = state.playbackRate;
+                    set({
+                        preloadedAudio: preloaded,
+                        preloadedAyahNumber: nextAyahNum,
+                    });
+                }
+            }
         });
 
         audio.addEventListener('loadedmetadata', () => {
@@ -114,16 +172,15 @@ export const useAudioStore = create<AudioState>((set, get) => ({
                 audio.currentTime = 0;
                 audio.play();
             } else if (currentAyahNumber && totalAyahs && currentAyahNumber < totalAyahs) {
-                // Play next ayah
+                // Play next ayah (will use preloaded audio if available)
                 get().nextAyah();
             } else if (repeatMode === 'surah') {
                 // Repeat surah from beginning
                 const state = get();
                 if (state.currentSurahId && state.surahName && state.totalAyahs) {
-                    // Play first ayah of the surah
                     get().play(
                         state.currentSurahId,
-                        state.currentSurahId * 1000 + 1, // Approximate first ayah ID
+                        state.currentSurahId * 1000 + 1,
                         1,
                         state.surahName,
                         state.totalAyahs
@@ -139,18 +196,132 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         audio.addEventListener('playing', () => set({ isLoading: false }));
         audio.addEventListener('error', () => set({ isLoading: false, isPlaying: false }));
 
+        // Setup Media Session handlers
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('play', () => get().resume());
+            navigator.mediaSession.setActionHandler('pause', () => get().pause());
+            navigator.mediaSession.setActionHandler('previoustrack', () => get().prevAyah());
+            navigator.mediaSession.setActionHandler('nexttrack', () => get().nextAyah());
+        }
+
         set({ audioElement: audio });
     },
 
     // Play specific ayah
     play: (surahId, ayahId, ayahNumber, surahName, totalAyahs) => {
-        const { audioElement, selectedReciterId, playbackRate } = get();
+        const state = get();
+        const { audioElement, selectedReciterId, playbackRate, preloadedAudio, preloadedAyahNumber } = state;
 
         if (!audioElement) {
             get().initAudio();
-            // Need to wait for next tick
             setTimeout(() => get().play(surahId, ayahId, ayahNumber, surahName, totalAyahs), 0);
             return;
+        }
+
+        // Check if we have a preloaded audio for the requested ayah
+        if (preloadedAudio && preloadedAyahNumber === ayahNumber) {
+            // Swap: stop old audio, use preloaded one as main
+            audioElement.pause();
+
+            // Copy event listeners to preloaded audio by swapping elements
+            // First, update state with new track info
+            set({
+                isLoading: false,
+                currentSurahId: surahId,
+                currentAyahId: ayahId,
+                currentAyahNumber: ayahNumber,
+                surahName,
+                totalAyahs,
+                progress: 0,
+                currentTime: 0,
+                preloadedAudio: null,
+                preloadedAyahNumber: null,
+            });
+
+            // Set up timeupdate on preloaded audio
+            preloadedAudio.addEventListener('timeupdate', () => {
+                const { duration: dur } = preloadedAudio;
+                if (dur > 0) {
+                    set({
+                        currentTime: preloadedAudio.currentTime,
+                        progress: (preloadedAudio.currentTime / dur) * 100,
+                    });
+                }
+
+                // Start preloading next-next ayah
+                const s = get();
+                if (
+                    dur > 0 &&
+                    preloadedAudio.currentTime > dur * 0.5 &&
+                    !s.preloadedAudio &&
+                    s.currentAyahNumber &&
+                    s.totalAyahs &&
+                    s.currentSurahId &&
+                    s.currentAyahNumber < s.totalAyahs
+                ) {
+                    const nextNum = s.currentAyahNumber + 1;
+                    const nextPreloaded = preloadNextAyahAudio(
+                        s.selectedReciterId,
+                        s.currentSurahId,
+                        nextNum,
+                        s.totalAyahs
+                    );
+                    if (nextPreloaded) {
+                        nextPreloaded.playbackRate = s.playbackRate;
+                        set({
+                            preloadedAudio: nextPreloaded,
+                            preloadedAyahNumber: nextNum,
+                        });
+                    }
+                }
+            });
+
+            preloadedAudio.addEventListener('loadedmetadata', () => {
+                set({ duration: preloadedAudio.duration, isLoading: false });
+            });
+
+            preloadedAudio.addEventListener('ended', () => {
+                const { repeatMode, currentAyahNumber: currAyah, totalAyahs: totAyahs } = get();
+
+                if (repeatMode === 'ayah') {
+                    preloadedAudio.currentTime = 0;
+                    preloadedAudio.play();
+                } else if (currAyah && totAyahs && currAyah < totAyahs) {
+                    get().nextAyah();
+                } else if (repeatMode === 'surah') {
+                    const st = get();
+                    if (st.currentSurahId && st.surahName && st.totalAyahs) {
+                        get().play(st.currentSurahId, st.currentSurahId * 1000 + 1, 1, st.surahName, st.totalAyahs);
+                    }
+                } else {
+                    set({ isPlaying: false, progress: 0 });
+                }
+            });
+
+            preloadedAudio.addEventListener('waiting', () => set({ isLoading: true }));
+            preloadedAudio.addEventListener('playing', () => set({ isLoading: false }));
+            preloadedAudio.addEventListener('error', () => set({ isLoading: false, isPlaying: false }));
+
+            preloadedAudio.playbackRate = playbackRate;
+            set({ audioElement: preloadedAudio, duration: preloadedAudio.duration || 0 });
+
+            preloadedAudio.play()
+                .then(() => {
+                    set({ isPlaying: true, isLoading: false });
+                    updateMediaSession(surahName, ayahNumber, true);
+                })
+                .catch((e) => {
+                    console.error('Preloaded audio play error:', e);
+                    set({ isLoading: false });
+                });
+
+            return;
+        }
+
+        // Normal play (no preloaded audio available) - clean up any stale preloaded
+        if (preloadedAudio) {
+            preloadedAudio.src = '';
+            set({ preloadedAudio: null, preloadedAyahNumber: null });
         }
 
         const url = getAudioUrl(selectedReciterId, surahId, ayahNumber);
@@ -201,10 +372,13 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     },
 
     stop: () => {
-        const { audioElement } = get();
+        const { audioElement, preloadedAudio } = get();
         if (audioElement) {
             audioElement.pause();
             audioElement.currentTime = 0;
+        }
+        if (preloadedAudio) {
+            preloadedAudio.src = '';
         }
         set({
             isPlaying: false,
@@ -216,6 +390,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
             progress: 0,
             currentTime: 0,
             duration: 0,
+            preloadedAudio: null,
+            preloadedAyahNumber: null,
         });
     },
 
@@ -236,6 +412,13 @@ export const useAudioStore = create<AudioState>((set, get) => ({
 
         if (!currentSurahId || !currentAyahNumber || !surahName || !totalAyahs) return;
 
+        // Clear preloaded audio since we're going backwards
+        const { preloadedAudio } = get();
+        if (preloadedAudio) {
+            preloadedAudio.src = '';
+            set({ preloadedAudio: null, preloadedAyahNumber: null });
+        }
+
         if (currentAyahNumber > 1) {
             const prevAyahNumber = currentAyahNumber - 1;
             const prevAyahId = (currentAyahId || 0) - 1;
@@ -251,9 +434,12 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     },
 
     setPlaybackRate: (rate) => {
-        const { audioElement } = get();
+        const { audioElement, preloadedAudio } = get();
         if (audioElement) {
             audioElement.playbackRate = rate;
+        }
+        if (preloadedAudio) {
+            preloadedAudio.playbackRate = rate;
         }
         set({ playbackRate: rate });
     },
@@ -263,8 +449,13 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     },
 
     setReciter: (reciterId) => {
-        const { isPlaying, currentSurahId, currentAyahId, currentAyahNumber, surahName, totalAyahs } = get();
-        set({ selectedReciterId: reciterId });
+        const { isPlaying, currentSurahId, currentAyahId, currentAyahNumber, surahName, totalAyahs, preloadedAudio } = get();
+
+        // Clear preloaded audio since reciter changed
+        if (preloadedAudio) {
+            preloadedAudio.src = '';
+        }
+        set({ selectedReciterId: reciterId, preloadedAudio: null, preloadedAyahNumber: null });
 
         // If currently playing, restart with new reciter
         if (isPlaying && currentSurahId && currentAyahId && currentAyahNumber && surahName && totalAyahs) {
@@ -273,11 +464,10 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     },
 
     cleanup: () => {
-        const { audioElement } = get();
+        const { audioElement, preloadedAudio } = get();
         if (audioElement) {
             audioElement.pause();
             audioElement.src = '';
-            // Remove event listeners to prevent memory leaks
             audioElement.onended = null;
             audioElement.ontimeupdate = null;
             audioElement.onloadedmetadata = null;
@@ -285,6 +475,9 @@ export const useAudioStore = create<AudioState>((set, get) => ({
             audioElement.onplaying = null;
             audioElement.onerror = null;
         }
-        set({ audioElement: null });
+        if (preloadedAudio) {
+            preloadedAudio.src = '';
+        }
+        set({ audioElement: null, preloadedAudio: null, preloadedAyahNumber: null });
     },
 }));

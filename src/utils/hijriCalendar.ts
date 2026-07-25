@@ -1,7 +1,8 @@
 // Hijri (Islamic) Calendar Utilities
-// Based on the Umm al-Qura calendar calculation
+// Uses the browser's Intl.DateTimeFormat API with the Umm al-Qura calendar
+// for accurate Hijri date conversion
 
-const HIJRI_MONTHS = [
+const HIJRI_MONTHS_TR = [
     'Muharrem',
     'Safer',
     'Rebiülevvel',
@@ -41,20 +42,50 @@ interface HijriDate {
 
 /**
  * Convert Gregorian date to Hijri date
- * Uses the Kuwaiti algorithm which is widely accepted
+ * Uses the Intl.DateTimeFormat API with the Umm al-Qura calendar for accuracy
  */
 export function gregorianToHijri(date: Date = new Date()): HijriDate {
+    try {
+        // Use the Intl API with Umm al-Qura calendar (most accurate)
+        const parts = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+        }).formatToParts(date);
+
+        let day = 1;
+        let month = 1;
+        let year = 1445;
+
+        for (const part of parts) {
+            if (part.type === 'day') day = parseInt(part.value, 10);
+            if (part.type === 'month') month = parseInt(part.value, 10);
+            if (part.type === 'year') year = parseInt(part.value, 10);
+        }
+
+        return {
+            day,
+            month,
+            year,
+            monthName: HIJRI_MONTHS_TR[month - 1] || HIJRI_MONTHS_TR[0],
+            monthNameAr: HIJRI_MONTHS_AR[month - 1] || HIJRI_MONTHS_AR[0],
+        };
+    } catch {
+        // Fallback: algorithmic conversion (Kuwaiti algorithm) for older browsers
+        return gregorianToHijriFallback(date);
+    }
+}
+
+/**
+ * Fallback algorithmic conversion for browsers without Intl support
+ * Uses the Kuwaiti algorithm
+ */
+function gregorianToHijriFallback(date: Date): HijriDate {
     const day = date.getDate();
     const month = date.getMonth();
     const year = date.getFullYear();
 
-    // Julian Day calculation
-    let jd = Math.floor((11 * year + 3) / 30) +
-        Math.floor(354 * year) +
-        Math.floor(30 * month) -
-        Math.floor((month - 1) / 2) +
-        day + 1948440 - 385;
-
+    let jd: number;
     if (month < 2) {
         jd = Math.floor((1461 * (year - 1 + 4800)) / 4) +
             Math.floor((367 * (month + 10)) / 12) -
@@ -67,7 +98,6 @@ export function gregorianToHijri(date: Date = new Date()): HijriDate {
             day - 32075;
     }
 
-    // Convert Julian Day to Hijri
     const l = jd - 1948440 + 10632;
     const n = Math.floor((l - 1) / 10631);
     const l2 = l - 10631 * n + 354;
@@ -84,8 +114,8 @@ export function gregorianToHijri(date: Date = new Date()): HijriDate {
         day: hijriDay,
         month: hijriMonth,
         year: hijriYear,
-        monthName: HIJRI_MONTHS[hijriMonth - 1] || HIJRI_MONTHS[0],
-        monthNameAr: HIJRI_MONTHS_AR[hijriMonth - 1] || HIJRI_MONTHS_AR[0]
+        monthName: HIJRI_MONTHS_TR[hijriMonth - 1] || HIJRI_MONTHS_TR[0],
+        monthNameAr: HIJRI_MONTHS_AR[hijriMonth - 1] || HIJRI_MONTHS_AR[0],
     };
 }
 

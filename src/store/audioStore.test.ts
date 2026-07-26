@@ -1,6 +1,22 @@
 // Audio Store Tests
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useAudioStore } from '../store/audioStore'
+import { useAudioStore, isPreloadFor } from '../store/audioStore'
+
+describe('isPreloadFor', () => {
+    const preload = { surahId: 2, ayahNumber: 5, reciterId: 'mishari' }
+
+    it('matches only the exact surah, ayah and reciter', () => {
+        expect(isPreloadFor(preload, 2, 5, 'mishari')).toBe(true)
+        // Same ayah number in a different surah must NOT reuse the preload
+        expect(isPreloadFor(preload, 3, 5, 'mishari')).toBe(false)
+        expect(isPreloadFor(preload, 2, 6, 'mishari')).toBe(false)
+        expect(isPreloadFor(preload, 2, 5, 'other')).toBe(false)
+    })
+
+    it('never matches when nothing is preloaded', () => {
+        expect(isPreloadFor({ surahId: null, ayahNumber: null, reciterId: null }, 2, 5, 'mishari')).toBe(false)
+    })
+})
 
 describe('AudioStore', () => {
     beforeEach(() => {

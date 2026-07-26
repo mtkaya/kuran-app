@@ -47,7 +47,7 @@ function App() {
     }, []);
 
     // Get Quran data and UI strings for the selected language
-    const { quranData, isLoading: isQuranLoading } = useQuranData(currentLanguage)
+    const { quranData, isLoading: isQuranLoading, error: quranError, retry: retryQuranLoad } = useQuranData(currentLanguage)
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage])
 
     const filteredSurahs = quranData.filter(surah =>
@@ -67,6 +67,24 @@ function App() {
     // Show splash screen on initial load
     if (showSplash) {
         return <SplashScreen onComplete={handleSplashComplete} minDisplayTime={2500} />;
+    }
+
+    // Data failed to load (offline, cache mismatch…): show the error and a
+    // retry action instead of silently rendering an empty surah list
+    if (isHydrated && !isQuranLoading && quranError) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center px-6">
+                <div className="flex flex-col items-center gap-4 text-center">
+                    <p className="text-destructive font-medium">{ui.pageLoadError}</p>
+                    <button
+                        onClick={retryQuranLoad}
+                        className="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                    >
+                        {ui.retry}
+                    </button>
+                </div>
+            </div>
+        );
     }
 
     // Wait for hydration and data loading

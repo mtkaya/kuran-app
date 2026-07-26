@@ -129,6 +129,11 @@ export const useSearchStore = create<SearchState>((set, get) => ({
 
             // Start processing
             setTimeout(processBatch, 0);
+        }).catch(() => {
+            // Data failed to load — never leave the UI stuck in "searching"
+            if (get().query === query) {
+                set({ results: [], isSearching: false });
+            }
         });
     },
 

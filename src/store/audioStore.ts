@@ -53,9 +53,11 @@ interface AudioState {
     // Audio element reference
     audioElement: HTMLAudioElement | null;
 
-    // Preloaded next ayah audio element
+    // Preloaded next ayah audio element, keyed by the full track identity
     preloadedAudio: HTMLAudioElement | null;
     preloadedAyahNumber: number | null;
+    preloadedSurahId: number | null;
+    preloadedReciterId: string | null;
 
     // Actions
     initAudio: () => void;
@@ -75,6 +77,21 @@ interface AudioState {
 /**
  * Preload the next ayah's audio in the background
  */
+// True only when the preloaded element is exactly the requested track —
+// same surah and reciter, not just the same ayah number
+export function isPreloadFor(
+    preload: { surahId: number | null; ayahNumber: number | null; reciterId: string | null },
+    surahId: number,
+    ayahNumber: number,
+    reciterId: string
+): boolean {
+    return (
+        preload.surahId === surahId &&
+        preload.ayahNumber === ayahNumber &&
+        preload.reciterId === reciterId
+    );
+}
+
 function preloadNextAyahAudio(
     reciterId: string,
     surahId: number,
@@ -114,6 +131,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     audioElement: null,
     preloadedAudio: null,
     preloadedAyahNumber: null,
+    preloadedSurahId: null,
+    preloadedReciterId: null,
 
     // Initialize audio element
     initAudio: () => {
@@ -155,6 +174,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
                     set({
                         preloadedAudio: preloaded,
                         preloadedAyahNumber: nextAyahNum,
+                        preloadedSurahId: state.currentSurahId,
+                        preloadedReciterId: state.selectedReciterId,
                     });
                 }
             }
@@ -210,7 +231,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     // Play specific ayah
     play: (surahId, ayahId, ayahNumber, surahName, totalAyahs) => {
         const state = get();
-        const { audioElement, selectedReciterId, playbackRate, preloadedAudio, preloadedAyahNumber } = state;
+        const { audioElement, selectedReciterId, playbackRate, preloadedAudio, preloadedAyahNumber, preloadedSurahId, preloadedReciterId } = state;
 
         if (!audioElement) {
             get().initAudio();
@@ -218,8 +239,11 @@ export const useAudioStore = create<AudioState>((set, get) => ({
             return;
         }
 
-        // Check if we have a preloaded audio for the requested ayah
-        if (preloadedAudio && preloadedAyahNumber === ayahNumber) {
+        // Check if we have a preloaded audio for the requested track
+        if (preloadedAudio && isPreloadFor(
+            { surahId: preloadedSurahId, ayahNumber: preloadedAyahNumber, reciterId: preloadedReciterId },
+            surahId, ayahNumber, selectedReciterId
+        )) {
             // Swap: stop old audio, use preloaded one as main
             audioElement.pause();
 
@@ -236,6 +260,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
                 currentTime: 0,
                 preloadedAudio: null,
                 preloadedAyahNumber: null,
+                preloadedSurahId: null,
+                preloadedReciterId: null,
             });
 
             // Set up timeupdate on preloaded audio
@@ -271,6 +297,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
                         set({
                             preloadedAudio: nextPreloaded,
                             preloadedAyahNumber: nextNum,
+                            preloadedSurahId: s.currentSurahId,
+                            preloadedReciterId: s.selectedReciterId,
                         });
                     }
                 }
@@ -321,7 +349,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         // Normal play (no preloaded audio available) - clean up any stale preloaded
         if (preloadedAudio) {
             preloadedAudio.src = '';
-            set({ preloadedAudio: null, preloadedAyahNumber: null });
+            set({ preloadedAudio: null, preloadedAyahNumber: null, preloadedSurahId: null, preloadedReciterId: null });
         }
 
         const url = getAudioUrl(selectedReciterId, surahId, ayahNumber);
@@ -392,6 +420,8 @@ export const useAudioStore = create<AudioState>((set, get) => ({
             duration: 0,
             preloadedAudio: null,
             preloadedAyahNumber: null,
+            preloadedSurahId: null,
+            preloadedReciterId: null,
         });
     },
 
@@ -416,7 +446,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         const { preloadedAudio } = get();
         if (preloadedAudio) {
             preloadedAudio.src = '';
-            set({ preloadedAudio: null, preloadedAyahNumber: null });
+            set({ preloadedAudio: null, preloadedAyahNumber: null, preloadedSurahId: null, preloadedReciterId: null });
         }
 
         if (currentAyahNumber > 1) {
@@ -455,7 +485,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         if (preloadedAudio) {
             preloadedAudio.src = '';
         }
-        set({ selectedReciterId: reciterId, preloadedAudio: null, preloadedAyahNumber: null });
+        set({ selectedReciterId: reciterId, preloadedAudio: null, preloadedAyahNumber: null, preloadedSurahId: null, preloadedReciterId: null });
 
         // If currently playing, restart with new reciter
         if (isPlaying && currentSurahId && currentAyahId && currentAyahNumber && surahName && totalAyahs) {
@@ -478,6 +508,6 @@ export const useAudioStore = create<AudioState>((set, get) => ({
         if (preloadedAudio) {
             preloadedAudio.src = '';
         }
-        set({ audioElement: null, preloadedAudio: null, preloadedAyahNumber: null });
+        set({ audioElement: null, preloadedAudio: null, preloadedAyahNumber: null, preloadedSurahId: null, preloadedReciterId: null });
     },
 }));

@@ -137,12 +137,24 @@ export function usePWA(): UsePWAReturn {
         return false;
     }, [installPrompt]);
 
-    // Update app (reload with new service worker)
+    // Update app: reload only after the new service worker has taken control,
+    // otherwise the old worker serves the stale index again
     const updateApp = useCallback(() => {
-        if (registration?.waiting) {
-            registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        const waiting = registration?.waiting;
+        if (waiting && 'serviceWorker' in navigator) {
+            let reloaded = false;
+            const reload = () => {
+                if (reloaded) return;
+                reloaded = true;
+                window.location.reload();
+            };
+            navigator.serviceWorker.addEventListener('controllerchange', reload, { once: true });
+            // Safety net in case activation stalls
+            setTimeout(reload, 3000);
+            waiting.postMessage({ type: 'SKIP_WAITING' });
+        } else {
+            window.location.reload();
         }
-        window.location.reload();
     }, [registration]);
 
     // Clear all caches

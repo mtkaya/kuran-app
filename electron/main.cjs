@@ -42,10 +42,24 @@ function createWindow() {
         mainWindow.show();
     });
 
-    // Handle external links
+    // Handle external links — only pass safe protocols to the OS
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-        shell.openExternal(url);
+        try {
+            const target = new URL(url);
+            if (target.protocol === 'https:' || target.protocol === 'mailto:') {
+                shell.openExternal(target.toString());
+            }
+        } catch {
+            // Unparseable URL — drop it
+        }
         return { action: 'deny' };
+    });
+
+    // Block in-window navigation away from the app
+    mainWindow.webContents.on('will-navigate', (event, url) => {
+        if (url !== mainWindow.webContents.getURL()) {
+            event.preventDefault();
+        }
     });
 
     // Emitted when the window is closed

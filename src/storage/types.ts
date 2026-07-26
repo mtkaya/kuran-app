@@ -18,6 +18,9 @@ export interface ReadingPosition {
     // Marker position as percentage (0-100) for custom placement on Mushaf
     markerX?: number;
     markerY?: number;
+    // Set when the user explicitly saved this position (flag button or
+    // long-press marker); automatic tracking must not overwrite such a record
+    manual?: boolean;
     timestamp?: number;
 }
 

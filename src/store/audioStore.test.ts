@@ -18,6 +18,78 @@ describe('isPreloadFor', () => {
     })
 })
 
+describe('AudioStore — memorization drill', () => {
+    const config = {
+        surahId: 2,
+        surahName: 'Bakara',
+        totalAyahs: 286,
+        surahFirstAyahId: 8,
+        fromAyah: 2,
+        toAyah: 4,
+        repeatCount: 3,
+        gapSeconds: 0,
+        loopRange: true,
+    }
+
+    beforeEach(() => {
+        useAudioStore.getState().cleanup()
+    })
+
+    it('starts a drill on the first ayah of the range', () => {
+        useAudioStore.getState().startMemorization(config)
+        const s = useAudioStore.getState()
+        expect(s.memorization).toMatchObject({ fromAyah: 2, toAyah: 4, repeatCount: 3 })
+        expect(s.memorizationRepeat).toBe(1)
+        expect(s.currentAyahNumber).toBe(2)
+        // Global id of Bakara 2 is 9
+        expect(s.currentAyahId).toBe(9)
+    })
+
+    it('clamps an out-of-bounds configuration', () => {
+        useAudioStore.getState().startMemorization({ ...config, toAyah: 9999, repeatCount: 50 })
+        expect(useAudioStore.getState().memorization).toMatchObject({ toAyah: 286, repeatCount: 10 })
+    })
+
+    it('keeps the drill when playback stays inside the range', () => {
+        useAudioStore.getState().startMemorization(config)
+        useAudioStore.getState().play(2, 10, 3, 'Bakara', 286)
+        expect(useAudioStore.getState().memorization).not.toBeNull()
+        expect(useAudioStore.getState().memorizationRepeat).toBe(1)
+    })
+
+    it('ends the drill when the user jumps outside the range', () => {
+        useAudioStore.getState().startMemorization(config)
+        useAudioStore.getState().play(2, 20, 13, 'Bakara', 286)
+        expect(useAudioStore.getState().memorization).toBeNull()
+    })
+
+    it('ends the drill when the user switches surah', () => {
+        useAudioStore.getState().startMemorization(config)
+        useAudioStore.getState().play(3, 300, 2, 'Ali İmran', 200)
+        expect(useAudioStore.getState().memorization).toBeNull()
+    })
+
+    it('stopMemorization clears the drill and stops playback', () => {
+        useAudioStore.getState().startMemorization(config)
+        useAudioStore.getState().stopMemorization()
+        const s = useAudioStore.getState()
+        expect(s.memorization).toBeNull()
+        expect(s.isPlaying).toBe(false)
+    })
+
+    it('updateMemorization adjusts a running drill without restarting it', () => {
+        useAudioStore.getState().startMemorization(config)
+        useAudioStore.getState().updateMemorization({ repeatCount: 5 })
+        expect(useAudioStore.getState().memorization).toMatchObject({ repeatCount: 5, fromAyah: 2 })
+        expect(useAudioStore.getState().currentAyahNumber).toBe(2)
+    })
+
+    it('updateMemorization is a no-op when no drill is running', () => {
+        useAudioStore.getState().updateMemorization({ repeatCount: 5 })
+        expect(useAudioStore.getState().memorization).toBeNull()
+    })
+})
+
 describe('AudioStore', () => {
     beforeEach(() => {
         // Reset store before each test

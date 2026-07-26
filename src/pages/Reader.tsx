@@ -4,8 +4,9 @@ import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
 import { MushafImageView } from '../components/MushafImageView';
 import { resolveInitialAyah, canAutoSavePosition } from '../utils/mushafPosition';
+import { MemorizationPanel } from '../components/MemorizationPanel';
 import { ContentPanel } from '../components/ContentPanel';
-import { ArrowLeft, Settings } from 'lucide-react';
+import { ArrowLeft, Settings, GraduationCap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { getUIStrings } from '../i18n/strings';
@@ -20,8 +21,9 @@ export default function Reader() {
     const { id } = useParams();
     const { currentLanguage } = useLanguage();
     const { lastRead, setLastRead } = useReadingStore();
-    const { currentAyahId, isPlaying, cleanup } = useAudioStore();
+    const { currentAyahId, currentAyahNumber, isPlaying, memorization, cleanup } = useAudioStore();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isMemorizationOpen, setIsMemorizationOpen] = useState(false);
     const [selectedAyah, setSelectedAyah] = useState<Ayah | null>(null);
     const { toast, showToast, hideToast } = useToast();
     const observerRef = useRef<IntersectionObserver | null>(null);
@@ -155,6 +157,18 @@ export default function Reader() {
                         {/* Desktop: Show reading mode info */}
                         <span className="hidden lg:inline text-sm text-muted-foreground capitalize">{readingMode} Mod</span>
                         <button
+                            onClick={() => setIsMemorizationOpen(true)}
+                            className={`p-2 lg:px-3 lg:py-2 rounded-full lg:rounded-lg flex items-center gap-2 transition-colors ${memorization
+                                ? 'bg-primary/15 text-primary'
+                                : 'hover:bg-accent text-foreground/80'
+                                }`}
+                            aria-label={ui.memorizationDrill}
+                            title={ui.memorizationDrill}
+                        >
+                            <GraduationCap className="w-5 h-5" />
+                            <span className="hidden lg:inline text-sm">{ui.memorizationDrill}</span>
+                        </button>
+                        <button
                             onClick={() => setIsSettingsOpen(true)}
                             className="p-2 lg:px-3 lg:py-2 hover:bg-accent rounded-full lg:rounded-lg text-foreground/80 flex items-center gap-2"
                             aria-label={ui.settings}
@@ -267,6 +281,22 @@ export default function Reader() {
             <SettingsPanel
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}
+            />
+
+            {/* Memorization drill setup */}
+            <MemorizationPanel
+                isOpen={isMemorizationOpen}
+                onClose={() => setIsMemorizationOpen(false)}
+                surahId={surah.id}
+                surahName={surah.name_turkish}
+                totalAyahs={surah.verse_count}
+                surahFirstAyahId={surah.ayahs[0]?.id ?? 1}
+                suggestedAyah={
+                    memorization?.fromAyah ??
+                    selectedAyah?.ayah_number ??
+                    currentAyahNumber ??
+                    (lastRead?.surahId === surah.id ? lastRead.ayahNumber : undefined)
+                }
             />
 
             {/* Toast */}

@@ -2,7 +2,7 @@
 import React from 'react';
 import {
     Play, Pause, SkipBack, SkipForward, X,
-    Repeat, Repeat1, Loader2
+    Repeat, Repeat1, Loader2, GraduationCap, Square
 } from 'lucide-react';
 import { useAudioStore, RepeatMode } from '../store/audioStore';
 import { useLanguage } from '../context/LanguageContext';
@@ -21,6 +21,9 @@ export const AudioPlayer: React.FC = () => {
         duration,
         playbackRate,
         repeatMode,
+        memorization,
+        memorizationRepeat,
+        stopMemorization,
         pause,
         resume,
         stop,
@@ -131,6 +134,17 @@ export const AudioPlayer: React.FC = () => {
                                 <span className="text-muted-foreground">{ui.verses} {currentAyahNumber}</span>
                             </div>
                         </div>
+                        {/* Drill progress */}
+                        {memorization && (
+                            <div className="flex items-center gap-1.5 mt-1">
+                                <GraduationCap className="w-3.5 h-3.5 text-primary shrink-0" />
+                                <span className="text-xs text-primary font-medium number-font truncate">
+                                    {memorization.fromAyah}–{memorization.toAyah}
+                                    <span className="mx-1.5 text-muted-foreground">·</span>
+                                    {ui.drillRepeatOf} {memorizationRepeat}/{memorization.repeatCount}
+                                </span>
+                            </div>
+                        )}
                         <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                             <span className="font-mono">{formatTime(currentTime)}</span>
                             <span>/</span>
@@ -167,18 +181,30 @@ export const AudioPlayer: React.FC = () => {
                             {playbackRate}x
                         </button>
 
-                        {/* Repeat */}
-                        <button
-                            onClick={cycleRepeatMode}
-                            className={`p-2 rounded-lg transition-colors ${repeatMode !== 'none'
-                                ? 'bg-primary/10 text-primary'
-                                : 'hover:bg-secondary'
-                                }`}
-                            aria-label={getRepeatLabel()}
-                            title={getRepeatLabel()}
-                        >
-                            {getRepeatIcon()}
-                        </button>
+                        {/* Repeat — doubles as "end drill" while a drill runs,
+                            since repeat mode is inert during one */}
+                        {memorization ? (
+                            <button
+                                onClick={stopMemorization}
+                                className="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
+                                aria-label={ui.drillStop}
+                                title={ui.drillStop}
+                            >
+                                <Square className="w-4 h-4" />
+                            </button>
+                        ) : (
+                            <button
+                                onClick={cycleRepeatMode}
+                                className={`p-2 rounded-lg transition-colors ${repeatMode !== 'none'
+                                    ? 'bg-primary/10 text-primary'
+                                    : 'hover:bg-secondary'
+                                    }`}
+                                aria-label={getRepeatLabel()}
+                                title={getRepeatLabel()}
+                            >
+                                {getRepeatIcon()}
+                            </button>
+                        )}
 
                         {/* Close */}
                         <button

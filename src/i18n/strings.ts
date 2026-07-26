@@ -85,6 +85,17 @@ interface UIStrings {
     retry: string;
     relatedVerses: string;
     goToReadingPage: string;
+    // Memorization drill
+    memorizationDrill: string;
+    drillRange: string;
+    drillFrom: string;
+    drillTo: string;
+    drillRepeat: string;
+    drillGap: string;
+    drillLoop: string;
+    drillStart: string;
+    drillStop: string;
+    drillRepeatOf: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -164,6 +175,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'Tekrar Dene',
         relatedVerses: 'Bağlantılı Ayetler',
         goToReadingPage: 'Ayetlere not eklemek için okuma sayfasına gidin',
+        memorizationDrill: 'Ezber Çalışması',
+        drillRange: 'Ayet aralığı',
+        drillFrom: 'Başlangıç',
+        drillTo: 'Bitiş',
+        drillRepeat: 'Tekrar sayısı',
+        drillGap: 'Bekleme',
+        drillLoop: 'Aralığı döngüye al',
+        drillStart: 'Çalışmayı başlat',
+        drillStop: 'Çalışmayı bitir',
+        drillRepeatOf: 'Tekrar',
     },
     en: {
         appTitle: 'Holy Quran',
@@ -241,6 +262,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'Try Again',
         relatedVerses: 'Related Verses',
         goToReadingPage: 'Go to reading page to add notes to verses',
+        memorizationDrill: 'Memorization Drill',
+        drillRange: 'Verse range',
+        drillFrom: 'From',
+        drillTo: 'To',
+        drillRepeat: 'Repetitions',
+        drillGap: 'Pause',
+        drillLoop: 'Loop the range',
+        drillStart: 'Start drill',
+        drillStop: 'End drill',
+        drillRepeatOf: 'Rep',
     },
     de: {
         appTitle: 'Koran App',
@@ -318,6 +349,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'Erneut versuchen',
         relatedVerses: 'Verwandte Verse',
         goToReadingPage: 'Gehen Sie zur Leseseite, um Notizen zu Versen hinzuzufügen',
+        memorizationDrill: 'Memorierübung',
+        drillRange: 'Versbereich',
+        drillFrom: 'Von',
+        drillTo: 'Bis',
+        drillRepeat: 'Wiederholungen',
+        drillGap: 'Pause',
+        drillLoop: 'Bereich wiederholen',
+        drillStart: 'Übung starten',
+        drillStop: 'Übung beenden',
+        drillRepeatOf: 'Wdh.',
     },
     fr: {
         appTitle: 'Coran App',
@@ -395,6 +436,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'Réessayer',
         relatedVerses: 'Versets liés',
         goToReadingPage: 'Allez à la page de lecture pour ajouter des notes aux versets',
+        memorizationDrill: 'Exercice de mémorisation',
+        drillRange: 'Plage de versets',
+        drillFrom: 'De',
+        drillTo: 'À',
+        drillRepeat: 'Répétitions',
+        drillGap: 'Pause',
+        drillLoop: 'Répéter la plage',
+        drillStart: 'Démarrer',
+        drillStop: 'Terminer',
+        drillRepeatOf: 'Rép.',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -472,6 +523,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: '重试',
         relatedVerses: '相关经文',
         goToReadingPage: '前往阅读页面为经文添加笔记',
+        memorizationDrill: '背诵练习',
+        drillRange: '经文范围',
+        drillFrom: '起始',
+        drillTo: '结束',
+        drillRepeat: '重复次数',
+        drillGap: '间隔',
+        drillLoop: '循环该范围',
+        drillStart: '开始练习',
+        drillStop: '结束练习',
+        drillRepeatOf: '第',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -549,6 +610,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'أعد المحاولة',
         relatedVerses: 'الآيات ذات الصلة',
         goToReadingPage: 'انتقل إلى صفحة القراءة لإضافة ملاحظات إلى الآيات',
+        memorizationDrill: 'تمرين الحفظ',
+        drillRange: 'نطاق الآيات',
+        drillFrom: 'من',
+        drillTo: 'إلى',
+        drillRepeat: 'عدد التكرار',
+        drillGap: 'المهلة',
+        drillLoop: 'تكرار النطاق',
+        drillStart: 'ابدأ التمرين',
+        drillStop: 'إنهاء التمرين',
+        drillRepeatOf: 'تكرار',
     },
     id: {
         appTitle: 'Al-Quran',
@@ -626,6 +697,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'Coba Lagi',
         relatedVerses: 'Ayat Terkait',
         goToReadingPage: 'Buka halaman baca untuk menambah catatan',
+        memorizationDrill: 'Latihan Hafalan',
+        drillRange: 'Rentang ayat',
+        drillFrom: 'Dari',
+        drillTo: 'Sampai',
+        drillRepeat: 'Jumlah ulangan',
+        drillGap: 'Jeda',
+        drillLoop: 'Ulangi rentang',
+        drillStart: 'Mulai latihan',
+        drillStop: 'Akhiri latihan',
+        drillRepeatOf: 'Ulangan',
     },
     ur: {
         appTitle: 'قرآن کریم',
@@ -703,6 +784,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'دوبارہ کوشش کریں',
         relatedVerses: 'متعلقہ آیات',
         goToReadingPage: 'آیات پر نوٹ شامل کرنے کے لیے پڑھنے کے صفحے پر جائیں',
+        memorizationDrill: 'حفظ کی مشق',
+        drillRange: 'آیات کی حد',
+        drillFrom: 'سے',
+        drillTo: 'تک',
+        drillRepeat: 'تکرار کی تعداد',
+        drillGap: 'وقفہ',
+        drillLoop: 'حد کو دہرائیں',
+        drillStart: 'مشق شروع کریں',
+        drillStop: 'مشق ختم کریں',
+        drillRepeatOf: 'تکرار',
     },
     bn: {
         appTitle: 'পবিত্র কুরআন',
@@ -780,6 +871,16 @@ const translations: Record<LanguageCode, UIStrings> = {
         retry: 'আবার চেষ্টা করুন',
         relatedVerses: 'সম্পর্কিত আয়াত',
         goToReadingPage: 'আয়াতে নোট যোগ করতে পড়ার পৃষ্ঠায় যান',
+        memorizationDrill: 'হেফজ অনুশীলন',
+        drillRange: 'আয়াতের পরিসর',
+        drillFrom: 'শুরু',
+        drillTo: 'শেষ',
+        drillRepeat: 'পুনরাবৃত্তি',
+        drillGap: 'বিরতি',
+        drillLoop: 'পরিসর পুনরাবৃত্তি',
+        drillStart: 'অনুশীলন শুরু',
+        drillStop: 'অনুশীলন শেষ',
+        drillRepeatOf: 'পুনরাবৃত্তি',
     },
 };
 

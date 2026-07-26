@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ayah } from '../types';
 import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText, Flag } from 'lucide-react';
 import { NoteModal } from './NoteModal';
@@ -24,13 +24,25 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     const { lastRead } = useReadingStore();
     const { isBookmarked, toggleBookmark } = useBookmarkStore();
     const { arabicFontSize, mealFontSize, showTransliteration, memorizationMode, arabicFont } = useSettingsStore();
-    const { isPlaying, currentAyahId, play, pause, resume, initAudio } = useAudioStore();
+    const { isPlaying, currentAyahId, memorization, memorizationRepeat, play, pause, resume, initAudio } = useAudioStore();
     const { addNote, getNotesByAyah } = useNotesStore();
     const { currentLanguage } = useLanguage();
     const ui = getUIStrings(currentLanguage);
 
     // Memorization mode - track if this ayah is revealed
     const [revealed, setRevealed] = useState(false);
+
+    // Each recitation is a fresh test: hide the text again whenever a new
+    // repetition of this ayah starts during a drill
+    const drillCursor = memorization && currentAyahId === ayah.id ? memorizationRepeat : null;
+    useEffect(() => {
+        if (drillCursor !== null) setRevealed(false);
+    }, [drillCursor]);
+
+    // Leaving memorization mode clears the per-ayah reveal state
+    useEffect(() => {
+        if (!memorizationMode) setRevealed(false);
+    }, [memorizationMode]);
 
     // Note modal state
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);

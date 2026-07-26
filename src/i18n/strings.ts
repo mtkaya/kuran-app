@@ -82,6 +82,7 @@ interface UIStrings {
     pageTranslation: string;
     page: string;
     pageLoadError: string;
+    retry: string;
     relatedVerses: string;
     goToReadingPage: string;
 }
@@ -160,6 +161,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'Sayfa Meali',
         page: 'Sayfa',
         pageLoadError: 'Sayfa yüklenemedi',
+        retry: 'Tekrar Dene',
         relatedVerses: 'Bağlantılı Ayetler',
         goToReadingPage: 'Ayetlere not eklemek için okuma sayfasına gidin',
     },
@@ -236,6 +238,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'Page Translation',
         page: 'Page',
         pageLoadError: 'Page could not be loaded',
+        retry: 'Try Again',
         relatedVerses: 'Related Verses',
         goToReadingPage: 'Go to reading page to add notes to verses',
     },
@@ -312,6 +315,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'Seitenübersetzung',
         page: 'Seite',
         pageLoadError: 'Seite konnte nicht geladen werden',
+        retry: 'Erneut versuchen',
         relatedVerses: 'Verwandte Verse',
         goToReadingPage: 'Gehen Sie zur Leseseite, um Notizen zu Versen hinzuzufügen',
     },
@@ -388,6 +392,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'Traduction de la page',
         page: 'Page',
         pageLoadError: 'La page n\'a pas pu être chargée',
+        retry: 'Réessayer',
         relatedVerses: 'Versets liés',
         goToReadingPage: 'Allez à la page de lecture pour ajouter des notes aux versets',
     },
@@ -464,6 +469,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: '页面翻译',
         page: '页',
         pageLoadError: '页面无法加载',
+        retry: '重试',
         relatedVerses: '相关经文',
         goToReadingPage: '前往阅读页面为经文添加笔记',
     },
@@ -540,6 +546,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'ترجمة الصفحة',
         page: 'صفحة',
         pageLoadError: 'تعذر تحميل الصفحة',
+        retry: 'أعد المحاولة',
         relatedVerses: 'الآيات ذات الصلة',
         goToReadingPage: 'انتقل إلى صفحة القراءة لإضافة ملاحظات إلى الآيات',
     },
@@ -616,6 +623,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'Terjemahan Halaman',
         page: 'Halaman',
         pageLoadError: 'Gagal memuat halaman',
+        retry: 'Coba Lagi',
         relatedVerses: 'Ayat Terkait',
         goToReadingPage: 'Buka halaman baca untuk menambah catatan',
     },
@@ -692,6 +700,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'صفحہ ترجمہ',
         page: 'صفحہ',
         pageLoadError: 'صفحہ لوڈ نہیں ہو سکا',
+        retry: 'دوبارہ کوشش کریں',
         relatedVerses: 'متعلقہ آیات',
         goToReadingPage: 'آیات پر نوٹ شامل کرنے کے لیے پڑھنے کے صفحے پر جائیں',
     },
@@ -768,6 +777,7 @@ const translations: Record<LanguageCode, UIStrings> = {
         pageTranslation: 'পৃষ্ঠা অনুবাদ',
         page: 'পৃষ্ঠা',
         pageLoadError: 'পৃষ্ঠা লোড হয়নি',
+        retry: 'আবার চেষ্টা করুন',
         relatedVerses: 'সম্পর্কিত আয়াত',
         goToReadingPage: 'আয়াতে নোট যোগ করতে পড়ার পৃষ্ঠায় যান',
     },

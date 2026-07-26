@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Surah } from '../types';
 import { LanguageCode } from '../context/LanguageContext';
 import { getQuranDataAsync, clearLanguageCache } from '../data/quran';
@@ -7,12 +7,16 @@ interface UseQuranDataResult {
     quranData: Surah[];
     isLoading: boolean;
     error: string | null;
+    retry: () => void;
 }
 
 export function useQuranData(language: LanguageCode): UseQuranDataResult {
     const [quranData, setQuranData] = useState<Surah[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [reloadToken, setReloadToken] = useState(0);
+
+    const retry = useCallback(() => setReloadToken(t => t + 1), []);
 
     useEffect(() => {
         let isMounted = true;
@@ -41,7 +45,7 @@ export function useQuranData(language: LanguageCode): UseQuranDataResult {
         return () => {
             isMounted = false;
         };
-    }, [language]);
+    }, [language, reloadToken]);
 
-    return { quranData, isLoading, error };
+    return { quranData, isLoading, error, retry };
 }

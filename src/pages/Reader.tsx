@@ -3,6 +3,7 @@ import { useQuranData } from '../hooks/useQuranData';
 import { AyahView } from '../components/AyahView';
 import { MushafView } from '../components/MushafView';
 import { MushafImageView } from '../components/MushafImageView';
+import { resolveInitialAyah, canAutoSavePosition } from '../utils/mushafPosition';
 import { ContentPanel } from '../components/ContentPanel';
 import { ArrowLeft, Settings } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -18,7 +19,7 @@ import { Ayah } from '../types';
 export default function Reader() {
     const { id } = useParams();
     const { currentLanguage } = useLanguage();
-    const { setLastRead } = useReadingStore();
+    const { lastRead, setLastRead } = useReadingStore();
     const { currentAyahId, isPlaying, cleanup } = useAudioStore();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [selectedAyah, setSelectedAyah] = useState<Ayah | null>(null);
@@ -26,12 +27,13 @@ export default function Reader() {
     const observerRef = useRef<IntersectionObserver | null>(null);
     const { readingMode } = useSettingsStore();
 
-    const { quranData, isLoading: isQuranLoading } = useQuranData(currentLanguage);
+    const { quranData, isLoading: isQuranLoading, error: quranError, retry: retryQuranLoad } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
     const surah = quranData.find(s => s.id === Number(id));
 
     // Track visible ayah for lastRead - must be before any conditional returns
     const handleAyahVisible = useCallback((ayah: { id: number; ayah_number: number }) => {
+        if (!canAutoSavePosition(useReadingStore.getState().lastRead)) return;
         if (surah) {
             setLastRead({
                 surahId: surah.id,
@@ -113,6 +115,20 @@ export default function Reader() {
         );
     }
 
+    if (quranError) {
+        return (
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4 p-8 text-center">
+                <p className="text-destructive font-medium">{ui.pageLoadError}</p>
+                <button
+                    onClick={retryQuranLoad}
+                    className="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors"
+                >
+                    {ui.retry}
+                </button>
+            </div>
+        );
+    }
+
     if (!surah) {
         return <div className="p-8 text-center">{ui.surahNotFound}</div>;
     }
@@ -160,7 +176,7 @@ export default function Reader() {
                     <div className="h-full animate-fade-in">
                         <MushafImageView
                             surahId={surah.id}
-                            initialAyah={1}
+                            initialAyah={resolveInitialAyah(surah.id, lastRead)}
                             onOpenSettings={() => setIsSettingsOpen(true)}
                         />
                     </div>

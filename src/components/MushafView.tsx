@@ -5,6 +5,8 @@ import { MushafTextView } from './MushafTextView';
 import { MushafTranslationPanel } from './MushafTranslationPanel';
 import { getPageForAyah } from '../data/pageMapping';
 import { useAudioStore } from '../store/audioStore';
+import { useReadingStore } from '../store/readingStore';
+import { resolveInitialPage } from '../utils/mushafPosition';
 import { useLanguage } from '../context/LanguageContext';
 import { useQuranData } from '../hooks/useQuranData';
 import { getUIStrings } from '../i18n/strings';
@@ -36,11 +38,12 @@ export const MushafView: React.FC<MushafViewProps> = ({ surahId, onPageChange, o
     const { quranData } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
 
-    // Initialize Page based on surah
+    // Initialize page: restore the saved reading position when it belongs to
+    // this surah, otherwise open the surah's first page
     useEffect(() => {
         if (surahId) {
-            const page = getPageForAyah(surahId, 1);
-            setCurrentPage(page);
+            const lastRead = useReadingStore.getState().lastRead;
+            setCurrentPage(resolveInitialPage(surahId, lastRead, getPageForAyah(surahId, 1)));
         }
     }, [surahId]);
 

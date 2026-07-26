@@ -7,6 +7,7 @@ import { useReadingStore } from '../store/readingStore';
 import { getPageFirstAyah } from '../data/pageMapping';
 import { useQuranData } from '../hooks/useQuranData';
 import { useLanguage } from '../context/LanguageContext';
+import { canAutoSavePosition } from '../utils/mushafPosition';
 
 interface MushafTextViewProps {
     initialPage?: number;
@@ -57,8 +58,10 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
         onPageChangeRef.current = onPageChange;
     }, [onPageChange]);
 
-    // Save last read position when page changes
+    // Save last read position when page changes — unless the user placed a
+    // manual mark, which acts like a physical ribbon and must survive flips
     useEffect(() => {
+        if (!canAutoSavePosition(useReadingStore.getState().lastRead)) return;
         const pageInfo = getPageFirstAyah(currentPage);
         if (pageInfo) {
             const surah = quranData.find(s => s.id === pageInfo.surah);
@@ -462,6 +465,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                                         ayahNumber: pageInfo.ayah,
                                         surahName: surah.name_turkish,
                                         page: currentPage,
+                                        manual: true,
                                     });
                                     setInitialLastReadPage(currentPage);
 

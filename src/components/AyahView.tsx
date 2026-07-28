@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Ayah } from '../types';
 import { Share2, Bookmark, BookmarkCheck, Play, Pause, FileText, Flag } from 'lucide-react';
 import { NoteModal } from './NoteModal';
+import { VerseCardSheet } from './VerseCardSheet';
 import { useBookmarkStore } from '../store/bookmarkStore';
 import { useReadingStore } from '../store/readingStore';
 import { useSettingsStore } from '../store/settingsStore';
@@ -46,6 +47,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
 
     // Note modal state
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    const [isCardOpen, setIsCardOpen] = useState(false);
 
     const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
 
@@ -216,11 +218,11 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                         <FileText className="w-5 h-5" />
                     </button>
 
-                    {/* Share Button */}
+                    {/* Share Button — opens the card sheet; copying text lives inside it */}
                     <button
-                        onClick={handleShare}
+                        onClick={(e) => { e.stopPropagation(); setIsCardOpen(true); }}
                         className="p-2 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
-                        aria-label={ui.copyVerse}
+                        aria-label={ui.verseCard}
                     >
                         <Share2 className="w-5 h-5" />
                     </button>
@@ -273,6 +275,15 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                 surahId={ayah.surah_id}
                 ayahNumber={ayah.ayah_number}
                 ayahText={ayah.text_arabic}
+            />
+
+            {/* Verse card share sheet */}
+            <VerseCardSheet
+                isOpen={isCardOpen}
+                onClose={() => setIsCardOpen(false)}
+                ayah={ayah}
+                surahName={surahName}
+                onCopyText={handleShare}
             />
         </>
     );

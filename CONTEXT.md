@@ -9,10 +9,10 @@
 | Alan | Deger |
 |------|-------|
 | Proje | kuran-app |
-| Branch | main |
+| Branch |  |
 | Remote | https://github.com/mtkaya/kuran-app.git |
-| Toplam commit | 170 |
-| Son commit | 2026-07-29 08:55 — `ff410b4` chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi |
+| Toplam commit | 176 |
+| Son commit | 2026-07-29 08:56 — `a573c75` chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi |
 | Kirli durum | Temiz |
 | AI araclari | Tespit edilmedi |
 
@@ -34,21 +34,22 @@ A	icons/icon-96.webp
 ## Son 10 Commit
 
 ```
-ff410b4 chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi
+a573c75 chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi
+bf98766 Merge pull request #8 from mtkaya/claude/kuran-app-health-check-48p854
+713d064 chore: release 1.0.8 — verse card sharing and bundled Quranic font
+d5d4e50 Merge pull request #7 from mtkaya/claude/kuran-app-health-check-48p854
+39dbcb3 feat: verse card share sheet
+fa5da20 feat: verse card renderer with nine code-drawn backgrounds
+2444a90 feat: bundle the Amiri Quran face instead of loading it from a CDN
 8e917d0 Merge pull request #6 from mtkaya/claude/kuran-app-health-check-48p854
 8074029 chore: release 1.0.7 — align Android, package and lockfile versions
 2163fb2 Merge pull request #5 from mtkaya/claude/kuran-app-health-check-48p854
-22e9e0d feat: memorization drill UI — setup sheet, player status, per-repeat hiding
-ffd0a1c feat: run memorization drills from the audio store
-d2ddd9a feat: memorization drill engine (pure, tested)
-2760569 Merge pull request #4 from mtkaya/claude/kuran-app-health-check-48p854
-302b4e6 fix: audio preload is keyed by surah and reciter, not just ayah number
-b154601 fix: Electron opens only https/mailto links externally and blocks stray navigation
 ```
 
 ## Aktif Branch'ler
 
 ```
+(dal yok, main yeniden temellendiriliyor)
 main
 release/1.0.6-local
 ```
@@ -57,9 +58,11 @@ release/1.0.6-local
 
 
 
+
 _(Henuz belirlenmedi — projeyle calisirken buraya yaz)_
 
 ## Notlar
+
 
 
 

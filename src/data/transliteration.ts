@@ -1,8 +1,13 @@
-// Transliteration Provider - Turkish Latin alphabet transliteration for Quran
-// Based on common Quran transliteration standards
-
-// Transliteration for first few ayahs of key surahs (sample data)
-// In production, this would be fetched from an API or larger dataset
+// Transliteration Provider
+//
+// Two sources, chosen by the reading language:
+//   - a full corpus fetched from the Açık Kuran API (see
+//     scripts/fetch-transliteration.mjs), Turkish reading for `tr` and the
+//     Latin reading for every other language;
+//   - the small built-in sample below, used until that corpus is present.
+//
+// The corpus is loaded on demand so the language files stay out of the initial
+// bundle; callers await ensureTransliteration() once, then read synchronously.
 
 const transliterationData: Record<number, Record<number, string>> = {
     // Surah 1 - Fatiha
@@ -79,7 +84,64 @@ const transliterationData: Record<number, Record<number, string>> = {
  * @param ayahNumber - Ayah number within the surah
  * @returns Transliterated text or null if not available
  */
-export function getTransliteration(surahId: number, ayahNumber: number): string | null {
+export type TransliterationCorpus = Record<string, Record<string, string>>;
+
+/** Turkish readers get the Turkish reading; everyone else the Latin one. */
+export function corpusVariantFor(language: string): 'tr' | 'en' {
+    return language === 'tr' ? 'tr' : 'en';
+}
+
+const loadedCorpora: Partial<Record<'tr' | 'en', TransliterationCorpus>> = {};
+const inFlight: Partial<Record<'tr' | 'en', Promise<void>>> = {};
+
+/**
+ * Load the corpus for a language once. Resolves even when the data files are
+ * absent — the built-in sample then remains the only source.
+ */
+export function ensureTransliteration(language: string): Promise<void> {
+    const variant = corpusVariantFor(language);
+    if (loadedCorpora[variant]) return Promise.resolve();
+    if (inFlight[variant]) return inFlight[variant]!;
+
+    const load = (async () => {
+        try {
+            const mod = variant === 'tr'
+                ? await import('./translit-tr.json')
+                : await import('./translit-en.json');
+            loadedCorpora[variant] = (mod.default ?? mod) as unknown as TransliterationCorpus;
+        } catch {
+            // Corpus not bundled yet — fall back to the sample
+        }
+    })();
+
+    inFlight[variant] = load;
+    return load;
+}
+
+/**
+ * True once a non-empty corpus is available. The JSON files are committed as
+ * empty placeholders until scripts/fetch-transliteration.mjs fills them, so
+ * presence alone is not enough.
+ */
+export function hasCorpus(language: string): boolean {
+    const corpus = loadedCorpora[corpusVariantFor(language)];
+    return Boolean(corpus && Object.keys(corpus).length > 0);
+}
+
+export function getTransliteration(
+    surahId: number,
+    ayahNumber: number,
+    language?: string
+): string | null {
+    if (language) {
+        const corpus = loadedCorpora[corpusVariantFor(language)];
+        const fromCorpus = corpus?.[String(surahId)]?.[String(ayahNumber)];
+        if (fromCorpus) return fromCorpus;
+        // Outside Turkish the sample's Turkish reading would be the wrong
+        // convention, so do not fall back to it.
+        if (corpusVariantFor(language) === 'en') return null;
+    }
+
     const surah = transliterationData[surahId];
     if (!surah) return null;
 

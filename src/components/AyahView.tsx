@@ -49,7 +49,9 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
     const [isCardOpen, setIsCardOpen] = useState(false);
 
-    const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
+    const transliteration = showTransliteration
+        ? getTransliteration(ayah.surah_id, ayah.ayah_number, currentLanguage)
+        : null;
 
     const bookmarked = isBookmarked(ayah.surah_id, ayah.id);
     const isLastRead = lastRead?.surahId === ayah.surah_id && lastRead?.ayahId === ayah.id;

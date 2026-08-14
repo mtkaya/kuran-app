@@ -114,6 +114,8 @@ interface UIStrings {
     cardShareUnsupported: string;
     close: string;
     transliterationUnavailable: string;
+    sources: string;
+    sourceTransliteration: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -220,6 +222,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'Bu cihaz görsel paylaşımını desteklemiyor, görsel indirildi',
         close: 'Kapat',
         transliterationUnavailable: 'Bu ayet için okunuş şu anda gösterilemiyor.',
+        sources: 'Kaynaklar',
+        sourceTransliteration: 'Okunuş metni:',
     },
     en: {
         appTitle: 'Holy Quran',
@@ -324,6 +328,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'This device cannot share images, so it was downloaded',
         close: 'Close',
         transliterationUnavailable: 'The transliteration for this verse is not available yet.',
+        sources: 'Sources',
+        sourceTransliteration: 'Transliteration text:',
     },
     de: {
         appTitle: 'Koran App',
@@ -428,6 +434,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'Dieses Gerät kann keine Bilder teilen, es wurde heruntergeladen',
         close: 'Schließen',
         transliterationUnavailable: 'Die Umschrift für diesen Vers ist derzeit nicht verfügbar.',
+        sources: 'Quellen',
+        sourceTransliteration: 'Umschrift:',
     },
     fr: {
         appTitle: 'Coran App',
@@ -532,6 +540,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: "Cet appareil ne peut pas partager d'images, elle a été téléchargée",
         close: 'Fermer',
         transliterationUnavailable: "La translittération de ce verset n'est pas encore disponible.",
+        sources: 'Sources',
+        sourceTransliteration: 'Translittération :',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -636,6 +646,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: '此设备无法分享图片，已改为下载',
         close: '关闭',
         transliterationUnavailable: '该经文的音译暂不可用。',
+        sources: '来源',
+        sourceTransliteration: '音译文本：',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -740,6 +752,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'هذا الجهاز لا يدعم مشاركة الصور، تم تنزيلها',
         close: 'إغلاق',
         transliterationUnavailable: 'النقل الصوتي لهذه الآية غير متاح حاليًا.',
+        sources: 'المصادر',
+        sourceTransliteration: 'نص النقل الصوتي:',
     },
     id: {
         appTitle: 'Al-Quran',
@@ -844,6 +858,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'Perangkat ini tidak dapat membagikan gambar, gambar telah diunduh',
         close: 'Tutup',
         transliterationUnavailable: 'Transliterasi untuk ayat ini belum tersedia.',
+        sources: 'Sumber',
+        sourceTransliteration: 'Teks transliterasi:',
     },
     ur: {
         appTitle: 'قرآن کریم',
@@ -948,6 +964,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'یہ آلہ تصویر شیئر نہیں کر سکتا، تصویر ڈاؤن لوڈ ہو گئی',
         close: 'بند کریں',
         transliterationUnavailable: 'اس آیت کا اردو رسم الخط ابھی دستیاب نہیں ہے۔',
+        sources: 'ذرائع',
+        sourceTransliteration: 'رسم الخط متن:',
     },
     bn: {
         appTitle: 'পবিত্র কুরআন',
@@ -1052,6 +1070,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         cardShareUnsupported: 'এই ডিভাইস ছবি শেয়ার করতে পারে না, ছবিটি ডাউনলোড হয়েছে',
         close: 'বন্ধ',
         transliterationUnavailable: 'এই আয়াতের উচ্চারণ এখনও যোগ করা হয়নি।',
+        sources: 'সূত্র',
+        sourceTransliteration: 'উচ্চারণ পাঠ:',
     },
 };
 

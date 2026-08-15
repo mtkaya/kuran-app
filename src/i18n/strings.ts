@@ -115,7 +115,8 @@ interface UIStrings {
     close: string;
     transliterationUnavailable: string;
     sources: string;
-    sourceTransliteration: string;
+    sourceTransliterationLatin: string;
+    sourceTransliterationTurkish: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -223,7 +224,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Kapat',
         transliterationUnavailable: 'Bu ayet için okunuş şu anda gösterilemiyor.',
         sources: 'Kaynaklar',
-        sourceTransliteration: 'Okunuş metni:',
+        sourceTransliterationLatin: 'Latin okunuş:',
+        sourceTransliterationTurkish: 'Türkçe okunuş:',
     },
     en: {
         appTitle: 'Holy Quran',
@@ -329,7 +331,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Close',
         transliterationUnavailable: 'The transliteration for this verse is not available yet.',
         sources: 'Sources',
-        sourceTransliteration: 'Transliteration text:',
+        sourceTransliterationLatin: 'Latin transliteration:',
+        sourceTransliterationTurkish: 'Turkish transliteration:',
     },
     de: {
         appTitle: 'Koran App',
@@ -435,7 +438,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Schließen',
         transliterationUnavailable: 'Die Umschrift für diesen Vers ist derzeit nicht verfügbar.',
         sources: 'Quellen',
-        sourceTransliteration: 'Umschrift:',
+        sourceTransliterationLatin: 'Lateinische Umschrift:',
+        sourceTransliterationTurkish: 'Türkische Umschrift:',
     },
     fr: {
         appTitle: 'Coran App',
@@ -541,7 +545,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Fermer',
         transliterationUnavailable: "La translittération de ce verset n'est pas encore disponible.",
         sources: 'Sources',
-        sourceTransliteration: 'Translittération :',
+        sourceTransliterationLatin: 'Translittération latine :',
+        sourceTransliterationTurkish: 'Translittération turque :',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -647,7 +652,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: '关闭',
         transliterationUnavailable: '该经文的音译暂不可用。',
         sources: '来源',
-        sourceTransliteration: '音译文本：',
+        sourceTransliterationLatin: '拉丁音译：',
+        sourceTransliterationTurkish: '土耳其语音译：',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -753,7 +759,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'إغلاق',
         transliterationUnavailable: 'النقل الصوتي لهذه الآية غير متاح حاليًا.',
         sources: 'المصادر',
-        sourceTransliteration: 'نص النقل الصوتي:',
+        sourceTransliterationLatin: 'النقل الصوتي اللاتيني:',
+        sourceTransliterationTurkish: 'النقل الصوتي التركي:',
     },
     id: {
         appTitle: 'Al-Quran',
@@ -859,7 +866,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Tutup',
         transliterationUnavailable: 'Transliterasi untuk ayat ini belum tersedia.',
         sources: 'Sumber',
-        sourceTransliteration: 'Teks transliterasi:',
+        sourceTransliterationLatin: 'Transliterasi Latin:',
+        sourceTransliterationTurkish: 'Transliterasi Turki:',
     },
     ur: {
         appTitle: 'قرآن کریم',
@@ -965,7 +973,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'بند کریں',
         transliterationUnavailable: 'اس آیت کا اردو رسم الخط ابھی دستیاب نہیں ہے۔',
         sources: 'ذرائع',
-        sourceTransliteration: 'رسم الخط متن:',
+        sourceTransliterationLatin: 'لاطینی رسم الخط:',
+        sourceTransliterationTurkish: 'ترکی رسم الخط:',
     },
     bn: {
         appTitle: 'পবিত্র কুরআন',
@@ -1071,7 +1080,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'বন্ধ',
         transliterationUnavailable: 'এই আয়াতের উচ্চারণ এখনও যোগ করা হয়নি।',
         sources: 'সূত্র',
-        sourceTransliteration: 'উচ্চারণ পাঠ:',
+        sourceTransliterationLatin: 'ল্যাটিন উচ্চারণ:',
+        sourceTransliterationTurkish: 'তুর্কি উচ্চারণ:',
     },
 };
 

@@ -24,13 +24,28 @@ const EXPECTED_VERSES = 6236;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Node wraps network failures as a bare "fetch failed"; the useful detail
+// (DNS, TLS, refused connection) is on err.cause
+function describe(err) {
+    const cause = err?.cause;
+    if (!cause) return err?.message ?? String(err);
+    const code = cause.code ? `${cause.code} ` : '';
+    return `${err.message} — ${code}${cause.message ?? ''}`.trim();
+}
+
 async function getSurah(id, attempt = 1) {
     try {
         const res = await fetch(`${API}/surah/${id}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return await res.json();
     } catch (err) {
-        if (attempt >= 4) throw new Error(`Surah ${id} failed: ${err.message}`);
+        if (attempt >= 4) {
+            throw new Error(
+                `Surah ${id} alınamadı: ${describe(err)}\n` +
+                `  Denenen adres: ${API}/surah/${id}\n` +
+                `  Şunu deneyin: curl -sS -o /dev/null -w "%{http_code}\\n" ${API}/surah/${id}`
+            );
+        }
         await sleep(attempt * 1000);
         return getSurah(id, attempt + 1);
     }

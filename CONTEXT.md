@@ -11,47 +11,46 @@
 | Proje | kuran-app |
 | Branch |  |
 | Remote | https://github.com/mtkaya/kuran-app.git |
-| Toplam commit | 176 |
-| Son commit | 2026-07-29 08:56 — `a573c75` chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi |
-| Kirli durum | Temiz |
+| Toplam commit | 201 |
+| Son commit | 2026-08-17 01:15 — `43c85ea` build(android): imzali paketi tek komuta indir ve imzayi dogrula |
+| Kirli durum | EVET — commit edilmemis degisiklikler var |
 | AI araclari | Tespit edilmedi |
 
 ## Son Degisiklikler
 
 Son commit'te degisen dosyalar:
 ```
-A	.context-enabled
-A	CONTEXT.md
-A	icons/icon-128.webp
-A	icons/icon-192.webp
-A	icons/icon-256.webp
-A	icons/icon-48.webp
-A	icons/icon-512.webp
-A	icons/icon-72.webp
-A	icons/icon-96.webp
+A	scripts/build-signed-bundle.sh
 ```
 
 ## Son 10 Commit
 
 ```
-a573c75 chore: PWA webp ikonlari + CONTEXT.md baglam dosyasi
-bf98766 Merge pull request #8 from mtkaya/claude/kuran-app-health-check-48p854
-713d064 chore: release 1.0.8 — verse card sharing and bundled Quranic font
-d5d4e50 Merge pull request #7 from mtkaya/claude/kuran-app-health-check-48p854
-39dbcb3 feat: verse card share sheet
-fa5da20 feat: verse card renderer with nine code-drawn backgrounds
-2444a90 feat: bundle the Amiri Quran face instead of loading it from a CDN
-8e917d0 Merge pull request #6 from mtkaya/claude/kuran-app-health-check-48p854
-8074029 chore: release 1.0.7 — align Android, package and lockfile versions
-2163fb2 Merge pull request #5 from mtkaya/claude/kuran-app-health-check-48p854
+43c85ea build(android): imzali paketi tek komuta indir ve imzayi dogrula
+a1a16e5 chore(ios): 1.0.8 icin build numarasini 9'a al
+d3e8e97 Merge pull request #9 from mtkaya/claude/kuran-app-health-check-48p854
+a4ba802 build(android): imzalamayi keystore.properties'ten oku
+620661c fix: iOS'u App Store'daki gerçek bundle kimliğine döndür
+8157493 fix: restore com.arfhause.holyquran.indexed as the iOS bundle identifier
+d22f132 Revert "fix: point the iOS project at the published bundle identifier"
+bb122b5 fix: repair the iOS display name and stop pinning the build number
+18ced10 fix: point the iOS project at the published bundle identifier
+4bbeba8 chore: guard signing material and write the 1.0.8 release notes
 ```
 
 ## Aktif Branch'ler
 
 ```
-(dal yok, main yeniden temellendiriliyor)
+(dal yok, claude/kuran-app-health-check-48p854 yeniden temellendiriliyor)
+claude/kuran-app-health-check-48p854
 main
 release/1.0.6-local
+```
+
+## Commit Edilmemis Degisiklikler
+
+```
+ M CONTEXT.md
 ```
 
 ## Siradaki
@@ -59,9 +58,13 @@ release/1.0.6-local
 
 
 
+
+
 _(Henuz belirlenmedi — projeyle calisirken buraya yaz)_
 
 ## Notlar
+
+
 
 
 

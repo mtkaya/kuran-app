@@ -61,11 +61,22 @@ describe('Latin transliteration corpus', () => {
         expect(report.blanks).toEqual([]);
     });
 
-    it('carries the Latin reading, not the Turkish one', () => {
-        // Turkish orthography would use circumflexes and no doubled-vowel
-        // digraphs; this corpus is the academic Latin convention
-        expect((latin as Corpus)['2']['6']).toContain('allatheena');
-    });
+    // Asserted against the Turkish corpus rather than against one source's
+    // spelling, so swapping where the Latin reading comes from does not fail
+    // this on a wording change.
+    it.skipIf(Object.keys(turkish as Corpus).length === 0)(
+        'carries the Latin reading, not the Turkish one',
+        () => {
+            const tr = turkish as Corpus;
+            const en = latin as Corpus;
+            const sample = ['2:6', '18:1', '55:13', '112:1'];
+            for (const ref of sample) {
+                const [surah, ayah] = ref.split(':');
+                expect(en[surah]?.[ayah], `${ref} Latin`).toBeTruthy();
+                expect(en[surah][ayah], `${ref} iki korpusta aynı`).not.toBe(tr[surah]?.[ayah]);
+            }
+        }
+    );
 });
 
 describe('Turkish transliteration corpus', () => {

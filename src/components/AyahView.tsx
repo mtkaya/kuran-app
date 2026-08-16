@@ -10,7 +10,7 @@ import { useAudioStore } from '../store/audioStore';
 import { useNotesStore } from '../store/notesStore';
 import { useLanguage } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
-import { getTransliteration } from '../data/transliteration';
+import { getTransliteration, hasCorpus } from '../data/transliteration';
 
 interface AyahViewProps {
     ayah: Ayah;
@@ -49,7 +49,9 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
     const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
     const [isCardOpen, setIsCardOpen] = useState(false);
 
-    const transliteration = showTransliteration ? getTransliteration(ayah.surah_id, ayah.ayah_number) : null;
+    const transliteration = showTransliteration
+        ? getTransliteration(ayah.surah_id, ayah.ayah_number, currentLanguage)
+        : null;
 
     const bookmarked = isBookmarked(ayah.surah_id, ayah.id);
     const isLastRead = lastRead?.surahId === ayah.surah_id && lastRead?.ayahId === ayah.id;
@@ -146,6 +148,21 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                             style={{ fontSize: `${mealFontSize - 2}px` }}
                         >
                             {transliteration}
+                        </p>
+                    </div>
+                )}
+
+                {/* Only once the corpus has actually loaded is a missing
+                    reading really missing. The corpus is a lazy chunk, so
+                    without this the notice flashes on every cold open before
+                    the chunk lands. */}
+                {showTransliteration && !transliteration && hasCorpus(currentLanguage) && (
+                    <div className="mb-4 py-2 px-3 bg-secondary/20 rounded-lg border-l-2 border-border">
+                        <p
+                            className="text-muted-foreground/70 italic"
+                            style={{ fontSize: `${mealFontSize - 4}px` }}
+                        >
+                            {ui.transliterationUnavailable}
                         </p>
                     </div>
                 )}

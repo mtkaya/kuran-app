@@ -35,3 +35,18 @@ coverage/
 
 # Misc
 *.log
+
+# Signing material — the upload key must never reach a public repo
+*.keystore
+*.jks
+*.p12
+*.pem
+key.properties
+android/key.properties
+google-services.json
+GoogleService-Info.plist
+# Play Console service account keys
+play-service-account*.json
+release-1.0.8/
+android/keystore.properties
+keystore.properties

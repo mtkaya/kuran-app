@@ -388,6 +388,43 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                             </a>
                         </div>
 
+                        {/* Sources — the transliteration corpus is CC BY-NC-SA,
+                            which requires this credit to stay visible */}
+                        <div className="pt-4 border-t border-border/50 space-y-1.5">
+                            <p className="text-xs font-medium text-muted-foreground">{ui.sources}</p>
+                            <p className="text-[11px] leading-relaxed text-muted-foreground/70">
+                                {ui.sourceTransliteration}{' '}
+                                <a
+                                    href="https://acikkuran.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary/80 hover:text-primary underline underline-offset-2"
+                                >
+                                    Açık Kuran
+                                </a>
+                                {' · '}
+                                <a
+                                    href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary/80 hover:text-primary underline underline-offset-2"
+                                >
+                                    CC BY-NC-SA 4.0
+                                </a>
+                            </p>
+                            <p className="text-[11px] leading-relaxed text-muted-foreground/70">
+                                {ui.sourceTransliterationConvention}{' '}
+                                <a
+                                    href="https://tanzil.net/trans/en.transliteration"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-primary/80 hover:text-primary underline underline-offset-2"
+                                >
+                                    Tanzil.net
+                                </a>
+                            </p>
+                        </div>
+
                         {/* Brand Signature */}
                         <div className="flex flex-col items-center gap-1">
                             <div className="w-12 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>

@@ -5,6 +5,7 @@ import { MushafView } from '../components/MushafView';
 import { MushafImageView } from '../components/MushafImageView';
 import { resolveInitialAyah, canAutoSavePosition } from '../utils/mushafPosition';
 import { MemorizationPanel } from '../components/MemorizationPanel';
+import { ensureTransliteration } from '../data/transliteration';
 import { ContentPanel } from '../components/ContentPanel';
 import { ArrowLeft, Settings, GraduationCap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
@@ -24,10 +25,13 @@ export default function Reader() {
     const { currentAyahId, currentAyahNumber, isPlaying, memorization, cleanup } = useAudioStore();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isMemorizationOpen, setIsMemorizationOpen] = useState(false);
+    // Bumped when the transliteration corpus finishes loading, so the ayah
+    // rows re-read it
+    const [, setCorpusVersion] = useState(0);
     const [selectedAyah, setSelectedAyah] = useState<Ayah | null>(null);
     const { toast, showToast, hideToast } = useToast();
     const observerRef = useRef<IntersectionObserver | null>(null);
-    const { readingMode } = useSettingsStore();
+    const { readingMode, showTransliteration } = useSettingsStore();
 
     const { quranData, isLoading: isQuranLoading, error: quranError, retry: retryQuranLoad } = useQuranData(currentLanguage);
     const ui = useMemo(() => getUIStrings(currentLanguage), [currentLanguage]);
@@ -104,6 +108,16 @@ export default function Reader() {
             // Don't cleanup if navigating - let the audio continue
         };
     }, [cleanup]);
+
+    // Pull in the transliteration corpus only when the reader actually needs it
+    useEffect(() => {
+        if (!showTransliteration) return;
+        let alive = true;
+        ensureTransliteration(currentLanguage).then(() => {
+            if (alive) setCorpusVersion(v => v + 1);
+        });
+        return () => { alive = false; };
+    }, [showTransliteration, currentLanguage]);
 
     // Show loading while data is loading - AFTER all hooks
     if (isQuranLoading) {

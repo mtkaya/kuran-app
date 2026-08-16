@@ -115,8 +115,8 @@ interface UIStrings {
     close: string;
     transliterationUnavailable: string;
     sources: string;
-    sourceTransliterationLatin: string;
-    sourceTransliterationTurkish: string;
+    sourceTransliteration: string;
+    sourceTransliterationConvention: string;
 }
 
 const translations: Record<LanguageCode, UIStrings> = {
@@ -224,8 +224,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Kapat',
         transliterationUnavailable: 'Bu ayet için okunuş şu anda gösterilemiyor.',
         sources: 'Kaynaklar',
-        sourceTransliterationLatin: 'Latin okunuş:',
-        sourceTransliterationTurkish: 'Türkçe okunuş:',
+        sourceTransliteration: 'Okunuş:',
+        sourceTransliterationConvention: 'Latin yazım geleneği:',
     },
     en: {
         appTitle: 'Holy Quran',
@@ -331,8 +331,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Close',
         transliterationUnavailable: 'The transliteration for this verse is not available yet.',
         sources: 'Sources',
-        sourceTransliterationLatin: 'Latin transliteration:',
-        sourceTransliterationTurkish: 'Turkish transliteration:',
+        sourceTransliteration: 'Transliteration:',
+        sourceTransliterationConvention: 'Latin spelling convention:',
     },
     de: {
         appTitle: 'Koran App',
@@ -438,8 +438,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Schließen',
         transliterationUnavailable: 'Die Umschrift für diesen Vers ist derzeit nicht verfügbar.',
         sources: 'Quellen',
-        sourceTransliterationLatin: 'Lateinische Umschrift:',
-        sourceTransliterationTurkish: 'Türkische Umschrift:',
+        sourceTransliteration: 'Umschrift:',
+        sourceTransliterationConvention: 'Lateinische Schreibkonvention:',
     },
     fr: {
         appTitle: 'Coran App',
@@ -545,8 +545,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Fermer',
         transliterationUnavailable: "La translittération de ce verset n'est pas encore disponible.",
         sources: 'Sources',
-        sourceTransliterationLatin: 'Translittération latine :',
-        sourceTransliterationTurkish: 'Translittération turque :',
+        sourceTransliteration: 'Translittération :',
+        sourceTransliterationConvention: 'Convention orthographique latine :',
     },
     zh: {
         appTitle: '古兰经应用',
@@ -652,8 +652,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: '关闭',
         transliterationUnavailable: '该经文的音译暂不可用。',
         sources: '来源',
-        sourceTransliterationLatin: '拉丁音译：',
-        sourceTransliterationTurkish: '土耳其语音译：',
+        sourceTransliteration: '音译：',
+        sourceTransliterationConvention: '拉丁拼写规范：',
     },
     ar: {
         appTitle: 'تطبيق القرآن',
@@ -759,8 +759,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'إغلاق',
         transliterationUnavailable: 'النقل الصوتي لهذه الآية غير متاح حاليًا.',
         sources: 'المصادر',
-        sourceTransliterationLatin: 'النقل الصوتي اللاتيني:',
-        sourceTransliterationTurkish: 'النقل الصوتي التركي:',
+        sourceTransliteration: 'النقل الصوتي:',
+        sourceTransliterationConvention: 'قواعد الكتابة اللاتينية:',
     },
     id: {
         appTitle: 'Al-Quran',
@@ -866,8 +866,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'Tutup',
         transliterationUnavailable: 'Transliterasi untuk ayat ini belum tersedia.',
         sources: 'Sumber',
-        sourceTransliterationLatin: 'Transliterasi Latin:',
-        sourceTransliterationTurkish: 'Transliterasi Turki:',
+        sourceTransliteration: 'Transliterasi:',
+        sourceTransliterationConvention: 'Konvensi ejaan Latin:',
     },
     ur: {
         appTitle: 'قرآن کریم',
@@ -973,8 +973,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'بند کریں',
         transliterationUnavailable: 'اس آیت کا اردو رسم الخط ابھی دستیاب نہیں ہے۔',
         sources: 'ذرائع',
-        sourceTransliterationLatin: 'لاطینی رسم الخط:',
-        sourceTransliterationTurkish: 'ترکی رسم الخط:',
+        sourceTransliteration: 'رسم الخط:',
+        sourceTransliterationConvention: 'لاطینی املا کا اصول:',
     },
     bn: {
         appTitle: 'পবিত্র কুরআন',
@@ -1080,8 +1080,8 @@ const translations: Record<LanguageCode, UIStrings> = {
         close: 'বন্ধ',
         transliterationUnavailable: 'এই আয়াতের উচ্চারণ এখনও যোগ করা হয়নি।',
         sources: 'সূত্র',
-        sourceTransliterationLatin: 'ল্যাটিন উচ্চারণ:',
-        sourceTransliterationTurkish: 'তুর্কি উচ্চারণ:',
+        sourceTransliteration: 'উচ্চারণ:',
+        sourceTransliterationConvention: 'ল্যাটিন বানান রীতি:',
     },
 };
 

@@ -22,10 +22,17 @@ fi
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="$HERE/../src/data"
 
+# Never truncate the committed file before the query is known good: write to a
+# scratch file, validate, and only then move it into place.
 export_column() {
     local column="$1" outfile="$2"
+    local tmp
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' RETURN
+
     echo "→ $column → $(basename "$outfile")"
-    psql "$DB_URL" -At -c "
+
+    if ! psql "$DB_URL" -At -v ON_ERROR_STOP=1 -c "
         SELECT json_object_agg(surah_id, verses)
         FROM (
             SELECT surah_id,
@@ -34,12 +41,18 @@ export_column() {
             WHERE $column IS NOT NULL AND btrim($column) <> ''
             GROUP BY surah_id
         ) grouped;
-    " > "$outfile"
-
-    if [[ ! -s "$outfile" ]] || [[ "$(head -c 1 "$outfile")" != "{" ]]; then
-        echo "  Boş veya geçersiz çıktı — sorguyu kontrol edin." >&2
+    " > "$tmp"; then
+        echo "  psql sorgusu başarısız oldu — $(basename "$outfile") değiştirilmedi." >&2
         exit 1
     fi
+
+    if [[ ! -s "$tmp" ]] || [[ "$(head -c 1 "$tmp")" != "{" ]]; then
+        echo "  Sorgu boş ya da JSON olmayan çıktı verdi — $(basename "$outfile") değiştirilmedi." >&2
+        echo "  İlk satır: $(head -c 200 "$tmp")" >&2
+        exit 1
+    fi
+
+    mv "$tmp" "$outfile"
 }
 
 export_column transcription    "$OUT_DIR/translit-tr.json"

@@ -10,7 +10,7 @@ import { useAudioStore } from '../store/audioStore';
 import { useNotesStore } from '../store/notesStore';
 import { useLanguage } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
-import { getTransliteration } from '../data/transliteration';
+import { getTransliteration, hasCorpus } from '../data/transliteration';
 
 interface AyahViewProps {
     ayah: Ayah;
@@ -152,10 +152,11 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                     </div>
                 )}
 
-                {/* Coverage is partial, so say so rather than silently omitting
-                    the row — the notice disappears on its own once the verse
-                    has a transliteration. */}
-                {showTransliteration && !transliteration && (
+                {/* Only once the corpus has actually loaded is a missing
+                    reading really missing. The corpus is a lazy chunk, so
+                    without this the notice flashes on every cold open before
+                    the chunk lands. */}
+                {showTransliteration && !transliteration && hasCorpus(currentLanguage) && (
                     <div className="mb-4 py-2 px-3 bg-secondary/20 rounded-lg border-l-2 border-border">
                         <p
                             className="text-muted-foreground/70 italic"

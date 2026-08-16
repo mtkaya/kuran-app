@@ -48,3 +48,5 @@ GoogleService-Info.plist
 # Play Console service account keys
 play-service-account*.json
 release-1.0.8/
+android/keystore.properties
+keystore.properties

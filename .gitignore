@@ -50,3 +50,6 @@ play-service-account*.json
 release-1.0.8/
 android/keystore.properties
 keystore.properties
+
+# Store screenshots — regenerate with scripts/capture-store-screenshots.mjs
+screenshots/

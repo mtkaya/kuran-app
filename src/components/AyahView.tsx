@@ -11,6 +11,7 @@ import { useNotesStore } from '../store/notesStore';
 import { useLanguage } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
 import { getTransliteration, hasCorpus } from '../data/transliteration';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface AyahViewProps {
     ayah: Ayah;
@@ -125,7 +126,7 @@ export const AyahView: React.FC<AyahViewProps> = ({ ayah, surahName, totalAyahs,
                         className={`font-arabic leading-loose font-medium transition-all duration-300 break-words ${memorizationMode && !revealed ? 'blur-md select-none' : ''
                             }`}
                         dir="rtl"
-                        style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2', fontFamily: arabicFont, wordBreak: 'break-word', overflowWrap: 'break-word' }}
+                        style={{ fontSize: `${arabicFontSize}px`, lineHeight: '2', fontFamily: arabicFontStack(arabicFont), wordBreak: 'break-word', overflowWrap: 'break-word' }}
                     >
                         {ayah.text_arabic}
                         <span className="inline-flex items-center justify-center w-8 h-8 mr-2 text-sm border border-primary rounded-full text-primary number-font blur-none">

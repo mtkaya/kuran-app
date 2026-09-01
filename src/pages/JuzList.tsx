@@ -9,6 +9,7 @@ import { useQuranData } from '../hooks/useQuranData';
 import { JUZ_DATA, TOTAL_JUZ } from '../data/juzData';
 import { useMemo, useState } from 'react';
 import { useSettingsStore } from '../store/settingsStore';
+import { arabicFontStack } from '../utils/arabicFont';
 
 export default function JuzList() {
     const { currentLanguage } = useLanguage();
@@ -102,7 +103,7 @@ export default function JuzList() {
                                     <h3
                                         className="font-arabic text-lg text-foreground mb-1"
                                         dir="rtl"
-                                        style={{ fontFamily: arabicFont }}
+                                        style={{ fontFamily: arabicFontStack(arabicFont) }}
                                     >
                                         {juz.nameArabic}
                                     </h3>

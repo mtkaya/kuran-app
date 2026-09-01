@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, FileText } from 'lucide-react';
 import { useSettingsStore } from '../store/settingsStore';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface NoteModalProps {
     isOpen: boolean;
@@ -55,7 +56,7 @@ export const NoteModal: React.FC<NoteModalProps> = ({
                     <p
                         className="font-arabic text-right text-lg leading-relaxed line-clamp-2"
                         dir="rtl"
-                        style={{ fontFamily: arabicFont }}
+                        style={{ fontFamily: arabicFontStack(arabicFont) }}
                     >
                         {ayahText}
                     </p>

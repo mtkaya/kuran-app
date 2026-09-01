@@ -591,7 +591,12 @@ export const MushafImageView: React.FC<MushafImageViewProps> = ({ surahId, initi
                                 top: `${(markerPosition || initialMarkerPosition)!.y}%`,
                                 transform: 'translate(-50%, -100%)'
                             } : {
-                                top: '1rem',
+                                // Clear the header: it is z-50 over this z-30
+                                // ribbon, so at top:1rem the label renders
+                                // underneath the settings and flag buttons.
+                                // safe area + the header's 1.5rem padding + a
+                                // 3rem button + a gap.
+                                top: 'calc(env(safe-area-inset-top, 50px) + 5.25rem)',
                                 right: '1rem'
                             })
                         }}

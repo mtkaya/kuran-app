@@ -49,7 +49,9 @@ export default {
             },
         },
         fontFamily: {
-            arabic: ['Amiri', 'serif'], // Placeholder for Arabic font
+            // Bundled face first: 'Amiri' comes from the Google Fonts CDN and
+            // is unavailable offline, where the generic fallback has no Arabic glyphs.
+            arabic: ['Amiri Quran', 'Amiri', 'serif'],
         }
     },
     plugins: [],

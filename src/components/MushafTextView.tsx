@@ -8,6 +8,7 @@ import { getPageFirstAyah } from '../data/pageMapping';
 import { useQuranData } from '../hooks/useQuranData';
 import { useLanguage } from '../context/LanguageContext';
 import { canAutoSavePosition } from '../utils/mushafPosition';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface MushafTextViewProps {
     initialPage?: number;
@@ -242,7 +243,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                 className={`mushaf-line relative flex flex-wrap justify-center items-baseline px-1 py-1 transition-all duration-300 overflow-hidden ${isActive ? 'bg-primary/10 rounded-lg' : ''
                     }`}
                 style={{
-                    fontFamily: arabicFont,
+                    fontFamily: arabicFontStack(arabicFont),
                     fontSize: `clamp(16px, ${arabicFontSize * 0.7}px, ${arabicFontSize}px)`,
                     lineHeight: '2.2',
                     maxWidth: '100%',
@@ -405,7 +406,7 @@ export const MushafTextView: React.FC<MushafTextViewProps> = ({
                         <div className="inline-block px-8 py-2 bg-gradient-to-r from-transparent via-primary/10 to-transparent rounded-full">
                             <span
                                 className="text-2xl text-primary font-bold"
-                                style={{ fontFamily: arabicFont }}
+                                style={{ fontFamily: arabicFontStack(arabicFont) }}
                             >
                                 سُورَةُ {pageData.surahInfo[0].name}
                             </span>

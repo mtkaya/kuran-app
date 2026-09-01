@@ -20,6 +20,7 @@ import { useSettingsStore } from '../store/settingsStore';
 import { contentService } from '../services/contentService';
 import { ContentType, TefsirContent, ContentProvider } from '../types/content';
 import { Ayah } from '../types';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface ContentPanelProps {
     currentAyah: Ayah | null;
@@ -128,7 +129,7 @@ export const ContentPanel: React.FC<ContentPanelProps> = ({
                         <p
                             className="text-xl leading-loose text-right font-arabic"
                             dir="rtl"
-                            style={{ fontFamily: arabicFont }}
+                            style={{ fontFamily: arabicFontStack(arabicFont) }}
                         >
                             {currentAyah.text_arabic}
                         </p>

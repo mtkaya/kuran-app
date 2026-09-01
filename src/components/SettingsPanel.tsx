@@ -6,6 +6,7 @@ import { useAudioStore } from '../store/audioStore';
 import { useLanguage, LanguageCode, LANGUAGES } from '../context/LanguageContext';
 import { getUIStrings } from '../i18n/strings';
 import { RECITERS } from '../data/reciterProvider';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface SettingsPanelProps {
     isOpen: boolean;
@@ -269,7 +270,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                                     ? 'bg-primary/10 border-primary text-primary font-medium'
                                     : 'bg-secondary border-transparent hover:bg-secondary/80'
                                     }`}
-                                style={{ fontFamily: font.id }}
+                                style={{ fontFamily: arabicFontStack(font.id) }}
                             >
                                 {font.name}
                             </button>
@@ -316,7 +317,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose })
                         key={`arabic-preview-${arabicFontSize}-${arabicFont}`}
                         className="text-right mt-3 font-arabic preview-text text-foreground transition-all duration-300"
                         dir="rtl"
-                        style={{ fontSize: `${arabicFontSize}px`, fontFamily: arabicFont }}
+                        style={{ fontSize: `${arabicFontSize}px`, fontFamily: arabicFontStack(arabicFont) }}
                     >
                         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                     </p>

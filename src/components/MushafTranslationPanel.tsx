@@ -4,6 +4,7 @@ import { useSettingsStore } from '../store/settingsStore';
 import { useNotesStore } from '../store/notesStore';
 import { NoteModal } from './NoteModal';
 import { Ayah } from '../types';
+import { arabicFontStack } from '../utils/arabicFont';
 
 interface MushafTranslationPanelProps {
     pageAyahs: Ayah[];
@@ -93,7 +94,7 @@ export const MushafTranslationPanel: React.FC<MushafTranslationPanelProps> = ({
                                 <p
                                     className="font-arabic text-xl text-right flex-1 leading-loose"
                                     dir="rtl"
-                                    style={{ fontFamily: arabicFont }}
+                                    style={{ fontFamily: arabicFontStack(arabicFont) }}
                                 >
                                     {ayah.text_arabic}
                                 </p>

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 1.0.8 icin imzali Play paketini uretir ve imzayi DOGRULAR.
+# Imzali Play paketini uretir ve imzayi DOGRULAR.
 #
 # On kosul: android/keystore.properties doldurulmus olmali (storePassword,
 # keyAlias, keyPassword). O dosya .gitignore'da; parola depoya girmez.
@@ -17,6 +17,13 @@ ozellikler="$KOK/android/keystore.properties"
 for alan in storePassword keyAlias keyPassword; do
   grep -qE "^${alan}=.+" "$ozellikler" || { echo "HATA: $ozellikler icinde '$alan' bos."; exit 1; }
 done
+
+# Hangi surumun paketlendigini basta soyle: yanlis dalda ya da pull yapmadan
+# derlemek 1.0.8'i ikinci kez uretir, Play de ayni versionCode'u reddeder.
+surum_adi="$(grep -oE 'versionName "[^"]+"' "$KOK/android/app/build.gradle" | head -1 | sed 's/versionName //; s/"//g')"
+surum_kodu="$(grep -oE 'versionCode [0-9]+' "$KOK/android/app/build.gradle" | head -1 | grep -oE '[0-9]+')"
+dal="$(git -C "$KOK" rev-parse --abbrev-ref HEAD 2>/dev/null || echo '?')"
+echo "==> Paketlenecek surum: $surum_adi ($surum_kodu)  ·  dal: $dal"
 
 echo "==> Web katmani derleniyor"
 cd "$KOK" && npm run build >/dev/null && npx cap sync android >/dev/null
@@ -41,4 +48,5 @@ fi
 echo
 echo "TAMAM. Play'e yuklenecek dosya:"
 echo "  $CIKTI"
+echo "  surum: $surum_adi ($surum_kodu)"
 keytool -printcert -jarfile "$CIKTI" 2>/dev/null | grep -E "Owner|SHA1" | head -2

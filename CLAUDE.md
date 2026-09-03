@@ -6,6 +6,14 @@ Durum yönetimi Zustand, tema Tailwind + HSL değişkenleri, testler Vitest.
 Buradaki maddelerin çoğu bir kez pahalıya mal olmuş şeyler. Her biri neden öyle
 olduğunu da söylüyor; gerekçeyi okumadan tersini yapma.
 
+## Nerede kaldık
+
+`docs/durum.md` açık işleri ve her platformun hangi aşamada olduğunu tutuyor.
+Oturuma başlarken oku, bir iş bitince ya da durum değişince güncelle. Dosya
+depo dışından da takip ediliyor, dolayısıyla bayat kalırsa yanlış yerden
+devam ediliyor. Bu dosya "neden", `durum.md` "şu an ne" sorusunu cevaplar;
+tuzakları oraya kopyalama.
+
 ## Değişmez kurallar
 
 **Kur'an metnini asla hafızadan üretme.** Arapça, meal ve okunuş yalnızca
